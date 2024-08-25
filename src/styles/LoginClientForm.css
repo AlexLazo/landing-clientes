@@ -1,0 +1,116 @@
+/* Estilos específicos para el componente ClienteLogin */
+.client-login-form {
+    max-width: 420px;
+    margin: 0 auto;
+    padding: 35px;
+    background-color: #E1DFDB;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 110px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.home-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 20px; /* Espacio entre el botón y el logo */
+}
+
+.home-icon {
+    font-size: 18px; /* Tamaño de la flecha más pequeño */
+    color: #33691E; /* Color del icono */
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 22px;
+    color: #1A1514;
+}
+
+p {
+    font: inherit;
+    color: #1A1514;
+    font-size: 15px;
+    text-align: center;
+}
+
+label {
+    display: block;
+    font-size: 19px;
+    margin-bottom: 10px;
+    color: #1A1514;
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 11px;
+    margin-bottom: 22px;
+    font-size: 17px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    color: #1A1514;
+}
+
+.password-input {
+    position: relative;
+}
+
+.forgot-password {
+    font-size: 15px;
+    color: #65574E;
+    cursor: pointer;
+    text-align: right;
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 13px;
+    background-color: #33691E;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-size: 19px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+button:hover {
+    background-color: #50623E;
+}
+
+.register-button {
+    background-color: #50623E;
+}
+
+.register-button:hover {
+    background-color: #53645e;
+}
+
+.error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}

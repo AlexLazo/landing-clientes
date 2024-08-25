@@ -4,6 +4,11 @@
   padding: 2rem;
   text-align: center;
 }
+/* Agrega un margen superior al contenido principal para compensar la altura del encabezado */
+main {
+  margin-top: 60px; /* Debe ser igual a la altura del encabezado */
+  padding: 20px; /* Ajusta el padding según tus necesidades */
+}
 
 .logo {
   height: 6em;

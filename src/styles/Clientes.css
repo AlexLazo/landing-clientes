@@ -1,0 +1,94 @@
+/* src/styles/Clientes.css */
+
+/* Estilo para la página de edición de cliente */
+.editar-cliente-page {
+    padding: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  
+  .editar-cliente-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .editar-cliente-page form {
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .editar-cliente-page .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .editar-cliente-page .form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+  }
+  
+  .editar-cliente-page .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .editar-cliente-page .form-group input:invalid {
+    border-color: #dc3545;
+  }
+  
+  .editar-cliente-page .form-group .form-feedback {
+    color: #dc3545;
+    font-size: 0.875em;
+  }
+  
+  .editar-cliente-page .error-message {
+    color: #dc3545;
+    margin-bottom: 20px;
+  }
+  
+  .editar-cliente-page .btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .editar-cliente-page .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+  }
+  
+  .editar-cliente-page .btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    text-align: center;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+  
+  .editar-cliente-page .btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+  }
+  
+  .toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+  

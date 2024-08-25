@@ -1,0 +1,67 @@
+/* Estilos para la página de Perfil del Cliente */
+.perfil-cliente {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  
+  .navbar {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    background-color: #2C3E50;
+    color: #ECF0F1;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+  }
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  
+  .logo {
+    width: 100px;
+  }
+  
+  .nav-links {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .nav-links li {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .nav-links li:hover {
+    background-color: #34495E;
+  }
+  
+  .nav-icon {
+    margin-right: 10px;
+  }
+  
+  .content {
+    margin-left: 270px;
+    padding: 20px;
+    flex: 1;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  p {
+    font-size: 18px;
+  }
+  
