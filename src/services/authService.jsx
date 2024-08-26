@@ -2,9 +2,9 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Validate API_URL
+// Validar que API_URL esté definida
 if (!API_URL) {
-  console.error("API_URL is not defined in the environment variables.");
+  console.error("API_URL no está definida en las variables de entorno.");
 }
 
 // Método para iniciar sesión como cliente
@@ -19,8 +19,8 @@ const loginClient = async (email, password) => {
     }
     return null;
   } catch (error) {
-    console.error("Login failed:", error);
-    throw new Error("Login failed. Please check your credentials and try again.");
+    console.error("Error al iniciar sesión:", error);
+    throw new Error("Error al iniciar sesión. Por favor, verifica tus credenciales e inténtalo de nuevo.");
   }
 };
 
@@ -44,8 +44,7 @@ const getUserDetails = () => {
 
 // Método para obtener el ID del cliente actual
 const getClienteId = () => {
-  const id = localStorage.getItem("clienteId");
-  return id ? id : null;
+  return localStorage.getItem("clienteId");
 };
 
 // Exporta el servicio de autenticación
