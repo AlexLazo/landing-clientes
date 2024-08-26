@@ -4,7 +4,7 @@ import { FiLock, FiArrowLeft } from "react-icons/fi";
 import AuthService from "../../services/authService";
 import "../../styles/LoginClientForm.css";
 
-const ClienteLogin = ({ logo, onLogin }) => {
+const ClienteLogin = ({ logo, onLogin = () => {} }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,13 +16,22 @@ const ClienteLogin = ({ logo, onLogin }) => {
     try {
       const token = await AuthService.loginClient(email, password);
       if (token) {
-        localStorage.setItem("token", token);
-        onLogin(); // Oculta el Header
-        navigate("/perfil-cliente");
+        onLogin(); // Call onLogin when login is successful
+
+        // Fetch user details to check if email is verified and profile is complete
+        const userDetails = await AuthService.getUserDetails();
+        const isProfileComplete = userDetails.nombre_comercial && userDetails.telefono;
+
+       if (!isProfileComplete) {
+          navigate(`/editar-cliente/${userDetails.id}`);
+        } else {
+          navigate("/perfil-cliente");
+        }
       } else {
         setError("Credenciales inválidas");
       }
     } catch (err) {
+      console.error('Error de inicio de sesión:', err.message);
       setError("Credenciales inválidas");
     }
   };
@@ -41,9 +50,9 @@ const ClienteLogin = ({ logo, onLogin }) => {
 
   return (
     <div className="client-login-form">
-       <button className="home-button" onClick={handleHomeRedirect}>
-          <FiArrowLeft className="home-icon" />
-        </button>
+      <button className="home-button" onClick={handleHomeRedirect}>
+        <FiArrowLeft className="home-icon" />
+      </button>
       <div className="logo-container">
         <img src={logo} alt="Logo" className="logo" />
       </div>

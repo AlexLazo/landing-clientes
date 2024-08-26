@@ -7,12 +7,11 @@ const AuthContext = createContext();
 // Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook para la navegación
 
   useEffect(() => {
-    // Aquí puedes verificar la autenticación del usuario en el almacenamiento local o desde una API
+    // Verificar autenticación del usuario
     const checkAuth = () => {
-      // Simulación: asume que si hay un token en el localStorage, el usuario está autenticado
       const token = localStorage.getItem('authToken');
       setIsAuthenticated(!!token);
     };
@@ -23,13 +22,13 @@ export const AuthProvider = ({ children }) => {
   const login = (token) => {
     localStorage.setItem('authToken', token);
     setIsAuthenticated(true);
-    navigate('/');
+    navigate('/'); // Navega a la página de inicio después de iniciar sesión
   };
 
   const logout = () => {
     localStorage.removeItem('authToken');
     setIsAuthenticated(false);
-    navigate('/login');
+    navigate('/login'); // Navega a la página de inicio de sesión después de cerrar sesión
   };
 
   return (

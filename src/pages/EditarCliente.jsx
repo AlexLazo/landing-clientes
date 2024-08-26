@@ -1,179 +1,139 @@
-// src/pages/EditarCliente.js
-import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { FormGroup, Label, Input, Button, FormFeedback, Row, Col } from "reactstrap";
+import { useState, useEffect } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import "/src/styles/Clientes.css";
 
-const formatDate = (date) => {
-  if (!date) return "";
-  const [year, month, day] = date.split(' ')[0].split('-');
-  return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-};
+const API_URL = import.meta.env.VITE_API_URL;
 
 const EditarCliente = () => {
-  const { id } = useParams(); // Get client ID from URL
-  const navigate = useNavigate();
-  const [cliente, setCliente] = useState(null);
-  const [error, setError] = useState("");
-  const [isDuiValid, setIsDuiValid] = useState(true);
-  const [isTelefonoValid, setIsTelefonoValid] = useState(true);
-  const [isNitValid, setIsNitValid] = useState(true);
+    const { id } = useParams();
+    const navigate = useNavigate();
+    const [cliente, setCliente] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
-  useEffect(() => {
-    // Fetch client data on component mount
-    const fetchCliente = async () => {
-      try {
-        const response = await axios.get(`${import.meta.env.VITE_API_URL}/perfil-cliente/${id}`);
-        setCliente(response.data);
-      } catch (err) {
-        console.error("Error al obtener el cliente:", err);
-        toast.error("Error al obtener los datos del cliente.");
-      }
+    useEffect(() => {
+        const fetchCliente = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const response = await axios.get(`${API_URL}/perfil-cliente/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+
+                setCliente(response.data.cliente);
+            } catch (err) {
+                setError("Error al cargar datos del cliente.");
+                console.error("Error:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchCliente();
+    }, [id]);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCliente((prevCliente) => ({
+            ...prevCliente,
+            [name]: value
+        }));
     };
 
-    fetchCliente();
-  }, [id]);
+    const handleSave = async () => {
+        try {
+            const token = localStorage.getItem("token");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setCliente((prev) => ({ ...prev, [name]: value }));
-  };
+            await axios.put(`${API_URL}/perfil-cliente/${id}`, cliente, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
-  const validateDui = (dui) => {
-    const regex = /^[0-9]{8}-[0-9]{1}$/;
-    setIsDuiValid(regex.test(dui));
-  };
+            alert("Perfil actualizado con éxito.");
+            navigate(`/perfil-cliente`);
+        } catch (err) {
+            setError("Error al guardar los cambios.");
+            console.error("Error:", err);
+        }
+    };
 
-  const validateTelefono = (telefono) => {
-    const regex = /^[0-9]{8}$/;
-    setIsTelefonoValid(regex.test(telefono));
-  };
-
-  const validateNit = (nit) => {
-    const regex = /^[0-9]{4}-[0-9]{6}-[0-9]{3}$/;
-    setIsNitValid(regex.test(nit));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!isDuiValid || !isTelefonoValid || !isNitValid) {
-      setError("Por favor, corrige los errores en el formulario.");
-      return;
+    if (loading) {
+        return <p>Loading...</p>;
     }
 
-    try {
-      await axios.put(`${import.meta.env.VITE_API_URL}/actualizar-perfil-cliente/${id}`, cliente);
-      toast.success("Cliente actualizado exitosamente.");
-      navigate("/clientes"); // Redirect to the clients list or another page
-    } catch (err) {
-      const errorMessage = err.response?.data.message || "Error al guardar los cambios.";
-      setError(errorMessage);
-      toast.error(errorMessage);
+    if (error) {
+        return <p>{error}</p>;
     }
-  };
 
-  if (!cliente) return <div>Cargando...</div>;
-
-  return (
-    <div className="editar-cliente-page">
-      <h1>Editar Cliente</h1>
-      <form onSubmit={handleSubmit}>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="nombre">Nombre</Label>
-              <Input
-                type="text"
-                id="nombre"
-                name="nombre"
-                value={cliente.nombre}
-                onChange={handleChange}
-                invalid={!cliente.nombre}
-              />
-              <FormFeedback>Por favor, ingresa el nombre del cliente.</FormFeedback>
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="apellido">Apellido</Label>
-              <Input
-                type="text"
-                id="apellido"
-                name="apellido"
-                value={cliente.apellido}
-                onChange={handleChange}
-                invalid={!cliente.apellido}
-              />
-              <FormFeedback>Por favor, ingresa el apellido del cliente.</FormFeedback>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="dui">DUI</Label>
-              <Input
-                type="text"
-                id="dui"
-                name="dui"
-                value={cliente.dui}
-                onChange={(e) => {
-                  handleChange(e);
-                  validateDui(e.target.value);
-                }}
-                invalid={!isDuiValid}
-              />
-              <FormFeedback>El DUI debe tener el formato 12345678-9.</FormFeedback>
-            </FormGroup>
-          </Col>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="telefono">Teléfono</Label>
-              <Input
-                type="text"
-                id="telefono"
-                name="telefono"
-                value={cliente.telefono}
-                onChange={(e) => {
-                  handleChange(e);
-                  validateTelefono(e.target.value);
-                }}
-                invalid={!isTelefonoValid}
-              />
-              <FormFeedback>El teléfono debe tener 8 dígitos.</FormFeedback>
-            </FormGroup>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <FormGroup>
-              <Label for="nit">NIT</Label>
-              <Input
-                type="text"
-                id="nit"
-                name="nit"
-                value={cliente.nit}
-                onChange={(e) => {
-                  handleChange(e);
-                  validateNit(e.target.value);
-                }}
-                invalid={!isNitValid}
-              />
-              <FormFeedback>El NIT debe tener el formato 1234-567890-123.</FormFeedback>
-            </FormGroup>
-          </Col>
-          {/* Add other form fields as needed */}
-        </Row>
-        {error && <div className="error-message">{error}</div>}
-        <Button color="primary" type="submit">Guardar Cambios</Button>
-        <Button color="secondary" onClick={() => navigate("/clientes")}>Cancelar</Button>
-      </form>
-      <ToastContainer />
-    </div>
-  );
+    return (
+        <div className="flex flex-col items-center w-full min-h-screen p-4">
+            <header className="flex items-center justify-between w-full p-4 border-b">
+                <button onClick={() => navigate("/perfil-cliente")}>
+                    <span>Regresar</span>
+                </button>
+                <div className="text-right">
+                    <p className="text-xs">VP8.00</p>
+                    <p className="text-xs">SV</p>
+                </div>
+            </header>
+            <main className="flex flex-col items-center w-full max-w-4xl p-4">
+                <h1 className="text-2xl font-bold">Editar Perfil</h1>
+                <form className="w-full max-w-md mt-4">
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Nombre Comercial</label>
+                        <input
+                            type="text"
+                            name="nombre_comercial"
+                            value={cliente?.nombre_comercial || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Teléfono</label>
+                        <input
+                            type="tel"
+                            name="telefono"
+                            value={cliente?.telefono || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-sm font-medium">Dirección</label>
+                        <input
+                            type="text"
+                            name="direccion"
+                            value={cliente?.direccion || ''}
+                            onChange={handleChange}
+                            className="w-full p-2 border border-gray-300 rounded"
+                        />
+                    </div>
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            className="btn-outline"
+                            onClick={() => navigate(`/perfil-cliente`)}
+                        >
+                            Cancelar
+                        </button>
+                        <button
+                            type="button"
+                            className="btn-primary"
+                            onClick={handleSave}
+                        >
+                            Guardar
+                        </button>
+                    </div>
+                </form>
+            </main>
+            <footer className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t">
+                <p className="text-center text-sm">© 2024 Mi Aplicación</p>
+            </footer>
+        </div>
+    );
 };
 
 export default EditarCliente;

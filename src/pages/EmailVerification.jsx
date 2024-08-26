@@ -65,7 +65,7 @@ const EmailVerification = () => {
       if (response.status === 200) {
         setMessage('¡Correo electrónico verificado con éxito!');
         setTimeout(() => {
-          navigate('/Login');
+          navigate('/login');
         }, 4000);
       } else {
         setMessage(`La verificación falló: ${response.data.error || 'Error'}`);

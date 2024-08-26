@@ -1,36 +1,50 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import styles from '/src/styles/PerfilCliente.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function PerfilCliente() {
     const [cliente, setCliente] = useState(null);
-    const [profileComplete, setProfileComplete] = useState(false); // Estado para verificar si el perfil está completo
+    const [profileComplete, setProfileComplete] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCliente = async () => {
+            const token = localStorage.getItem("token");
+            const clienteId = localStorage.getItem("clienteId");
+
+            if (!token || !clienteId) {
+                navigate("/login");
+                return;
+            }
+
             try {
-                const response = await axios.get(`${API_URL}/perfil-cliente`, {
+                const response = await axios.get(`${API_URL}/perfil-cliente/${clienteId}`, {
                     headers: {
-                        Authorization: `Bearer ${token}` // Reemplaza `token` con el token de autenticación adecuado
+                        Authorization: `Bearer ${token}`
                     }
                 });
 
                 setCliente(response.data.cliente);
 
-                // Verifica si el perfil está completo
-                const isProfileComplete = response.data.cliente.nombre_comercial && response.data.cliente.telefono; // Ajusta según los campos requeridos
+                const isProfileComplete = response.data.cliente.nombre_comercial && response.data.cliente.telefono;
                 setProfileComplete(isProfileComplete);
 
-                // Redirige si el perfil no está completo
                 if (!isProfileComplete) {
                     alert("Por favor, completa tu perfil para continuar.");
-                    navigate('/editar-perfil');
+                    navigate(`/editar-cliente/${clienteId}`);
                 }
             } catch (error) {
-                console.error("Error fetching cliente data:", error);
+                if (error.response && error.response.status === 404) {
+                    navigate('/agregar-cliente');
+                } else {
+                    console.error("Error fetching cliente data:", error);
+                }
+            } finally {
+                setLoading(false);
             }
         };
 
@@ -39,19 +53,40 @@ export default function PerfilCliente() {
 
     const handleDeleteAccount = async () => {
         try {
-            // Lógica para eliminar la cuenta (dependerá del endpoint que utilices)
+            const token = localStorage.getItem("token");
+            const clienteId = localStorage.getItem("clienteId");
+
+            if (!token || !clienteId) {
+                navigate("/login");
+                return;
+            }
+
+            await axios.delete(`${API_URL}/perfil-cliente/${clienteId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+
             alert("Cuenta eliminada.");
+            localStorage.removeItem("token");
+            localStorage.removeItem("clienteId");
+            navigate("/login");
         } catch (error) {
             console.error("Error al eliminar cuenta:", error);
         }
     };
 
+    if (loading) {
+        return <p>Cargando...</p>;
+    }
+
     if (!cliente) {
-        return <p>Loading...</p>;
+        return <p>No se encontró la información del cliente.</p>;
     }
 
     return (
-        <div className="flex flex-col items-center w-full min-h-screen p-4">
+        <div className={styles.profileContainer}>
+            <h2>Perfil del Cliente</h2>
             <header className="flex items-center justify-between w-full p-4 border-b">
                 <div className="flex items-center">
                     <MenuIcon className="w-6 h-6 mr-2" />
@@ -111,15 +146,12 @@ export default function PerfilCliente() {
                         <FilePenIcon className="w-6 h-6 mb-1" />
                         Editar
                     </Button>
-                    <Button variant="destructive" className="flex flex-col items-center" onClick={handleDeleteAccount}>
-                        <DeleteIcon className="w-6 h-6 mb-1" />
-                        Eliminar Cuenta
-                    </Button>
                 </div>
             </main>
             <footer className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t">
                 <p className="text-center text-xs">31°C Mayorm. nublado</p>
             </footer>
+            <button onClick={handleDeleteAccount}>Eliminar Cuenta</button>
         </div>
     );
 }

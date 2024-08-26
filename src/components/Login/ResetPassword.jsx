@@ -33,7 +33,7 @@ const ResetPassword = ({ token }) => {
       if (response.data.success) {
         setMessage('Tu contraseña ha sido restablecida.');
         setTimeout(() => {
-          navigate('/clienteLogin');
+          navigate('/Login');
         }, 4000); // Redirigir después de 4 segundos
       } else {
         setMessage('Error al restablecer la contraseña.');
