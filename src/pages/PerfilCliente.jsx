@@ -1,41 +1,40 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import styles from '/src/styles/PerfilCliente.module.css';
+import Modal from 'react-modal';
+import styles from "/src/styles/PerfilCliente.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
+Modal.setAppElement('#root');
+
 export default function PerfilCliente() {
     const [cliente, setCliente] = useState(null);
-    const [profileComplete, setProfileComplete] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [modalIsOpen, setModalIsOpen] = useState(false);
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCliente = async () => {
             const token = localStorage.getItem("token");
-            const clienteId = localStorage.getItem("clienteId");
 
-            if (!token || !clienteId) {
+            if (!token) {
                 navigate("/login");
                 return;
             }
 
             try {
-                const response = await axios.get(`${API_URL}/perfil-cliente/${clienteId}`, {
+                const response = await axios.get(`${API_URL}/perfil-cliente`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                        Authorization: `Bearer ${token}`,
+                    },
                 });
 
                 setCliente(response.data.cliente);
 
-                const isProfileComplete = response.data.cliente.nombre_comercial && response.data.cliente.telefono;
-                setProfileComplete(isProfileComplete);
-
+                const isProfileComplete = response.data.cliente.telefono; 
                 if (!isProfileComplete) {
-                    alert("Por favor, completa tu perfil para continuar.");
-                    navigate(`/editar-cliente/${clienteId}`);
+                    setModalIsOpen(true); // Open the modal if profile is incomplete
                 }
             } catch (error) {
                 if (error.response && error.response.status === 404) {
@@ -54,17 +53,16 @@ export default function PerfilCliente() {
     const handleDeleteAccount = async () => {
         try {
             const token = localStorage.getItem("token");
-            const clienteId = localStorage.getItem("clienteId");
 
-            if (!token || !clienteId) {
+            if (!token) {
                 navigate("/login");
                 return;
             }
 
-            await axios.delete(`${API_URL}/perfil-cliente/${clienteId}`, {
+            await axios.delete(`${API_URL}/perfil-cliente`, {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
 
             alert("Cuenta eliminada.");
@@ -76,82 +74,59 @@ export default function PerfilCliente() {
         }
     };
 
+    const closeModal = () => {
+        setModalIsOpen(false);
+    };
+
+    const handleAddData = () => {
+        navigate('/agregar-cliente');
+        closeModal();
+    };
+
     if (loading) {
-        return <p>Cargando...</p>;
+        return <p className={styles.loading}>Cargando...</p>;
     }
 
     if (!cliente) {
-        return <p>No se encontró la información del cliente.</p>;
+        return <p className={styles.error}>No se encontró la información del cliente.</p>;
     }
 
     return (
         <div className={styles.profileContainer}>
             <h2>Perfil del Cliente</h2>
-            <header className="flex items-center justify-between w-full p-4 border-b">
-                <div className="flex items-center">
-                    <MenuIcon className="w-6 h-6 mr-2" />
-                    <FlagIcon className="w-8 h-6" />
-                </div>
-                <div className="text-right">
-                    <p className="text-xs">VP8.00</p>
-                    <p className="text-xs">SV</p>
-                </div>
-            </header>
-            <main className="flex flex-col items-center w-full max-w-4xl p-4">
-                <Avatar className="w-24 h-24 mb-4">
-                    <AvatarImage src="/placeholder-user.jpg" alt="Profile Picture" />
-                    <AvatarFallback>BA</AvatarFallback>
-                </Avatar>
-                <h1 className="text-2xl font-bold text-center">{cliente.nombre} {cliente.apellido}</h1>
-                <p className="text-center text-muted-foreground">{cliente.email}</p>
-                <div className="flex justify-between w-full mt-4">
-                    <p className="text-sm">Código: {cliente.dui || '-'}</p>
-                    <p className="text-sm">Cuenta: {cliente.nombre_comercial || 'Estandar'}</p>
-                </div>
-                <nav className="flex justify-center w-full mt-4 border-b">
-                    <a href="#" className="px-4 py-2 text-blue-600 border-b-2 border-blue-600">
-                        Datos generales
-                    </a>
-                </nav>
-                <div className="w-full mt-4">
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                        <div>
-                            <p className="font-bold">Nombre</p>
-                            <p>{cliente.nombre}</p>
-                        </div>
-                        <div>
-                            <p className="font-bold">Apellido</p>
-                            <p>{cliente.apellido}</p>
-                        </div>
-                        <div>
-                            <p className="font-bold">Correo electronico</p>
-                            <p>{cliente.email}</p>
-                        </div>
-                        <div>
-                            <p className="font-bold">DUI</p>
-                            <p>{cliente.dui || '-'}</p>
-                        </div>
-                        <div>
-                            <p className="font-bold">Teléfono</p>
-                            <p>{cliente.telefono}</p>
-                        </div>
-                        <div>
-                            <p className="font-bold">Dirección</p>
-                            <p>{cliente.direccion}</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="flex justify-around w-full mt-8">
-                    <Button variant="outline" className="flex flex-col items-center" onClick={() => navigate('/editar-perfil')}>
-                        <FilePenIcon className="w-6 h-6 mb-1" />
-                        Editar
-                    </Button>
-                </div>
-            </main>
-            <footer className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t">
-                <p className="text-center text-xs">31°C Mayorm. nublado</p>
-            </footer>
-            <button onClick={handleDeleteAccount}>Eliminar Cuenta</button>
+            <div className={styles.profileInfo}>
+                <p><strong>Nombre:</strong> {cliente.nombre}</p>
+                <p><strong>Apellido:</strong> {cliente.apellido}</p>
+                <p><strong>Correo Electrónico:</strong> {cliente.email}</p>
+                <p><strong>DUI:</strong> {cliente.dui}</p>
+                <p><strong>Teléfono:</strong> {cliente.telefono}</p>
+                <p><strong>Dirección:</strong> {cliente.direccion}</p>
+            </div>
+            <div className={styles.actions}>
+                <button onClick={() => navigate(`/editar-cliente`)} className={styles.editButton}>
+                    Editar Perfil
+                </button>
+                <button onClick={handleDeleteAccount} className={styles.deleteButton}>
+                    Eliminar Cuenta
+                </button>
+            </div>
+
+            <Modal
+                isOpen={modalIsOpen}
+                onRequestClose={closeModal}
+                contentLabel="Complete Your Profile"
+                className={styles.modal}
+                overlayClassName={styles.overlay}
+            >
+                <h2>Completa tu perfil</h2>
+                <p>Por favor, ingresa los datos necesarios para completar tu perfil.</p>
+                <button onClick={handleAddData} className={styles.addDataButton}>
+                    Agregar Datos
+                </button>
+                <button onClick={closeModal} className={styles.closeModalButton}>
+                    Cerrar
+                </button>
+            </Modal>
         </div>
     );
 }

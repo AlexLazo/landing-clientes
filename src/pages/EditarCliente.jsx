@@ -1,11 +1,11 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import '../styles/EditarCliente.css'; // Import the new CSS file
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const EditarCliente = () => {
-    const { id } = useParams();
     const navigate = useNavigate();
     const [cliente, setCliente] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -15,7 +15,14 @@ const EditarCliente = () => {
         const fetchCliente = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await axios.get(`${API_URL}/perfil-cliente/${id}`, {
+                const clienteId = localStorage.getItem("clienteId");
+
+                if (!clienteId) {
+                    navigate('/perfil-cliente');
+                    return;
+                }
+
+                const response = await axios.get(`${API_URL}/perfil-cliente`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -31,7 +38,7 @@ const EditarCliente = () => {
         };
 
         fetchCliente();
-    }, [id]);
+    }, [navigate]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -45,7 +52,7 @@ const EditarCliente = () => {
         try {
             const token = localStorage.getItem("token");
 
-            await axios.put(`${API_URL}/perfil-cliente/${id}`, cliente, {
+            await axios.put(`${API_URL}/perfil-cliente`, cliente, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -60,68 +67,64 @@ const EditarCliente = () => {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p className="editar-cliente-loading">Cargando...</p>;
     }
 
     if (error) {
-        return <p>{error}</p>;
+        return <p className="editar-cliente-error">{error}</p>;
     }
 
     return (
-        <div className="flex flex-col items-center w-full min-h-screen p-4">
-            <header className="flex items-center justify-between w-full p-4 border-b">
-                <button onClick={() => navigate("/perfil-cliente")}>
-                    <span>Regresar</span>
+        <div className="editar-cliente-container">
+            <header className="editar-cliente-header">
+                <button className="editar-cliente-back-button" onClick={() => navigate("/perfil-cliente")}>
+                    Regresar
                 </button>
-                <div className="text-right">
-                    <p className="text-xs">VP8.00</p>
-                    <p className="text-xs">SV</p>
-                </div>
             </header>
-            <main className="flex flex-col items-center w-full max-w-4xl p-4">
-                <h1 className="text-2xl font-bold">Editar Perfil</h1>
-                <form className="w-full max-w-md mt-4">
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Nombre Comercial</label>
+            <main className="editar-cliente-main-content">
+                <h1 className="editar-cliente-title">Editar Perfil</h1>
+                <form className="editar-cliente-form">
+                    <div className="editar-cliente-form-group">
+                        <label className="editar-cliente-label">Nombre Comercial</label>
                         <input
                             type="text"
                             name="nombre_comercial"
                             value={cliente?.nombre_comercial || ''}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="editar-cliente-input"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Teléfono</label>
+                    <div className="editar-cliente-form-group">
+                        <label className="editar-cliente-label">Teléfono</label>
                         <input
                             type="tel"
                             name="telefono"
                             value={cliente?.telefono || ''}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="editar-cliente-input"
                         />
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium">Dirección</label>
+                    <div className="editar-cliente-form-group">
+                        <label className="editar-cliente-label">Dirección</label>
                         <input
                             type="text"
                             name="direccion"
                             value={cliente?.direccion || ''}
                             onChange={handleChange}
-                            className="w-full p-2 border border-gray-300 rounded"
+                            className="editar-cliente-input"
                         />
                     </div>
-                    <div className="flex justify-between">
+                    <div className="editar-cliente-button-group">
                         <button
                             type="button"
-                            className="btn-outline"
+                            className="editar-cliente-button editar-cliente-button-outline"
                             onClick={() => navigate(`/perfil-cliente`)}
                         >
                             Cancelar
                         </button>
                         <button
                             type="button"
-                            className="btn-primary"
+                            className="editar-cliente-button editar-cliente-button-primary"
                             onClick={handleSave}
                         >
                             Guardar
@@ -129,8 +132,8 @@ const EditarCliente = () => {
                     </div>
                 </form>
             </main>
-            <footer className="fixed bottom-0 left-0 right-0 p-2 bg-white border-t">
-                <p className="text-center text-sm">© 2024 Mi Aplicación</p>
+            <footer className="editar-cliente-footer">
+                <p>© 2024 Mi Aplicación</p>
             </footer>
         </div>
     );

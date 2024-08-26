@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FiLock, FiArrowLeft } from "react-icons/fi";
 import AuthService from "../../services/authService";
 import "../../styles/LoginClientForm.css";
+import { FiArrowLeft, FiLock } from "react-icons/fi";
 
 const ClienteLogin = ({ logo, onLogin = () => {} }) => {
   const [email, setEmail] = useState("");
@@ -16,22 +16,13 @@ const ClienteLogin = ({ logo, onLogin = () => {} }) => {
     try {
       const token = await AuthService.loginClient(email, password);
       if (token) {
-        onLogin(); // Call onLogin when login is successful
-
-        // Fetch user details to check if email is verified and profile is complete
-        const userDetails = await AuthService.getUserDetails();
-        const isProfileComplete = userDetails.nombre_comercial && userDetails.telefono;
-
-       if (!isProfileComplete) {
-          navigate(`/editar-cliente/${userDetails.id}`);
-        } else {
-          navigate("/perfil-cliente");
-        }
+        onLogin();
+        navigate("/perfil-cliente"); // Redirige directamente al perfil del cliente
       } else {
         setError("Credenciales inválidas");
       }
     } catch (err) {
-      console.error('Error de inicio de sesión:', err.message);
+      console.error("Error de inicio de sesión:", err.message);
       setError("Credenciales inválidas");
     }
   };

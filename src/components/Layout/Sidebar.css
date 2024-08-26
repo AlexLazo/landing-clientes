@@ -1,67 +1,120 @@
+/* Sidebar.css */
 .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100vh;
-    background-color: #333;
-    color: #fff;
-    display: flex;
-    flex-direction: column;
-    transform: translateX(-100%);
-    transition: transform 0.3s ease;
-    z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px; /* Ancho más pequeño cuando está cerrado */
+  background-color: #ffffff;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  overflow: hidden;
 }
 
 .sidebar.open {
-    transform: translateX(0);
-}
-
-.sidebar-toggle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 24px;
-    color: #fff;
-    padding: 10px;
-}
-
-.toggle-icon {
-    margin: 10px;
+  width: 250px; /* Ancho más grande cuando está abierto */
 }
 
 .sidebar-menu {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding-top: 60px; /* Espacio para el botón de toggle */
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 10px;
+  right: -50px; /* Fuera del área visible del sidebar cuando está cerrado */
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: right 0.3s ease;
+  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+}
+
+.sidebar.open .sidebar-toggle {
+  right: 0;
+}
+
+.toggle-icon {
+  font-size: 1.5rem;
 }
 
 .sidebar-menu ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .sidebar-menu li {
-    margin: 15px 0;
+  margin: 10px 0;
 }
 
 .sidebar-menu a,
-.sidebar-menu button {
-    color: #fff;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
+.logout-button {
+  text-decoration: none;
+  color: #333;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-menu a:hover,
+.logout-button:hover {
+  background-color: #f1f1f1;
 }
 
 .menu-icon {
-    margin-right: 10px;
+  margin-right: 10px;
+  font-size: 1.5rem; /* Aumenta el tamaño del ícono */
 }
 
 .logout-button {
-    background: none;
-    border: none;
-    cursor: pointer;
+  background: none;
+  border: none;
+  color: #333;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  margin-top: auto;
+  padding: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.logout-button:hover {
+  background-color: #e0e0e0;
+}
+
+/* Mostrar el texto solo cuando el sidebar está abierto */
+.sidebar.open .sidebar-menu a {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar.open .sidebar-menu a span {
+  display: inline; /* Mostrar el texto cuando está abierto */
+}
+
+.sidebar .sidebar-menu a span {
+  display: none; /* Ocultar el texto cuando está cerrado */
+}
+
+/* Mejoras para pantallas pequeñas */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Ancho más pequeño en pantallas pequeñas */
+  }
+  .sidebar.open {
+    width: 200px;
+  }
 }

@@ -20,6 +20,8 @@ import AgregarCliente from "./components/Cliente/AgregarCliente";
 
 const AppContent = () => {
   const location = useLocation();
+  
+  // Verifica si la ruta actual está en una de las páginas de autenticación
   const isAuthPage = [
     '/login',
     '/email-verification',
@@ -27,7 +29,8 @@ const AppContent = () => {
     '/reset-password',
     '/register'
   ].includes(location.pathname);
-
+  
+  // Verifica si la ruta actual está en una de las páginas de cliente
   const isClientPage = [
     '/perfil-cliente',
     '/editar-cliente',
@@ -36,12 +39,15 @@ const AppContent = () => {
     '/rastreo',
     '/eliminar-cuenta'
   ].some(path => location.pathname.startsWith(path));
+  
+  console.log('Current Path:', location.pathname);
+  console.log('isClientPage:', isClientPage);
 
   return (
     <>
       {!isAuthPage && !isClientPage && <Header />}
-      {isClientPage && <Sidebar />} {/* Agrega Sidebar en las páginas del lado cliente */}
-      <div className="app-container">
+      <div className={`app-container ${isClientPage ? 'with-sidebar' : ''}`}>
+        {isClientPage && <Sidebar />}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
@@ -55,7 +61,7 @@ const AppContent = () => {
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/perfil-cliente" element={<PerfilCliente />} />
-            <Route path="/editar-cliente/:id" element={<EditarCliente />} />
+            <Route path="/editar-cliente" element={<EditarCliente />} />
             <Route path="/agregar-cliente" element={<AgregarCliente />} />
           </Routes>
         </main>
