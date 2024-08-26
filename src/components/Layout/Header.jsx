@@ -24,10 +24,11 @@ const Header = () => {
           />
         </div>
         <ul className="nav-links">
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/services">Services</Link></li>
-          <li><Link to="/contact">Contact</Link></li>
+          <li><Link to="/">Inicio</Link></li>
+          <li><Link to="/about">Sobre Nosotros</Link></li>
+          <li><Link to="/services">Nuestros Servicios</Link></li>
+          <li><Link to="/contact">Contactanos</Link></li>
+          <li><Link to="/faq">FAQ</Link></li>
         </ul>
         <div className="header-actions">
           <Link to="/login" className="login-button">Login</Link>
