@@ -3,13 +3,11 @@ import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, But
 import AuthService from "/src/services/authService";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import "/src/styles/Clientes.css";
+import "/src/styles/AgregarCliente.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const AgregarCliente = () => {
-    const [isEmailValid, setIsEmailValid] = useState(true);
-    const [isPasswordValid, setIsPasswordValid] = useState(true);
     const [nitErrorMessage, setNitErrorMessage] = useState(""); // Estado para el mensaje de error del NIT
     const [formData, setFormData] = useState({ nit: '', });
     const [isDuiValid, setIsDuiValid] = useState(true);
@@ -153,33 +151,6 @@ const AgregarCliente = () => {
         setIsTelefonoValid(isValid);
     };
 
-    const generateErrorMessage = (errorData) => {
-        let errorMessage = "Error al agregar el cliente.";
-
-        if (errorData.errors) {
-            const errorKeys = Object.keys(errorData.errors);
-
-            if (errorKeys.includes("dui") && errorKeys.includes("telefono")) {
-                errorMessage = "El DUI y el teléfono ya están registrados.";
-            } else if (errorKeys.includes("nit") && errorKeys.includes("telefono")) {
-                errorMessage = "El NIT y el teléfono ya están registrados.";
-            } else if (errorKeys.includes("dui") && errorKeys.includes("email")) {
-                errorMessage = "El DUI y el correo electrónico ya están registrados.";
-            } else if (errorKeys.includes("dui")) {
-                errorMessage = "El DUI ya está registrado.";
-            } else if (errorKeys.includes("nit")) {
-                errorMessage = "El NIT ya está registrado.";
-            } else if (errorKeys.includes("telefono")) {
-                errorMessage = "El teléfono ya está registrado.";
-            } else {
-                errorMessage = errorData.message || "Error al agregar el cliente.";
-            }
-        }
-
-        return errorMessage;
-    };
-
-
 
     const handleNitChange = (event) => {
         const value = event.target.value || ""; // Asegúrate de que el valor no sea undefined
@@ -257,7 +228,7 @@ const AgregarCliente = () => {
         e.preventDefault();
 
         // Validaciones de campos
-        if (!isDuiValid || !isTelefonoValid || !isEmailValid || !isPasswordValid || tipoPersona === "") {
+        if (!isDuiValid || !isTelefonoValid || tipoPersona === "") {
             setAlertaError(true);
             setErrorMensaje("Por favor, revisa los campos requeridos.");
             return;
@@ -295,7 +266,7 @@ const AgregarCliente = () => {
 
             console.log("Cliente registrado:", response.data);
             setAlertaExito(true);
-            setTimeout(() => navigate('/GestionClientes'), 2000);
+            setTimeout(() => navigate('/perfil-cliente'), 2000);
             resetForm();
             setAlertaError(false);
         } catch (error) {
@@ -303,8 +274,6 @@ const AgregarCliente = () => {
             handleError(error);
         }
     };
-
-
 
     const resetForm = () => {
         setNombres("");
@@ -327,44 +296,31 @@ const AgregarCliente = () => {
     const handleError = (error) => {
         let errorMessage = "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.";
 
+        // Imprime la respuesta completa del error para verificar su estructura
+        console.error("Error completo:", error);
+
         if (error.response && error.response.data) {
-            const errorData = error.response.data.error || error.response.data.message;
-            console.error("Error data:", errorData); // Forzar visualización en consola
+            const errorData = error.response.data;
 
-            // Detectar errores de duplicación
-            if (errorData && Array.isArray(errorData)) {
-                if (errorData.includes("El DUI ya está registrado.") && errorData.includes("El teléfono ya está registrado.")) {
-                    errorMessage = "El DUI y el teléfono ya están registrados.";
-                } else if (errorData.includes("El NIT ya está registrado.") && errorData.includes("El teléfono ya está registrado.")) {
-                    errorMessage = "El NIT y el teléfono ya están registrados.";
-                } else if (errorData.includes("El DUI ya está registrado.")) {
-                    errorMessage = "El DUI ya está registrado.";
-                } else if (errorData.includes("El NIT ya está registrado.")) {
-                    errorMessage = "El NIT ya está registrado.";
-                } else if (errorData.includes("El teléfono ya está registrado.")) {
-                    errorMessage = "El teléfono ya está registrado.";
-                }
-            } else if (error.response.data.errors) {
-                const errorKeys = Object.keys(error.response.data.errors);
-                console.error("Error keys:", errorKeys); // Forzar visualización en consola
+            // Imprime la estructura del errorData para ver cómo se presenta realmente
+            console.error("Error data:", errorData);
 
-                if (errorKeys.includes("dui") && errorKeys.includes("telefono")) {
-                    errorMessage = "El DUI y el teléfono ya están registrados.";
-                } else if (errorKeys.includes("nit") && errorKeys.includes("telefono")) {
-                    errorMessage = "El NIT y el teléfono ya están registrados.";
-                } else if (errorKeys.includes("dui") && errorKeys.includes("email")) {
-                    errorMessage = "El DUI y el correo electrónico ya están registrados.";
-                } else if (errorKeys.includes("dui")) {
+            // Revisa si `errorData.error` es un objeto y contiene los errores esperados
+            if (errorData.error) {
+                const errors = errorData.error;
+
+                if (errors.dui && errors.dui.length > 0) {
                     errorMessage = "El DUI ya está registrado.";
-                } else if (errorKeys.includes("nit")) {
-                    errorMessage = "El NIT ya está registrado.";
-                } else if (errorKeys.includes("telefono")) {
+                } else if (errors.telefono && errors.telefono.length > 0) {
                     errorMessage = "El teléfono ya está registrado.";
+                } else if (errors.nit && errors.nit.length > 0) {
+                    errorMessage = "El NIT ya está registrado.";
                 }
             }
         }
 
-        console.error("Error message:", errorMessage); // Forzar visualización del mensaje final
+        // Imprime el mensaje final del error para depuración
+        console.error("Error message:", errorMessage);
         setAlertaExito(false);
         setAlertaError(true);
         setErrorMensaje(errorMessage);
@@ -411,19 +367,37 @@ const AgregarCliente = () => {
                         <Col lg="12">
                             <Card>
                                 <CardBody>
+                                    {/* Título del formulario */}
+                                    <h3 className="form-title">Registra tus datos</h3>
+
                                     {alertaExito && (
-                                        <Alert color="success" className="alert-dismissible fade show" role="alert">
-                                            ¡Cliente registrado exitosamente!
-                                            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </Alert>
+                                        <div className="alert-custom alert-success-custom">
+                                            <span>¡Cliente registrado exitosamente!</span>
+                                            <button
+                                                type="button"
+                                                className="alert-close-btn"
+                                                onClick={() => setAlertaExito(false)}
+                                                aria-label="Close"
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
                                     )}
                                     {alertaError && (
-                                        <Alert color="danger" className="alert-dismissible fade show" role="alert">
-                                            {errorMensaje}
-                                            <button type="button" className="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                                        </Alert>
+                                        <div className="alert-custom alert-danger-custom">
+                                            <span>{errorMensaje}</span>
+                                            <button
+                                                type="button"
+                                                className="alert-close-btn"
+                                                onClick={() => setAlertaError(false)}
+                                                aria-label="Close"
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
                                     )}
                                     <Form onSubmit={handleSubmit}>
+                                        {/* Campos del formulario organizados en dos columnas por fila */}
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
@@ -470,28 +444,30 @@ const AgregarCliente = () => {
                                                     </Input>
                                                 </FormGroup>
                                             </Col>
+                                            <Col md={6}>
+                                                {tipoPersona !== "2" && ( // Condición para mostrar el campo DUI solo si tipoPersona no es jurídica
+                                                    <FormGroup className="form-group-custom">
+                                                        <Label for="dui">DUI</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="dui"
+                                                            value={dui}
+                                                            onChange={handleDuiChange}
+                                                            required
+                                                            maxLength="10"
+                                                            invalid={!isDuiValid}
+                                                            disabled={tipoPersona === "2"} // Deshabilitado si es jurídica
+                                                        />
+                                                        {!isDuiValid && (
+                                                            <FormFeedback className="text-danger">
+                                                                El DUI ingresado no es válido. Debe tener el formato 02345678-9.
+                                                            </FormFeedback>
+                                                        )}
+                                                    </FormGroup>
+                                                )}
+                                            </Col>
                                         </Row>
                                         <Row form>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="dui">DUI</Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="dui"
-                                                        value={dui}
-                                                        onChange={handleDuiChange}
-                                                        required
-                                                        maxLength="10"
-                                                        invalid={!isDuiValid}
-                                                        disabled={isJuridicalPerson}
-                                                    />
-                                                    {!isDuiValid && (
-                                                        <FormFeedback className="text-danger">
-                                                            El DUI ingresado no es válido. Debe tener el formato 02345678-9.
-                                                        </FormFeedback>
-                                                    )}
-                                                </FormGroup>
-                                            </Col>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="telefono">Teléfono</Label>
@@ -509,9 +485,6 @@ const AgregarCliente = () => {
                                                     )}
                                                 </FormGroup>
                                             </Col>
-
-                                        </Row>
-                                        <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="fechaRegistro">Fecha de Registro</Label>
@@ -521,12 +494,14 @@ const AgregarCliente = () => {
                                                         value={fechaRegistro}
                                                         onChange={(e) => setFechaRegistro(e.target.value)}
                                                         required
-                                                        min={minDate} // Set min date
+                                                        min={minDate}
                                                         max={maxDate}
                                                         className="dark-mode-input-date"
                                                     />
                                                 </FormGroup>
                                             </Col>
+                                        </Row>
+                                        <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="direccion">Dirección</Label>
@@ -539,8 +514,6 @@ const AgregarCliente = () => {
                                                     />
                                                 </FormGroup>
                                             </Col>
-                                        </Row>
-                                        <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="departamento">Departamento</Label>
@@ -560,6 +533,8 @@ const AgregarCliente = () => {
                                                     </Input>
                                                 </FormGroup>
                                             </Col>
+                                        </Row>
+                                        <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="municipio">Municipio</Label>
@@ -582,9 +557,9 @@ const AgregarCliente = () => {
                                         </Row>
                                         {tipoPersona === "2" && ( // Si es persona jurídica
                                             <>
-                                                <Row>
+                                                <Row form>
                                                     <Col md={6}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="esContribuyente">¿Es Contribuyente?</Label>
                                                             <Input
                                                                 type="checkbox"
@@ -595,9 +570,9 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-                                                <Row>
+                                                <Row form>
                                                     <Col md={6}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nombreComercial">Nombre Comercial</Label>
                                                             <Input
                                                                 type="text"
@@ -608,7 +583,7 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                     <Col md={6}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nit">NIT</Label>
                                                             <Input
                                                                 type="text"
@@ -624,11 +599,10 @@ const AgregarCliente = () => {
                                                             )}
                                                         </FormGroup>
                                                     </Col>
-
                                                 </Row>
-                                                <Row>
+                                                <Row form>
                                                     <Col md={6}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nrc">NRC</Label>
                                                             <Input
                                                                 type="text"
@@ -645,7 +619,7 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                     <Col md={6}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="giro">Giro</Label>
                                                             <Input
                                                                 type="text"
@@ -656,9 +630,9 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
-                                                <Row>
+                                                <Row form>
                                                     <Col md={12}>
-                                                        <FormGroup>
+                                                        <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nombreEmpresa">Nombre de la Empresa</Label>
                                                             <Input
                                                                 type="text"
@@ -671,12 +645,10 @@ const AgregarCliente = () => {
                                                 </Row>
                                             </>
                                         )}
-                                        <Row>
+
+                                        <Row form>
                                             <Col md={12}>
                                                 <Button type="submit" color="primary">Guardar</Button>
-                                                <Button className="ms-2 btn-custom-red" onClick={() => window.location.href = '/GestionClientes'}>
-                                                    Salir
-                                                </Button>
                                             </Col>
                                         </Row>
                                     </Form>
@@ -688,6 +660,6 @@ const AgregarCliente = () => {
             </div>
         </React.Fragment>
     );
-};
+}
 
 export default AgregarCliente;

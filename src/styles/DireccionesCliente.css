@@ -1,0 +1,246 @@
+/* Contenedor general para DireccionesCliente */
+.direcciones-cliente-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding: 2%;
+    background-color: #f4f4f4;
+    box-sizing: border-box;
+}
+
+/* Título de la sección */
+.direcciones-cliente-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #4e54c8;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+/* Subtítulo */
+.direcciones-cliente-subtitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+/* Lista de direcciones */
+.direcciones-cliente-lista {
+    list-style-type: none;
+    padding: 0;
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+/* Elemento de la lista */
+.direcciones-cliente-lista-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Botones de acción para cada dirección */
+.direcciones-cliente-action-buttons button {
+    margin-left: 10px;
+}
+
+/* Botón general */
+.direcciones-cliente-button {
+    background-color: #071e2a;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* Botón de agregar dirección */
+.direcciones-cliente-button-agregar {
+    background-color: #8f94fb;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+    align-self: flex-start;
+}
+
+.direcciones-cliente-button-agregar:hover {
+    background-color: #4e54c8;
+}
+
+/* Botones individuales */
+.direcciones-cliente-button:hover {
+    background-color: #4e54c8;
+}
+
+.direcciones-cliente-button-editar {
+    background-color: #4e54c8;
+}
+
+.direcciones-cliente-button-eliminar {
+    background-color: #e63946;
+}
+
+.direcciones-cliente-button-eliminar:hover {
+    background-color: #b02a37;
+}
+
+/* Modal */
+.direcciones-cliente-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.direcciones-cliente-modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+/* Formulario dentro del modal */
+.direcciones-cliente-form-group {
+    margin-bottom: 15px;
+}
+
+.direcciones-cliente-label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+    color: #333;
+}
+
+.direcciones-cliente-input {
+    width: 100%;
+    padding: 8px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.direcciones-cliente-form-button {
+    background-color: #071e2a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
+}
+.direcciones-cliente-button-agregar {
+    width: 50%; /* Ajusta el ancho del botón */
+    padding: 8px 16px; /* Ajusta el relleno para hacer el botón más pequeño y proporcionado */
+    font-size: 14px; /* Tamaño de la fuente para el texto del botón */
+    border-radius: 4px; /* Radio de borde para redondear las esquinas */
+    border: none; /* Elimina el borde si es necesario */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: #fff; /* Color del texto del botón */
+    cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+    text-align: center; /* Alinea el texto en el centro del botón */
+    font-weight: 500; /* Peso de la fuente para mayor legibilidad */
+    display: block; /* Cambia el botón a un elemento de bloque */
+    margin: 0 auto; /* Centra el botón horizontalmente */
+    position: inherit; /* Hereda la posición del contenedor si es necesario */
+  }
+  
+  /* Opcional: Estilo adicional para el estado hover del botón */
+  .direcciones-cliente-button-agregar:hover {
+    background-color: #0056b3; /* Color de fondo cuando el botón está en estado hover */
+    color: #fff; /* Color del texto cuando el botón está en estado hover */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Agrega una sombra para un efecto de profundidad */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave para los cambios */
+  }
+  
+  /* Opcional: Estilo adicional para el estado activo del botón */
+  .direcciones-cliente-button-agregar:active {
+    background-color: #004080; /* Color de fondo cuando el botón es presionado */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Reduce la sombra al presionar el botón */
+  }
+  
+
+.direcciones-cliente-form-button-primary {
+    background-color: #8f94fb;
+}
+
+.direcciones-cliente-form-button:hover {
+    background-color: #4e54c8;
+}
+
+/* Cerrar modal */
+.direcciones-cliente-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Estilo general para las alertas */
+.alert-custom {
+    padding: 15px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Alerta de éxito */
+.alert-success-custom {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+/* Alerta de error */
+.alert-danger-custom {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* Botón de cierre de alerta */
+.alert-close-btn {
+    background-color: #e0e0e0; /* Color de fondo gris claro */
+    border: none;
+    border-radius: 50%; /* Botón redondo */
+    color: #333; /* Color del ícono */
+    font-size: 1.25rem;
+    cursor: pointer;
+    width: 30px; /* Ancho del botón */
+    height: 30px; /* Alto del botón */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.alert-close-btn:hover {
+    background-color: #dcdcdc; /* Color de fondo gris oscuro al pasar el cursor */
+    color: #000; /* Color del ícono al pasar el cursor */
+}

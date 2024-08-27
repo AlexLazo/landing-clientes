@@ -148,68 +148,70 @@
     font-size: 1.25rem;
 }
 
-/* Edit Client Page Styles */
-.editar-cliente-page {
+/* Agregar Cliente Page Styles */
+.agregar-cliente-page {
     padding: 20px;
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
-.editar-cliente-page h1 {
+.agregar-cliente-page h1 {
     text-align: center;
     margin-bottom: 20px;
+    font-size: 2rem;
+    font-weight: 600;
 }
 
-.editar-cliente-page form {
+.agregar-cliente-page form {
     background: #f9f9f9;
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
 }
 
 /* Form Group Styles */
-.editar-cliente-page .form-group {
+.agregar-cliente-page .form-group {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
 }
 
-.editar-cliente-page .form-group label {
+.agregar-cliente-page .form-group label {
     font-weight: bold;
     margin-bottom: 5px;
-    display: block;
 }
 
-.editar-cliente-page .form-group input {
+.agregar-cliente-page .form-group input {
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
-.editar-cliente-page .form-group input:invalid {
+.agregar-cliente-page .form-group input:invalid {
     border-color: #dc3545;
 }
 
-.editar-cliente-page .form-group .form-feedback {
+.agregar-cliente-page .form-group .form-feedback {
     color: #dc3545;
     font-size: 0.875em;
 }
 
-.editar-cliente-page .error-message {
+.agregar-cliente-page .error-message {
     color: #dc3545;
     margin-bottom: 20px;
+    font-weight: bold;
 }
 
 /* Button Styles in Form */
-.editar-cliente-page .btn-primary {
+.agregar-cliente-page .btn-primary {
     background-color: #007bff;
     border-color: #007bff;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 4px;
     text-align: center;
     display: inline-block;
@@ -218,16 +220,16 @@
     grid-column: span 2;
 }
 
-.editar-cliente-page .btn-primary:hover {
+.agregar-cliente-page .btn-primary:hover {
     background-color: #0056b3;
     border-color: #004085;
 }
 
-.editar-cliente-page .btn-secondary {
+.agregar-cliente-page .btn-secondary {
     background-color: #6c757d;
     border-color: #6c757d;
     color: #fff;
-    padding: 10px 20px;
+    padding: 12px 24px;
     border-radius: 4px;
     text-align: center;
     display: inline-block;
@@ -237,7 +239,7 @@
     grid-column: span 2;
 }
 
-.editar-cliente-page .btn-secondary:hover {
+.agregar-cliente-page .btn-secondary:hover {
     background-color: #5a6268;
     border-color: #545b62;
 }
@@ -248,4 +250,5 @@
     top: 20px;
     right: 20px;
     z-index: 9999;
+    max-width: 300px;
 }

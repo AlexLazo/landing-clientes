@@ -1,42 +1,45 @@
-/* General styles for the EditarCliente component */
+/* General container styling */
 .editar-cliente-container {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    padding: 20px;
+    padding: 2%;
     background-color: #f4f4f4;
+    box-sizing: border-box;
 }
 
+/* Header styling */
 .editar-cliente-header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 16px;
+    justify-content: flex-start;
+    padding: 1rem;
     background-color: #ffffff;
     border-bottom: 1px solid #e5e5e5;
 }
 
+/* Back button */
 .editar-cliente-back-button {
     background-color: #007bff;
-    color: white;
+    color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 0.75rem 1.5rem;
     border-radius: 5px;
     cursor: pointer;
     font-size: 1rem;
+    transition: background-color 0.3s;
 }
 
 .editar-cliente-back-button:hover {
     background-color: #0056b3;
 }
 
-/* Main content styles */
+/* Main content styling */
 .editar-cliente-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
+    padding: 2rem;
     background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -46,17 +49,17 @@
     font-size: 2rem;
     font-weight: bold;
     color: #333;
-    margin-bottom: 20px;
+    margin-bottom: 2rem;
 }
 
-/* Form styles */
+/* Form styling */
 .editar-cliente-form {
     width: 100%;
     max-width: 500px;
 }
 
 .editar-cliente-form-group {
-    margin-bottom: 20px;
+    margin-bottom: 1.5rem;
 }
 
 .editar-cliente-label {
@@ -64,12 +67,12 @@
     font-size: 0.875rem;
     font-weight: 500;
     color: #555;
-    margin-bottom: 8px;
+    margin-bottom: 0.5rem;
 }
 
 .editar-cliente-input {
     width: 100%;
-    padding: 10px;
+    padding: 0.75rem;
     border: 1px solid #ddd;
     border-radius: 4px;
     font-size: 0.875rem;
@@ -80,19 +83,22 @@
     outline: none;
 }
 
-/* Button styles */
+/* Button styling */
 .editar-cliente-button-group {
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
 }
 
 .editar-cliente-button {
+    flex: 1;
+    padding: 0.75rem 0;
     border: none;
-    padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
     font-size: 0.875rem;
     font-weight: bold;
+    transition: background-color 0.3s;
 }
 
 .editar-cliente-button-outline {
@@ -100,33 +106,79 @@
     color: #333;
 }
 
-.editar-cliente-button-primary {
-    background-color: #007bff;
-    color: white;
-}
-
 .editar-cliente-button-outline:hover {
     background-color: #e5e5e5;
+}
+
+.editar-cliente-button-primary {
+    background-color: #007bff;
+    color: #fff;
 }
 
 .editar-cliente-button-primary:hover {
     background-color: #0056b3;
 }
 
-/* Footer styles */
+/* Footer styling */
 .editar-cliente-footer {
-    padding: 10px;
-    border-top: 1px solid #e5e5e5;
+    padding: 1rem;
     background-color: #ffffff;
     text-align: center;
     font-size: 0.875rem;
     color: #777;
+    border-top: 1px solid #e5e5e5;
 }
 
-/* Loading and error styles */
+/* Loading spinner and error message */
 .editar-cliente-loading, .editar-cliente-error {
     text-align: center;
     color: #333;
     font-size: 1rem;
-    margin-top: 20px;
+    margin-top: 2rem;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #007bff;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem auto;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .editar-cliente-container {
+        padding: 1rem;
+    }
+
+    .editar-cliente-main-content {
+        padding: 1.5rem;
+    }
+
+    .editar-cliente-title {
+        font-size: 1.5rem;
+    }
+
+    .editar-cliente-form-group {
+        margin-bottom: 1rem;
+    }
+
+    .editar-cliente-button-group {
+        flex-direction: column;
+    }
+
+    .editar-cliente-button {
+        margin-bottom: 1rem;
+    }
 }

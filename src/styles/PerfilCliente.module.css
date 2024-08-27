@@ -1,17 +1,22 @@
+/* General Styles */
 .profileContainer {
-  padding: 20px;
   max-width: 800px;
-  margin: auto;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f9fc;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
 }
 
+/* Header Section */
 .header {
   display: flex;
   justify-content: space-between;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ddd;
+  align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 20px;
 }
 
 .headerLeft {
@@ -19,63 +24,86 @@
   align-items: center;
 }
 
+.avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.headerText h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.headerText p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
 .headerRight {
   text-align: right;
 }
 
-.icon {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-
-.headerText {
-  font-size: 12px;
-  color: #666;
-}
-
-.profileContent {
-  text-align: center;
-}
-
-.avatar {
-  margin: 0 auto;
-}
-
-.profileName {
-  font-size: 24px;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.profileEmail {
-  font-size: 16px;
-  color: #888;
-}
-
-.profileInfo {
-  margin: 20px 0;
-}
-
-.infoItem {
+.clientCode {
   font-size: 14px;
-  color: #333;
+  color: #777;
+  margin-bottom: 5px;
 }
 
+/* Navigation Menu */
 .navMenu {
-  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 .navLink {
+  margin: 0 15px;
   font-size: 16px;
-  color: #007bff;
-  border-bottom: 2px solid #007bff;
-  padding-bottom: 5px;
+  color: #071e2a;
   text-decoration: none;
+  position: relative;
+  padding: 10px;
+}
+
+.navLink:hover,
+.navLink:focus {
+  color: #4e54c8;
+}
+
+.navLink::after {
+  content: "";
+  display: block;
+  height: 3px;
+  background: #4e54c8;
+  width: 0;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.navLink:hover::after,
+.navLink:focus::after {
+  width: 100%;
+}
+
+/* Profile Content Section */
+.profileContent {
+  margin-bottom: 20px;
 }
 
 .profileDetails {
-  margin: 20px 0;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .detailsGrid {
@@ -86,41 +114,130 @@
 
 .detailsLabel {
   font-weight: bold;
+  color: #333;
   margin-bottom: 5px;
 }
 
+.detailsGrid p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+/* Action Buttons */
 .actions {
-  display: flex;
-  justify-content: space-around;
+  text-align: center;
   margin-top: 20px;
 }
 
-.editButton, .deleteButton {
-  padding: 10px 20px;
+.editButton {
+  background-color: #4e54c8;
+  color: white;
   border: none;
-  border-radius: 4px;
-  font-size: 16px;
+  padding: 10px 20px;
+  border-radius: 5px;
   cursor: pointer;
+  font-size: 16px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
 }
 
-.editButton {
-  background-color: #007bff;
-  color: white;
+.editButton:hover {
+  background-color: #6a6eff;
 }
 
 .deleteButton {
-  background-color: #dc3545;
+  background-color: #ff4d4f;
   color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
-.footer {
+.deleteButton:hover {
+  background-color: #ff7875;
+}
+
+/* Loading and Error Messages */
+.loading,
+.error {
   text-align: center;
-  padding: 10px;
-  background: #f9f9f9;
-  border-top: 1px solid #ddd;
+  font-size: 18px;
+  color: #555;
 }
 
-.footerText {
-  font-size: 12px;
-  color: #666;
+/* Modal Styles */
+.modal {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  max-width: 500px;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
+
+.overlay {
+  background: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}
+
+.addDataButton,
+.closeModalButton {
+  background-color: #071e2a;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin-top: 20px;
+  margin-right: 10px;
+  transition: background-color 0.3s;
+}
+
+.addDataButton:hover,
+.closeModalButton:hover {
+  background-color: #4e54c8;
+}
+/* Modal Styles */
+.modal {
+  max-width: 500px;
+  margin: auto;
+  padding: 20px;
+  background: white;
+  border-radius: 8px;
+}
+
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.confirmDeleteButton {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.closeModalButton {
+  background-color: #ccc;
+  color: black;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+

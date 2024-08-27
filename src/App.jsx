@@ -17,7 +17,8 @@ import ResetPassword from './components/Login/ResetPassword';
 import PerfilCliente from './pages/PerfilCliente';
 import EditarCliente from './pages/EditarCliente';
 import AgregarCliente from "./components/Cliente/AgregarCliente";
-
+import DireccionesCliente from './pages/DireccionesCliente';
+import AgregarDireccion from './pages/AgregarDireccion';
 const AppContent = () => {
   const location = useLocation();
   
@@ -37,7 +38,9 @@ const AppContent = () => {
     '/agregar-cliente',
     '/ordenes',
     '/rastreo',
-    '/eliminar-cuenta'
+    '/eliminar-cuenta',
+    '/direcciones-cliente',
+    '/agregar-direccion',
   ].some(path => location.pathname.startsWith(path));
   
   console.log('Current Path:', location.pathname);
@@ -63,6 +66,8 @@ const AppContent = () => {
             <Route path="/perfil-cliente" element={<PerfilCliente />} />
             <Route path="/editar-cliente" element={<EditarCliente />} />
             <Route path="/agregar-cliente" element={<AgregarCliente />} />
+            <Route path="/direcciones-cliente" element={<DireccionesCliente />} />
+            <Route path="/agregar-direccion" element={<AgregarDireccion />} />
           </Routes>
         </main>
       </div>

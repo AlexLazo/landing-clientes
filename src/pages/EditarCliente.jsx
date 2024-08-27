@@ -1,13 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import '../styles/EditarCliente.css'; // Import the new CSS file
+import '../styles/EditarCliente.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const EditarCliente = () => {
     const navigate = useNavigate();
-    const [cliente, setCliente] = useState(null);
+    const [cliente, setCliente] = useState({
+        nombre: '',
+        apellido: '',
+        direccion: '',
+        telefono: '',
+    });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
@@ -18,6 +23,7 @@ const EditarCliente = () => {
                 const clienteId = localStorage.getItem("clienteId");
 
                 if (!clienteId) {
+                    setError("Cliente ID no encontrado.");
                     navigate('/perfil-cliente');
                     return;
                 }
@@ -30,8 +36,7 @@ const EditarCliente = () => {
 
                 setCliente(response.data.cliente);
             } catch (err) {
-                setError("Error al cargar datos del cliente.");
-                console.error("Error:", err);
+                handleFetchError(err);
             } finally {
                 setLoading(false);
             }
@@ -40,22 +45,30 @@ const EditarCliente = () => {
         fetchCliente();
     }, [navigate]);
 
+    const createAuthHeader = (token) => ({
+        Authorization: `Bearer ${token}`,
+    });
+
+    const handleFetchError = (err) => {
+        setError("Error al cargar datos del cliente.");
+        console.error("Error:", err);
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCliente((prevCliente) => ({
             ...prevCliente,
-            [name]: value
+            [name]: value,
         }));
     };
 
     const handleSave = async () => {
         try {
             const token = localStorage.getItem("token");
+            const clienteId = localStorage.getItem("clienteId");
 
-            await axios.put(`${API_URL}/perfil-cliente`, cliente, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            await axios.put(`${API_URL}/actualizar-perfil-cliente`, cliente, {
+                headers: createAuthHeader(token),
             });
 
             alert("Perfil actualizado con éxito.");
@@ -67,7 +80,12 @@ const EditarCliente = () => {
     };
 
     if (loading) {
-        return <p className="editar-cliente-loading">Cargando...</p>;
+        return (
+            <div className="editar-cliente-loading">
+                <div className="spinner"></div>
+                <p>Cargando...</p>
+            </div>
+        );
     }
 
     if (error) {
@@ -77,43 +95,29 @@ const EditarCliente = () => {
     return (
         <div className="editar-cliente-container">
             <header className="editar-cliente-header">
-                <button className="editar-cliente-back-button" onClick={() => navigate("/perfil-cliente")}>
-                    Regresar
-                </button>
             </header>
             <main className="editar-cliente-main-content">
                 <h1 className="editar-cliente-title">Editar Perfil</h1>
                 <form className="editar-cliente-form">
-                    <div className="editar-cliente-form-group">
-                        <label className="editar-cliente-label">Nombre Comercial</label>
-                        <input
-                            type="text"
-                            name="nombre_comercial"
-                            value={cliente?.nombre_comercial || ''}
-                            onChange={handleChange}
-                            className="editar-cliente-input"
-                        />
-                    </div>
-                    <div className="editar-cliente-form-group">
-                        <label className="editar-cliente-label">Teléfono</label>
-                        <input
-                            type="tel"
-                            name="telefono"
-                            value={cliente?.telefono || ''}
-                            onChange={handleChange}
-                            className="editar-cliente-input"
-                        />
-                    </div>
-                    <div className="editar-cliente-form-group">
-                        <label className="editar-cliente-label">Dirección</label>
-                        <input
-                            type="text"
-                            name="direccion"
-                            value={cliente?.direccion || ''}
-                            onChange={handleChange}
-                            className="editar-cliente-input"
-                        />
-                    </div>
+                    {[
+                        { name: "nombre", type: "text", label: "Nombres" },
+                        { name: "apellido", type: "text", label: "Apellidos" },
+                        { name: "direccion", type: "text", label: "Dirección" },
+                        { name: "telefono", type: "tel", label: "Teléfono" },
+                    ].map(({ name, type, label }) => (
+                        <div key={name} className="editar-cliente-form-group">
+                            <label className="editar-cliente-label">
+                                {label}
+                            </label>
+                            <input
+                                type={type}
+                                name={name}
+                                value={cliente[name] || ''}
+                                onChange={handleChange}
+                                className="editar-cliente-input"
+                            />
+                        </div>
+                    ))}
                     <div className="editar-cliente-button-group">
                         <button
                             type="button"

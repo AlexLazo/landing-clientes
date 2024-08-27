@@ -1,32 +1,27 @@
-/* Sidebar.css */
+/* Sidebar container */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 80px; /* Ancho más pequeño cuando está cerrado */
-  background-color: #ffffff;
+  width: 80px; /* Ancho inicial del sidebar */
+  background-color: #007bff; /* Color de fondo del sidebar */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: width 0.3s ease;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
+/* Sidebar when open */
 .sidebar.open {
-  width: 250px; /* Ancho más grande cuando está abierto */
+  width: 250px; /* Ancho del sidebar cuando está abierto */
 }
 
-.sidebar-menu {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  padding-top: 60px; /* Espacio para el botón de toggle */
-}
-
+/* Sidebar toggle button */
 .sidebar-toggle {
   position: absolute;
   top: 10px;
-  right: -50px; /* Fuera del área visible del sidebar cuando está cerrado */
-  background: #007bff;
+  left: 10px; /* Alinea el botón con los otros íconos */
+  background-color: #007bff;
   color: white;
   border: none;
   border-radius: 50%;
@@ -36,85 +31,115 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: right 0.3s ease;
-  z-index: 1000; /* Asegura que el botón esté encima del contenido */
+  z-index: 1000;
+  margin: 0; /* Asegura que el botón no tenga margen extra */
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
 }
 
-.sidebar.open .sidebar-toggle {
-  right: 0;
+.modal-content {
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  width: 300px;
 }
 
+.confirm-button,
+.cancel-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: #6c757d;
+}
+
+.confirm-button:hover,
+.cancel-button:hover {
+  opacity: 0.8;
+}
+
+
+/* Icon inside the toggle button */
 .toggle-icon {
   font-size: 1.5rem;
 }
 
+/* Sidebar menu */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  padding-top: 70px; /* Espacio para el botón de toggle */
+  height: 100%;
+}
+
+/* Sidebar menu list */
 .sidebar-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* Sidebar menu items */
 .sidebar-menu li {
   margin: 10px 0;
 }
 
+/* Sidebar menu links */
 .sidebar-menu a,
 .logout-button {
   text-decoration: none;
-  color: #333;
+  color: white;
   display: flex;
   align-items: center;
   padding: 10px;
+  transition: all 0.3s ease;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
 }
 
+/* Background color on hover */
 .sidebar-menu a:hover,
 .logout-button:hover {
-  background-color: #f1f1f1;
+  background-color: #0056b3; /* Fondo al hacer hover */
 }
 
+/* Menu icons */
 .menu-icon {
+  font-size: 1.5rem;
   margin-right: 10px;
-  font-size: 1.5rem; /* Aumenta el tamaño del ícono */
 }
 
+/* Hide the text when the sidebar is closed */
+.sidebar .sidebar-menu a span {
+  display: none; /* Ocultar texto cuando el sidebar está cerrado */
+}
+
+/* Show the text when the sidebar is open */
+.sidebar.open .sidebar-menu a span {
+  display: inline; /* Mostrar texto cuando el sidebar está abierto */
+}
+
+/* Logout button */
 .logout-button {
   background: none;
   border: none;
-  color: #333;
+  color: white;
   cursor: pointer;
-  display: flex;
-  align-items: center;
   margin-top: auto;
   padding: 10px;
-  transition: background-color 0.3s ease;
-}
-
-.logout-button:hover {
-  background-color: #e0e0e0;
-}
-
-/* Mostrar el texto solo cuando el sidebar está abierto */
-.sidebar.open .sidebar-menu a {
-  display: flex;
-  align-items: center;
-}
-
-.sidebar.open .sidebar-menu a span {
-  display: inline; /* Mostrar el texto cuando está abierto */
-}
-
-.sidebar .sidebar-menu a span {
-  display: none; /* Ocultar el texto cuando está cerrado */
-}
-
-/* Mejoras para pantallas pequeñas */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 60px; /* Ancho más pequeño en pantallas pequeñas */
-  }
-  .sidebar.open {
-    width: 200px;
-  }
 }
