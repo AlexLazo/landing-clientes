@@ -1,45 +1,58 @@
 import React from 'react';
 import '../styles/Home.css';
+import empaque from '../assets/images/servicio-de-paqueteria-19.jpg';
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
     <div className="home-container">
       <header className="hero-section">
         <div className="hero-content">
-          <h1>Welcome to Mr. Paquetes</h1>
-          <p>Your reliable partner for fast and secure package delivery.</p>
-          <button className="cta-button">Get Started</button>
+          <h1>Mr. Paquetes SV</h1>
+          <h2>«Conectando destinos, siempre a tiempo y seguro»</h2>
+          <p>Estamos dedicados a transformar la experiencia de envió de paquetes en San Miguel, El Salvador. Confiabilidad, rapidez y tecnología avanzada son los pilares que nos permiten ofrecer un servicio excepcional. Descubre más sobre nosotros y cómo podemos ayudarte a simplificar tus necesidades de logística.</p>
+          <br />
+          <Link to="/about" className="cta-button"> Sobre Nosotros</Link>
         </div>
       </header>
-      <section className="services">
-        <h2>Our Services</h2>
-        <div className="service-cards">
-          <div className="service-card">
-            <h3>Express Delivery</h3>
-            <p>Get your packages delivered within 24 hours with our express service.</p>
-          </div>
-          <div className="service-card">
-            <h3>International Shipping</h3>
-            <p>Ship globally with real-time tracking and exceptional support.</p>
-          </div>
-          <div className="service-card">
-            <h3>Package Tracking</h3>
-            <p>Monitor your shipment’s progress with our advanced tracking system.</p>
-          </div>
+
+<div className='services-container'>
+    <section className="services-section">
+      <div className='content-services'>
+      <div className='image-container-services'>
+        <img src={empaque} alt="Persona empacando" />
+      </div>
+      <div className='text-container-services'>
+        <h1>Simplificando la Logística</h1>
+        <br />
+        <p>
+          En Mr. Paquetes, entendemos que cada cliente tiene necesidades únicas, por lo que adaptamos nuestras soluciones logísticas para ofrecer un servicio de entregas confiable; nuestra dedicación a la puntualidad e innovación la cual garantiza que cada paquete llegue a su destino de manera rápida y segura, superando siempre tus expectativas.
+        </p>
+        <p>
+          Nuestro equipo de atención al cliente está siempre disponible para asistirte y asegurarte una experiencia de envío fluida y sin preocupaciones.
+        </p>
+        <p>
+          Descubre cómo podemos ayudarte a conectar destinos de manera eficiente y segura.
+        </p>
+        <br />
+        <Link to="/services" className="cta-button"> Nuestros Servicios</Link>
+      </div> 
+      </div>
+    </section>
+</div>
+
+      <section className="join-us">
+        <div className="join-us-card">
+          <h1>¡Únete a Mr. Paquetes SV y Descubre Nuestro Servicio!          
+          </h1>
+          <p>¿Listo para experimentar el mejor servicio de envío y logística en San Miguel, El Salvador? En Mr. Paquetes, te ofrecemos más que solo envíos; te brindamos una experiencia sin igual basada en confiabilidad, rapidez y tecnología avanzada.</p>
+          <Link to="/register" className="cta-button"> Registrate</Link>
+          <br /> <br />
+          <p>¿Necesitas ayuda? <Link to="/Contact" >Contáctanos</Link></p>
         </div>
       </section>
-      <section className="testimonials">
-        <h2>What Our Clients Say</h2>
-        <div className="testimonial-card">
-          <p>"FastShip transformed our delivery process. Fast, reliable, and cost-effective!"</p>
-          <span>- Jane Doe, CEO of TechCorp</span>
-        </div>
-        <div className="testimonial-card">
-          <p>"Their international shipping is top-notch. We trust FastShip for all our global needs."</p>
-          <span>- John Smith, Logistics Manager</span>
-        </div>
-      </section>
-      <section className="contact-form">
+
+      {/* <section className="contact-form">
         <h2>Contact Us</h2>
         <form>
           <input type="text" placeholder="Your Name" required />
@@ -47,9 +60,8 @@ const Home = () => {
           <textarea placeholder="Your Message" required></textarea>
           <button type="submit" className="cta-button">Send Message</button>
         </form>
-      </section>
+      </section> */}
     </div>
   );
 };
-
 export default Home;

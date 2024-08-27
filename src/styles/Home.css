@@ -8,55 +8,140 @@
   }
   
   .hero-section {
-    background: linear-gradient(to right, #007bff, #0056b3);
-    color: #fff;
+    background-image: url(..\assets\images\servicio-de-paqueteria-4.jpg);
+    background-position: 30%  30%;
+    background-size: initial;
+    background-attachment: inherit;
+    /*color: #fff;*/
     text-align: center;
-    padding: 100px 20px;
-    position: relative;
+    padding: 110px;
+    margin: auto;
   }
   
   .hero-content {
+    background: linear-gradient(to right, #d6d2ce, #e1dfd8);
+    text-align: center;
     max-width: 600px;
     margin: 0 auto;
+    border-radius: 20px;
+    padding: 1rem 1rem;
   }
   
   .hero-section h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
+    font-size: 3rem;
+    line-height: 1.5;
+  }
+
+  .hero-section h2 {
+    font-size: 2.6rem;
+    font-weight: normal;
+    font-style: italic;
+    line-height: 1.5;
   }
   
   .hero-section p {
-    font-size: 1.2em;
-    margin-bottom: 30px;
+    font-size: 1.2rem;  
+    line-height: 1.5;
   }
   
   .cta-button {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    color: #fff;
-    background-color: #0056b3;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+    display: inline-block;
+    padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: bold;
+    color:#E1DFDB; /* Color del texto */
+    background-color: #408345; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Alinea el texto al centro */
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
   }
   
   .cta-button:hover {
-    background-color: #004494;
+    background-color: #33691E; /* Color de fondo al pasar el ratón */
   }
   
-  .services {
-    padding: 60px 20px;
-    background-color: #f9f9f9;
+  /* SERVICIOS */
+
+  .services-container{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+    box-sizing: border-box;
+  }
+
+  .services-section{
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #1A1514 ;
+    /*text-align: center;*/
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+
+  .content-services {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #1A1514 ;
+    /*text-align: center;*/
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+
+  .image-container-services{
+    flex: 1;
+    flex-direction: column;
     text-align: center;
+    margin-right: auto;
   }
   
-  .services h2 {
+  .image-container-services img{
+    width: 545px;
+    height: auto;
+    padding: 20px;
+    border-radius: 50px;
+    margin-left: 50px;
+  }
+
+  .text-container-services{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 10px auto;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    max-width: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .text-container-services h1 {
+    color: #E1DFDB;
+    text-align: center;
+    /*font-weight: bold;*/
+    font-size: 3rem;
+    line-height: 1.5;
+  }
+
+  .text-container-services h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
+    line-height: 5.5rem;
+  }
+
+  .text-container-services p{
+    text-align: left;
+    color: #E1DFDB;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    margin-bottom: 30px;
   }
   
-  .service-cards {
+/*  .service-cards {
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
@@ -75,7 +160,52 @@
   .service-card:hover {
     box-shadow: 0 6px 12px rgba(0,0,0,0.2);
   }
-  
+*/
+
+/* JOIN US */
+
+.join-us{
+  padding: 60px 20px;
+  background-color: #65574E;
+  text-align: center;
+}
+
+.join-us-card {
+  background-color: #E1DFDB;
+  border-radius: 10px;
+  padding: 30px 200px;
+  margin: 20px auto;
+  max-width: 1100px;
+}
+
+.join-us-card h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.join-us-card h2 {
+  font-size: 2.6rem;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.join-us-card p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.join-us contact-us-join-us p{
+font-style: bold;
+}
+
+/*.join-us a{
+  font-weight: bold;
+  color: inherit;
+}*/
+
+  /* TESTIMONIOS 
   .testimonials {
     padding: 60px 20px;
     background-color: #f1f1f1;
@@ -85,6 +215,7 @@
   .testimonials h2 {
     font-size: 2.5em;
     margin-bottom: 20px;
+    line-height: 1.5;
   }
   
   .testimonial-card {
@@ -103,6 +234,8 @@
     color: #555;
   }
   
+*/
+  /* CONTACTO */
   .contact-form {
     padding: 60px 20px;
     background-color: #fff;
@@ -153,4 +286,3 @@
     margin: 0;
     color: #6c757d;
   }
-  
