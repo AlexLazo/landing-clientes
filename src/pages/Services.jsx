@@ -5,8 +5,8 @@ const Services = () => {
   return (
     <div className="services-container">
       <header className="services-hero">
-        <h1>Our Services</h1>
-        <p>Discover the range of services we offer to meet your package delivery needs.</p>
+        <h1>Nuestros Servicios</h1>
+        <p>Descubre en En Mr. Paquetes, nos dedicamos a ofrecer soluciones logísticas completas y eficientes para satisfacer las necesidades de nuestros clientes. A continuación, te presentamos los principales servicios que ofrecemos:</p>
       </header>
       <section className="services-list">
         <div className="service-item">

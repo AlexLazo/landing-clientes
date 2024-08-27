@@ -9,6 +9,7 @@ import camarasal from '../assets/alianzas/alianzas-camarasal-logo.png';
 import fgk from '../assets/alianzas/alianzas-fundacion-gk-logo.jpg';
 import canada from '../assets/alianzas/alianzas-la-canada-empaques-logo.jpg';
 import univo from '../assets/alianzas/alianzas-univo-logo.jpg';
+import { Link } from "react-router-dom";
 
 
 const About = () => {
@@ -28,7 +29,7 @@ const About = () => {
         “Conectando destinos, siempre a tiempo y seguro”
         </p>
         <br />
-        <button className='cta-button'>¿Que ofrecemos?</button>
+        <Link to="/services" className="cta-button">¿Que ofrecemos?</Link>
       </div>
       <div className='image-container-about'>
         <img src={mision} alt="Empaque" />
@@ -75,7 +76,7 @@ const About = () => {
             <li><strong>Sostenibilidad</strong></li>
           </ul>
           <br />
-          <button className='cta-button'>Conoce nuestros servicios</button>
+          <Link to="/services" className="cta-button"> Conoce nuestros servicios</Link>
       </div>
       <div className='image-container-about'>
         <img src={valores} alt="Empaque" />

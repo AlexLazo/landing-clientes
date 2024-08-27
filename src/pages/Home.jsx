@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Home.css';
-import empaque from '../assets/images/servicio-de-paqueteria-19.jpg'
+import empaque from '../assets/images/servicio-de-paqueteria-19.jpg';
+import { Link } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -11,7 +12,7 @@ const Home = () => {
           <h2>«Conectando destinos, siempre a tiempo y seguro»</h2>
           <p>Estamos dedicados a transformar la experiencia de envió de paquetes en San Miguel, El Salvador. Confiabilidad, rapidez y tecnología avanzada son los pilares que nos permiten ofrecer un servicio excepcional. Descubre más sobre nosotros y cómo podemos ayudarte a simplificar tus necesidades de logística.</p>
           <br />
-          <button className="cta-button">Sobre Nosotros</button>
+          <Link to="/about" className="cta-button"> Sobre Nosotros</Link>
         </div>
       </header>
 
@@ -34,7 +35,7 @@ const Home = () => {
           Descubre cómo podemos ayudarte a conectar destinos de manera eficiente y segura.
         </p>
         <br />
-        <button className='cta-button'>Nuestros Servicios</button>
+        <Link to="/services" className="cta-button"> Nuestros Servicios</Link>
       </div> 
       </div>
     </section>
@@ -45,9 +46,9 @@ const Home = () => {
           <h1>¡Únete a Mr. Paquetes SV y Descubre Nuestro Servicio!          
           </h1>
           <p>¿Listo para experimentar el mejor servicio de envío y logística en San Miguel, El Salvador? En Mr. Paquetes, te ofrecemos más que solo envíos; te brindamos una experiencia sin igual basada en confiabilidad, rapidez y tecnología avanzada.</p>
-          <button className='cta-button'>Registrate</button>
-          <br />
-          <p>¿Necesitas ayuda? <a href="">Contáctanos</a></p>
+          <Link to="/register" className="cta-button"> Registrate</Link>
+          <br /> <br />
+          <p>¿Necesitas ayuda? <Link to="/Contact" >Contáctanos</Link></p>
         </div>
       </section>
 

@@ -40,32 +40,26 @@
   }
   
   .hero-section p {
-    font-size: 1.2rem;
-    
+    font-size: 1.2rem;  
     line-height: 1.5;
   }
   
   .cta-button {
-    padding-top: 0.9rem;
-    padding-right: 2rem;
-    padding-bottom: 0.9rem;
-    padding-left: 2rem;
-    font-size: 1.2rem;
-    font-weight: 500;
-    font-style: normal;
-    line-height: inherit;
-    color: #fff;
-    background-color: #408345;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0 auto;
-    width: auto;
+    display: inline-block;
+    padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: bold;
+    color:#E1DFDB; /* Color del texto */
+    background-color: #408345; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Alinea el texto al centro */
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
   }
   
   .cta-button:hover {
-    background-color: #33691e;
+    background-color: #33691E; /* Color de fondo al pasar el ratón */
   }
   
   /* SERVICIOS */
@@ -206,10 +200,10 @@
 font-style: bold;
 }
 
-.join-us a{
+/*.join-us a{
   font-weight: bold;
   color: inherit;
-}
+}*/
 
   /* TESTIMONIOS 
   .testimonials {
