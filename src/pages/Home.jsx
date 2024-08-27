@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/Home.css';
-import empaque from '../assets/servicio-de-paqueteria-19.jpg'
+import empaque from '../assets/images/servicio-de-paqueteria-19.jpg'
 
 const Home = () => {
   return (
