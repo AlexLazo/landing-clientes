@@ -38,7 +38,7 @@ const Contact = () => {
               </div>
             </div>
             <div className='contact-email-info'>
-              <p>Nuestro equipo de atención al cliente está disponible para asistirte de lunes a viernes, de 8:00 AM a 6:00 PM.</p>
+              <p>Envíanos un correo electrónico y te responderemos a la brevedad posible. Estamos aquí para ayudarte con cualquier pregunta sobre nuestros servicios.</p>
               </div>
           </div>
           
@@ -54,7 +54,7 @@ const Contact = () => {
               </div>
             </div>
             <div className='contact-social-info'>
-              <p>Nuestro equipo de atención al cliente está disponible para asistirte de lunes a viernes, de 8:00 AM a 6:00 PM.</p>
+              <p>Síguenos en nuestras redes sociales para estar al tanto de las últimas noticias, promociones y actualizaciones:</p>
               </div>
           </div>
           
@@ -67,7 +67,7 @@ const Contact = () => {
               </div>
             </div>
             <div className='contact-visit-info'>
-              <p>Nuestro equipo de atención al cliente está disponible para asistirte de lunes a viernes, de 8:00 AM a 6:00 PM.</p>
+              <p>Nuestro horario de atención es: <br /> Lunes a Viernes: 8:00 AM – 6:00 PM Sábados: 8:00 AM – 1:00 PM</p>
               </div>
           </div>
           
