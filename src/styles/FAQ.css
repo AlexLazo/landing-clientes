@@ -1,0 +1,56 @@
+/* Estilos básicos para la página de inicio */
+.faq-container {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #1A1514;
+    box-sizing: border-box;
+}
+
+.faq-section {
+    background-color: #1A1514;
+    background-size: initial;
+    background-attachment: inherit;
+    text-align: left;
+    padding: 110px;
+    margin: auto;
+}
+
+.faq-content {
+    background: linear-gradient(to right, #1A1514, #1A1514);
+    text-align: left;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-radius: 20px;
+    padding: 1rem 1rem;
+}
+
+.faq-section h1 {
+    font-size: 3rem;
+    color: #D6D2CE;
+    line-height: 1.5;
+}
+
+.faq-section h4 {
+    font-size: 1.5rem;
+    font-weight: normal;
+    color: #D6D2CE;
+    font-style: italic;
+    line-height: 1.5;
+    text-align: left;
+}
+
+.faq-section p {
+    font-size: 1.2rem;
+    color: #D6D2CE;  
+    line-height: 1.5;
+    text-align: left;
+}
+
+.faq-section hr {
+    border: none;
+    border-bottom: 2px solid #ffffff; 
+    width: 100%; 
+    margin: 20px auto;
+
+}

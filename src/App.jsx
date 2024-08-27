@@ -19,6 +19,8 @@ import EditarCliente from './pages/EditarCliente';
 import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
+import Faq from './pages/FAQ';
+
 const AppContent = () => {
   const location = useLocation();
   
@@ -68,6 +70,7 @@ const AppContent = () => {
             <Route path="/agregar-cliente" element={<AgregarCliente />} />
             <Route path="/direcciones-cliente" element={<DireccionesCliente />} />
             <Route path="/agregar-direccion" element={<AgregarDireccion />} />
+            <Route path="/faq" element={<Faq />} />
           </Routes>
         </main>
       </div>

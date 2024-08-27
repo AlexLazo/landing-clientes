@@ -92,16 +92,16 @@ const About = () => {
           <p>En Mr. Paquetes, creemos en la fuerza de las alianzas estratégicas para ofrecer un servicio más completo y eficiente a nuestros clientes. Hemos establecido colaboraciones con diversas empresas y organizaciones en el pais.</p>
 
           <div className="alianza">
-          <img
+          <a href="https://www.bancocuscatlan.com"><img
             src={cuscatlan}
             alt="banco-cuscatlan"
             className="alianza-img"
-          />
-          <img src={canada} className='alianza-img'  alt="cañada-empaques" />
-          <img src={agricola} className='alianza-img'  alt="banco-agricola" />
-          <img src={fgk} className='alianza-img'  alt="f-gloria-kriete" />
-          <img src={camarasal} className='alianza-img'  alt="camarasal" />
-          <img src={univo} className='alianza-img'  alt="univo" />
+          /></a>
+          <a href="https://www.lacañadapaquetes.com"><img src={canada} className='alianza-img'  alt="cañada-empaques" /></a>
+          <a href="https://www.bancoagricola.com"><img src={agricola} className='alianza-img'  alt="banco-agricola" /></a>
+          <a href="https://fundaciongloriakriete.org"><img src={fgk} className='alianza-img'  alt="f-gloria-kriete" /></a>
+          <a href="https://camarasal.com"><img src={camarasal} className='alianza-img'  alt="camarasal" /></a>
+          <a href="https://www.univo.edu.sv"><img src={univo} className='alianza-img'  alt="univo"/></a>
         </div>
 
         </div>

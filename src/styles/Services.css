@@ -7,8 +7,8 @@
   }
   
   .services-hero {
-    background: linear-gradient(to right, #28a745, #1e7d32);
-    color: #fff;
+    background: linear-gradient(to right, #65574E, #65574E);
+    color: #E1DFDB;
     text-align: center;
     padding: 80px 20px;
   }
@@ -20,6 +20,8 @@
   
   .services-hero p {
     font-size: 1.5em;
+  font-weight: medium;
+    color: #E1DFDB
   }
   
   .services-list {
@@ -41,7 +43,217 @@
   }
   
   .service-item p {
-    font-size: 1.2em;
+    font-size: 1.5em;
     line-height: 1.6;
+    color: #E1DFDB;
   }
   
+
+  /* SECCION | CARDS SERVICIOS | CAFE */
+
+      .service-content {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        padding: 1%;
+        color: #333;
+        box-sizing: border-box;
+        background-color: #65574E;
+      }
+  
+      .service-section{
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0;
+        margin: auto;
+        max-width: auto;
+      }
+  
+      .content-service {
+        display: flex;
+        flex-wrap: wrap;
+        /*text-align: center;*/
+        padding: 0;
+        margin: auto;
+        max-width: auto;
+      }
+  
+      .text-container-service h1 {
+        font-size: 3rem;
+        line-height: 1.5;
+        margin-bottom: 20px;
+        color:#E1DFDB ;
+      }
+    
+      .image-container-service{
+        flex: 1;
+        flex-direction: column;
+        text-align: center;
+        margin-right: auto;
+      }
+  
+      .text-container-service{
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        margin: 0 auto 10px auto;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        max-width: 500px;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+  
+      .image-container-service img{
+        width: 545px;
+        height: auto;
+        padding: 20px;
+        border-radius: 50px;
+        margin-left: 50px;
+      }
+  
+      .text-container-service h2 {
+        font-size: 2.5em;
+        margin-bottom: 20px;
+      }
+      
+      .text-container-service p{
+        font-size: 1.5em;
+        line-height: 1.6;
+        color:#E1DFDB ;
+      }
+
+      
+  /* SECCION | CARDS SERVICIOS | CAFE CLARO */
+
+  .w-service-content {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 1%;
+    color: #333;
+    box-sizing: border-box;
+    background-color: #D6D2CE;
+  }
+
+  .w-service-section{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+
+  .w-content-service {
+    display: flex;
+    flex-wrap: wrap;
+    /*text-align: center;*/
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+
+  .w-text-container-service h1 {
+    font-size: 3rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color:#65574E ;
+  }
+
+  .w-image-container-service{
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+    margin-right: auto;
+  }
+
+  .w-text-container-service{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 10px auto;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    max-width: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+
+  .w-image-container-service img{
+    width: 545px;
+    height: auto;
+    padding: 20px;
+    border-radius: 50px;
+    margin-left: 50px;
+  }
+
+  .w-text-container-service h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .w-text-container-service p{
+    font-size: 1.5em;
+    line-height: 1.6;
+    color:#65574E ;
+  }
+
+/* CONTACTANOS */
+
+
+
+.services-contact{
+  padding: 60px 20px;
+  background-color: #65574E;
+  text-align: center;
+  align-items: center;
+}
+
+.services-contact-card {
+  background-color: #D6D2CE;
+  border-radius: 20px;
+  padding: 30px 200px;
+  margin: auto auto;
+  max-width: 1200px;
+}
+
+.services-contact-card h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+  color: #65574E;
+}
+
+.services-contact-card h2 {
+  font-size: 2.6rem;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.services-contact-card p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  font-weight: medium;
+  color: #65574E;
+}
+
+
+.services-contact a{
+  font-weight: bold;
+}
+
+  .services-contact {
+    display: flex;
+    align-items: inherit;
+  }
+  .services-contact-img {
+    height: 140px;
+    border-radius: 20%;
+    padding: 1%;
+    transition: filter 0.3s ease;
+  }
+
+  .services-contact-img:hover {
+    filter: drop-shadow(0 0 2em var(--primary-color));
+  }
