@@ -80,3 +80,168 @@
     background-color: #117a8b;
   }
   
+
+/* Contacto */
+
+.contact-board{
+  padding: 150px 20px;
+  background-color: #65574E;
+  text-align: center;
+  align-items: center;
+}
+
+.contact-board-card {
+  background-color: #E1DFDB;
+  border-radius: 10px;
+  padding: 30px 200px;
+  margin: auto auto;
+  max-width: 1200px;
+}
+
+.contact-board-card h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+}
+
+.contact-board-card h2 {
+  font-size: 2.6rem;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.contact-board-card p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+
+.contact-board a{
+  font-weight: bold;
+  color: inherit;
+}
+
+/* GRUPO TELEFONO */
+  .contact-info-telefono {
+    align-items: center;
+    background-color: #D6D2CE;
+    border-radius: 20px;
+  }
+
+.contact-telefono-group h3{
+  font-size: 25px;
+  padding: 10px;
+  margin: 10px;
+
+}
+.contact-telefono-row{
+  display: flex;
+  justify-content: space-between;
+}
+
+.contact-telefono-info p{
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+}
+
+.contact-telefono-row img{
+    height: 60px;
+    width: 60px;
+    padding: auto;
+    margin: 10px;
+}
+
+/* GRUPO CORREO ELECTRONICO */
+.contact-info-email {
+  align-items: center;
+  background-color: #D6D2CE;
+  border-radius: 20px;
+}
+
+.contact-email-group h3{
+font-size: 25px;
+padding: 10px;
+margin: 10px;
+
+}
+.contact-email-row{
+display: flex;
+justify-content: space-between;
+}
+
+.contact-email-info p{
+text-align: center;
+padding: 10px;
+margin: 10px;
+}
+
+.contact-email-row img{
+  height: 60px;
+  width: 60px;
+  padding: auto;
+  margin: 10px;
+}
+
+/* GRUPO REDES SOCIALES */
+.contact-info-social {
+  align-items: center;
+  background-color: #D6D2CE;
+  border-radius: 20px;
+}
+
+.contact-social-group h3{
+font-size: 25px;
+padding: 10px;
+margin: 10px;
+
+}
+.contact-social-row{
+display: flex;
+justify-content: space-between;
+}
+
+.contact-social-info p{
+text-align: center;
+padding: 10px;
+margin: 10px;
+}
+
+.contact-social-row img{
+  height: 60px;
+  width: 60px;
+  padding: auto;
+  margin: 10px;
+}
+
+/* GRUPO VISITANOS */
+.contact-info-visit {
+  align-items: center;
+  background-color: #D6D2CE;
+  border-radius: 20px;
+}
+
+.contact-visit-group h3{
+font-size: 25px;
+padding: 10px;
+margin: 10px;
+
+}
+.contact-visit-row{
+display: flex;
+justify-content: space-between;
+}
+
+.contact-visit-info p{
+text-align: center;
+padding: 10px;
+margin: 10px;
+}
+
+.contact-visit-row img{
+  height: 60px;
+  width: 60px;
+  padding: auto;
+  margin: 10px;
+}
