@@ -4,13 +4,55 @@ import { useNavigate } from 'react-router-dom';
 import styles from './ForgetResetPassword.module.css';
 
 const ResetPassword = ({ token }) => {
-  const [email, setEmail] = useState(''); // Añadido para enviar el email al backend
+  const [email, setEmail] = useState('');
+  const [emailError, setEmailError] = useState('');
   const [otp, setOtp] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [newPasswordError, setNewPasswordError] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [confirmPasswordError, setConfirmPasswordError] = useState('');
   const [message, setMessage] = useState('');
   const [isResetting, setIsResetting] = useState(false);
   const navigate = useNavigate();
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    return password.length >= 8;
+  };
+
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+    if (!validateEmail(value)) {
+      setEmailError('Por favor, ingresa un correo electrónico válido.');
+    } else {
+      setEmailError('');
+    }
+  };
+
+  const handleNewPasswordChange = (e) => {
+    const value = e.target.value;
+    setNewPassword(value);
+    if (!validatePassword(value)) {
+      setNewPasswordError('La contraseña debe tener al menos 8 caracteres.');
+    } else {
+      setNewPasswordError('');
+    }
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    const value = e.target.value;
+    setConfirmPassword(value);
+    if (value !== newPassword) {
+      setConfirmPasswordError('Las contraseñas no coinciden.');
+    } else {
+      setConfirmPasswordError('');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,9 +65,21 @@ const ResetPassword = ({ token }) => {
       return;
     }
 
+    if (!validateEmail(email)) {
+      setMessage('Por favor, ingresa un correo electrónico válido.');
+      setIsResetting(false);
+      return;
+    }
+
+    if (!validatePassword(newPassword)) {
+      setMessage('La contraseña debe tener al menos 8 caracteres.');
+      setIsResetting(false);
+      return;
+    }
+
     try {
       const response = await axios.post(`${import.meta.env.VITE_API_URL}/password/reset`, {
-        email, // Enviar el email al backend
+        email,
         otp,
         password: newPassword,
       });
@@ -33,8 +87,8 @@ const ResetPassword = ({ token }) => {
       if (response.data.success) {
         setMessage('Tu contraseña ha sido restablecida.');
         setTimeout(() => {
-          navigate('/Login');
-        }, 4000); // Redirigir después de 4 segundos
+          navigate('/login');
+        }, 4000);
       } else {
         setMessage('Error al restablecer la contraseña.');
       }
@@ -60,11 +114,12 @@ const ResetPassword = ({ token }) => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               placeholder="Ingresa tu correo electrónico"
               className={styles.formInput}
               required
             />
+            {emailError && <div className={styles.error}>{emailError}</div>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.formLabel}>Código de Verificación (OTP)</label>
@@ -82,22 +137,24 @@ const ResetPassword = ({ token }) => {
             <input
               type="password"
               value={newPassword}
-              onChange={(e) => setNewPassword(e.target.value)}
+              onChange={handleNewPasswordChange}
               placeholder="Ingresa tu nueva contraseña"
               className={styles.formInput}
               required
             />
+            {newPasswordError && <div className={styles.error}>{newPasswordError}</div>}
           </div>
           <div className={styles.formGroup}>
             <label className={styles.formLabel}>Confirmar Contraseña</label>
             <input
               type="password"
               value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
+              onChange={handleConfirmPasswordChange}
               placeholder="Confirma tu nueva contraseña"
               className={styles.formInput}
               required
             />
+            {confirmPasswordError && <div className={styles.error}>{confirmPasswordError}</div>}
           </div>
           <button type="submit" className={styles.submitButton} disabled={isResetting}>
             {isResetting ? 'Restableciendo...' : 'Restablecer Contraseña'}
