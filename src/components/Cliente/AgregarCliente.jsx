@@ -226,14 +226,17 @@ const AgregarCliente = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
+    
         // Validaciones de campos
-        if (!isDuiValid || !isTelefonoValid || tipoPersona === "") {
+        if (!isTelefonoValid || tipoPersona === "") {
             setAlertaError(true);
             setErrorMensaje("Por favor, revisa los campos requeridos.");
             return;
         }
-
+    
+        // Obtener la fecha actual en formato YYYY/MM/DD
+        const fechaActual = new Date().toISOString().split('T')[0].replace(/-/g, "/");
+    
         // Datos del cliente
         const clienteData = {
             nombre: nombres,
@@ -250,12 +253,12 @@ const AgregarCliente = () => {
             nit: tipoPersona === "1" ? null : nit,
             nrc: tipoPersona === "1" ? null : nrc,
             giro: tipoPersona === "1" ? null : giro,
-            fecha_registro: fechaRegistro.replace(/-/g, "/"),
+            fecha_registro: fechaActual, // Utiliza la fecha actual
             id_estado: 1
         };
-
+    
         console.log("Datos a enviar:", clienteData);
-
+    
         try {
             const response = await axios.post(`${API_URL}/crear-perfil-cliente`, clienteData, {
                 headers: {
@@ -263,7 +266,7 @@ const AgregarCliente = () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-
+    
             console.log("Cliente registrado:", response.data);
             setAlertaExito(true);
             setTimeout(() => navigate('/perfil-cliente'), 2000);
@@ -274,6 +277,7 @@ const AgregarCliente = () => {
             handleError(error);
         }
     };
+    
 
     const resetForm = () => {
         setNombres("");
@@ -483,21 +487,6 @@ const AgregarCliente = () => {
                                                     {telefonoError && (
                                                         <FormFeedback className="text-danger">{telefonoError}</FormFeedback>
                                                     )}
-                                                </FormGroup>
-                                            </Col>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="fechaRegistro">Fecha de Registro</Label>
-                                                    <Input
-                                                        type="date"
-                                                        id="fechaRegistro"
-                                                        value={fechaRegistro}
-                                                        onChange={(e) => setFechaRegistro(e.target.value)}
-                                                        required
-                                                        min={minDate}
-                                                        max={maxDate}
-                                                        className="dark-mode-input-date"
-                                                    />
                                                 </FormGroup>
                                             </Col>
                                         </Row>

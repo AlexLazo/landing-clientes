@@ -1,18 +1,17 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import AuthService from './AuthService';
 
-// Crear el contexto de autenticación
 const AuthContext = createContext();
 
-// Proveedor de autenticación
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // Estado de autenticación
-  const [loading, setLoading] = useState(true); // Estado de carga
-  const navigate = useNavigate(); // Hook para la navegación
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar autenticación del usuario
-    const checkAuth = () => {
+    // Verificar autenticación del usuario al cargar el componente
+    const checkAuth = async () => {
       try {
         const token = localStorage.getItem('authToken');
         if (token) {
@@ -22,11 +21,10 @@ export const AuthProvider = ({ children }) => {
           setIsAuthenticated(false);
         }
       } catch (error) {
-        // Manejo de errores
         console.error('Error checking authentication:', error);
         setIsAuthenticated(false);
       } finally {
-        setLoading(false); // Termina el estado de carga
+        setLoading(false);
       }
     };
 
@@ -45,16 +43,17 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     try {
-      localStorage.removeItem('authToken');
+      AuthService.logout(); // Asegúrate de que AuthService.logout esté limpiando el localStorage
+      localStorage.removeItem('authToken'); // Limpia el token del localStorage
       setIsAuthenticated(false);
-      navigate('/login'); // Navega a la página de inicio de sesión después de cerrar sesión
+      navigate('/login'); // Redirige a la página de inicio de sesión
     } catch (error) {
       console.error('Error logging out:', error);
     }
   };
 
   if (loading) {
-    return <div>Loading...</div>; // O una mejor solución de carga
+    return <div>Loading...</div>; // O una mejor solución de carga, como un spinner
   }
 
   return (
@@ -64,5 +63,4 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-// Hook personalizado para usar el contexto de autenticación
 export const useAuth = () => useContext(AuthContext);

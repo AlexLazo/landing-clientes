@@ -12,7 +12,8 @@ const loginClient = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/login-cliente`, { email, password });
     if (response.data.token) {
-      localStorage.setItem("token", response.data.token);
+      // Guarda el token y los datos del usuario en localStorage
+      localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("clienteId", response.data.user.id); // Guardar el ID del cliente
       return response.data.token;
@@ -26,14 +27,14 @@ const loginClient = async (email, password) => {
 
 // Método para cerrar sesión
 const logout = () => {
-  localStorage.removeItem("token");
+  localStorage.removeItem("authToken");
   localStorage.removeItem("user");
   localStorage.removeItem("clienteId"); // Eliminar el ID del cliente al cerrar sesión
 };
 
 // Método para obtener el token del usuario actual
-const getCurrentUser = () => {
-  return localStorage.getItem("token");
+const getCurrentUserToken = () => {
+  return localStorage.getItem("authToken");
 };
 
 // Método para obtener los detalles del usuario actual
@@ -51,9 +52,9 @@ const getClienteId = () => {
 const AuthService = {
   loginClient,
   logout,
-  getCurrentUser,
+  getCurrentUserToken,
   getUserDetails,
-  getClienteId, // Exportar el método para obtener el ID del cliente
+  getClienteId,
 };
 
 export default AuthService;

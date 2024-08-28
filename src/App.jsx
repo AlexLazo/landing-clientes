@@ -1,9 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
 import { AuthProvider } from './services/AuthContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
-import Sidebar from './components/Layout/Sidebar'; // Importa el Sidebar
+import Sidebar from './components/Layout/Sidebar';
 import Home from './pages/Home';
 import About from './pages/About';
 import Contact from './pages/Contact';
@@ -20,6 +20,7 @@ import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
 import Faq from './pages/FAQ';
+import PrivateRoute from './components/PrivateRoute';
 
 const AppContent = () => {
   const location = useLocation();
@@ -65,11 +66,11 @@ const AppContent = () => {
             <Route path="/email-verification" element={<EmailVerification />} />
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
-            <Route path="/perfil-cliente" element={<PerfilCliente />} />
-            <Route path="/editar-cliente" element={<EditarCliente />} />
-            <Route path="/agregar-cliente" element={<AgregarCliente />} />
-            <Route path="/direcciones-cliente" element={<DireccionesCliente />} />
-            <Route path="/agregar-direccion" element={<AgregarDireccion />} />
+            <Route path="/perfil-cliente" element={<PrivateRoute element={<PerfilCliente />} />} />
+            <Route path="/editar-cliente" element={<PrivateRoute element={<EditarCliente />} />} />
+            <Route path="/agregar-cliente" element={<PrivateRoute element={<AgregarCliente />} />} />
+            <Route path="/direcciones-cliente" element={<PrivateRoute element={<DireccionesCliente />} />} />
+            <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
             <Route path="/faq" element={<Faq />} />
           </Routes>
         </main>
