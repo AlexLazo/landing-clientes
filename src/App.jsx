@@ -1,6 +1,5 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
-import { AuthProvider } from './services/AuthContext';
+import React from 'react';
+import { Routes, Route, useLocation } from 'react-router-dom';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import Sidebar from './components/Layout/Sidebar';
@@ -24,8 +23,7 @@ import PrivateRoute from './components/PrivateRoute';
 
 const AppContent = () => {
   const location = useLocation();
-  
-  // Verifica si la ruta actual está en una de las páginas de autenticación
+
   const isAuthPage = [
     '/login',
     '/email-verification',
@@ -33,8 +31,7 @@ const AppContent = () => {
     '/reset-password',
     '/register'
   ].includes(location.pathname);
-  
-  // Verifica si la ruta actual está en una de las páginas de cliente
+
   const isClientPage = [
     '/perfil-cliente',
     '/editar-cliente',
@@ -45,9 +42,6 @@ const AppContent = () => {
     '/direcciones-cliente',
     '/agregar-direccion',
   ].some(path => location.pathname.startsWith(path));
-  
-  console.log('Current Path:', location.pathname);
-  console.log('isClientPage:', isClientPage);
 
   return (
     <>
@@ -81,11 +75,7 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <Router>
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
-  </Router>
+  <AppContent />
 );
 
 export default App;

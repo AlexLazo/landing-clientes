@@ -2,54 +2,56 @@ import axios from "axios";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-// Validar que API_URL esté definida
 if (!API_URL) {
   console.error("API_URL no está definida en las variables de entorno.");
 }
 
-// Método para iniciar sesión como cliente
 const loginClient = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/login-cliente`, { email, password });
     if (response.data.token) {
-      // Guarda el token y los datos del usuario en localStorage
+      // Guardar el token y detalles del usuario en localStorage
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("clienteId", response.data.user.id); // Guardar el ID del cliente
       return response.data.token;
+    } else {
+      // Manejar el caso donde el token no está presente en la respuesta
+      console.warn("El token no se encuentra en la respuesta.");
+      return null;
     }
-    return null;
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    throw new Error("Error al iniciar sesión. Por favor, verifica tus credenciales e inténtalo de nuevo.");
+    throw new Error("Error al iniciar sesión. Verifica tus credenciales.");
   }
 };
 
-// Método para cerrar sesión
 const logout = () => {
+  // Eliminar el token y detalles del usuario al cerrar sesión
   localStorage.removeItem("authToken");
   localStorage.removeItem("user");
   localStorage.removeItem("clienteId"); // Eliminar el ID del cliente al cerrar sesión
+  // Redirigir al login para asegurar que el usuario vea la página de inicio de sesión
+  window.location.href = "/login";
 };
 
-// Método para obtener el token del usuario actual
 const getCurrentUserToken = () => {
+  // Obtener el token actual del usuario
   return localStorage.getItem("authToken");
 };
 
-// Método para obtener los detalles del usuario actual
 const getUserDetails = () => {
+  // Obtener los detalles del usuario desde localStorage
   const user = localStorage.getItem("user");
   return user ? JSON.parse(user) : null;
 };
 
-// Método para obtener el ID del cliente actual
 const getClienteId = () => {
+  // Obtener el ID del cliente desde localStorage
   return localStorage.getItem("clienteId");
 };
 
-// Exporta el servicio de autenticación
-const AuthService = {
+const authService = {
   loginClient,
   logout,
   getCurrentUserToken,
@@ -57,4 +59,4 @@ const AuthService = {
   getClienteId,
 };
 
-export default AuthService;
+export default authService;

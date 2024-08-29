@@ -1,5 +1,5 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaTruck, FaTrashAlt, FaSignOutAlt } from 'react-icons/fa';
 import './Sidebar.css';
 import { useAuth } from '/src/services/AuthContext'; // Ajusta la ruta según tu estructura
@@ -7,6 +7,7 @@ import { useAuth } from '/src/services/AuthContext'; // Ajusta la ruta según tu
 const Sidebar = () => {
   const { logout } = useAuth();
   const location = useLocation();
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -21,6 +22,7 @@ const Sidebar = () => {
   const handleConfirmLogout = useCallback(() => {
     logout();
     setIsModalOpen(false);
+    window.location.href = "/login"; // Redirige al login después de cerrar sesión
   }, [logout]);
 
   const handleCloseModal = useCallback(() => {
@@ -39,7 +41,6 @@ const Sidebar = () => {
     };
   }, [isOpen]);
 
-  // Check if the current route is 'AgregarCliente'
   const isAgregarClientePage = location.pathname === '/agregar-cliente';
 
   return (

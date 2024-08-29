@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import AuthService from "/src/services/authService";
-import "/src/styles/LoginClientForm.css";
+import AuthService from "../../services/authService";
+import "../../styles/LoginClientForm.css";
 import { FiArrowLeft, FiLock } from "react-icons/fi";
 
 const ClienteLogin = ({ logo, onLogin = () => {} }) => {

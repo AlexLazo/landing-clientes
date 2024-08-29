@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthService from './AuthService';
+import AuthService from './authService';
 
 const AuthContext = createContext();
 
@@ -31,34 +31,27 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  const login = (token) => {
+  const login = async (email, password) => {
     try {
+      const { token } = await AuthService.login(email, password);
       localStorage.setItem('authToken', token);
       setIsAuthenticated(true);
-      navigate('/'); // Navega a la página de inicio después de iniciar sesión
+      navigate('/perfil-cliente');
     } catch (error) {
       console.error('Error logging in:', error);
+      // Manejo de errores de login
     }
   };
 
   const logout = () => {
-    try {
-      AuthService.logout(); // Asegúrate de que AuthService.logout esté limpiando el localStorage
-      localStorage.removeItem('authToken'); // Limpia el token del localStorage
-      setIsAuthenticated(false);
-      navigate('/login'); // Redirige a la página de inicio de sesión
-    } catch (error) {
-      console.error('Error logging out:', error);
-    }
+    localStorage.removeItem('authToken');
+    setIsAuthenticated(false);
+    navigate('/login');
   };
 
-  if (loading) {
-    return <div>Loading...</div>; // O una mejor solución de carga, como un spinner
-  }
-
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
-      {children}
+    <AuthContext.Provider value={{ isAuthenticated, loading, login, logout }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };

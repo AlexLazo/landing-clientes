@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import AuthService from "../../services/AuthService"; // Asegúrate de importar el AuthService
+import AuthService from "../../services/authService";
 
 const Logout = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
-    AuthService.logout(); // Asegúrate de que el AuthService esté siendo utilizado
-    navigate("/login");
-  }, [navigate]);
+    AuthService.logout(); // Limpia el token y otros datos del localStorage
+    window.location.href = "/login"; // Redirige al login después de cerrar sesión
+  }, []);
 
   return null;
 };
