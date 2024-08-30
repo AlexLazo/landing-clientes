@@ -1,0 +1,105 @@
+.direccionesClienteContainer {
+    max-width: 800px;
+    margin: 50px auto; /* Centrar el contenedor y darle margen superior */
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+}
+
+/* Sección del header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 24px;
+    color: #333;
+}
+
+.buttonAgregar {
+    background-color: #071e2a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.buttonAgregar:hover {
+    background-color: #4e54c8;
+}
+
+/* Subtítulo */
+.subtitle {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+/* Loading y mensajes de error */
+.loading,
+.emptyMessage,
+.error {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+}
+
+/* Estilo de la lista */
+.listGroup {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.listItem {
+    background-color: #ffffff;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.actionButtons {
+    display: flex;
+    gap: 10px;
+}
+
+/* Botones de acción */
+.button {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.buttonEditar {
+    background-color: #53645e;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.buttonEditar:hover {
+    background-color: #6a6eff;
+}
+
+.buttonEliminar {
+    background-color: #ff4d4f;
+    color: white;
+    transition: background-color 0.3s;
+}
+
+.buttonEliminar:hover {
+    background-color: #ff7875;
+}

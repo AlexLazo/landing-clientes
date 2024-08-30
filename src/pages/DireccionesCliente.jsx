@@ -1,177 +1,123 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/DireccionesCliente.module.css';
+import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
+import styles from '../styles/Direcciones.module.css'; // Importación correcta del CSS
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const DireccionesCliente = () => {
     const [direcciones, setDirecciones] = useState([]);
-    const [form, setForm] = useState({
-        id_cliente: '',
-        nombre_contacto: '',
-        telefono: '',
-        id_departamento: '',
-        id_municipio: '',
-        direccion: '',
-        referencia: ''
-    });
-    const [departamentos, setDepartamentos] = useState([]);
-    const [municipiosPorDepartamento, setMunicipiosPorDepartamento] = useState({});
-    const [token, setToken] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
-    // Fetch token from local storage
     useEffect(() => {
-        const storedToken = localStorage.getItem('authToken');
-        if (storedToken) {
-            setToken(storedToken);
-        } else {
-            console.error('No token found in local storage');
-        }
-    }, []);
+        const fetchData = async () => {
+            const token = localStorage.getItem('authToken');
 
-    // Fetch direcciones and departamentos
-    useEffect(() => {
-        if (token) {
-            const fetchData = async () => {
-                try {
-                    const [direccionesResponse, departamentosResponse] = await Promise.all([
-                        axios.get(`${API_URL}/direcciones`, {
-                            headers: { Authorization: `Bearer ${token}` }
-                        }),
-                        axios.get(`${API_URL}/dropdown/get_departamentos`, {
-                            headers: { Authorization: `Bearer ${token}` }
-                        })
-                    ]);
-                    
-                    setDirecciones(direccionesResponse.data.direcciones || []);
-                    setDepartamentos(Array.isArray(departamentosResponse.data) ? departamentosResponse.data : []);
-                } catch (error) {
-                    console.error('Error fetching data:', error);
-                    setDirecciones([]);
-                    setDepartamentos([]);
-                }
-            };
+            if (!token) {
+                navigate('/login');
+                return;
+            }
 
-            fetchData();
-        }
-    }, [token]);
+            try {
+                const { data: { id: clienteId } } = await axios.get(`${API_URL}/cliente`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
 
-    // Fetch municipios when department changes
-    useEffect(() => {
-        const fetchMunicipios = async () => {
-            if (form.id_departamento) {
-                try {
-                    const response = await axios.get(`${API_URL}/dropdown/get_municipio/${form.id_departamento}`, {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                    setMunicipiosPorDepartamento(prev => ({
-                        ...prev,
-                        [form.id_departamento]: response.data.municipio || []
-                    }));
-                } catch (error) {
-                    console.error('Error fetching municipios:', error);
-                }
+                const { data: { direcciones = [] } } = await axios.get(`${API_URL}/direcciones/${clienteId}`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                setDirecciones(direcciones);
+            } catch (error) {
+                handleError(error);
+            } finally {
+                setLoading(false);
             }
         };
 
-        fetchMunicipios();
-    }, [form.id_departamento, token]);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setForm(prevForm => ({
-            ...prevForm,
-            [name]: value
-        }));
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        try {
-            if (form.id_cliente) {
-                await axios.put(`${API_URL}/direcciones/${form.id_cliente}`, form, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+        const handleError = (error) => {
+            if (error.response?.status === 404) {
+                setError('Direcciones no encontradas.');
             } else {
-                await axios.post(`${API_URL}/direcciones`, form, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
+                console.error('Error fetching data:', error);
+                setError('Error al cargar las direcciones.');
             }
-            const response = await axios.get(`${API_URL}/direcciones`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setDirecciones(response.data.direcciones || []);
-            setForm({
-                id_cliente: '',
-                nombre_contacto: '',
-                telefono: '',
-                id_departamento: '',
-                id_municipio: '',
-                direccion: '',
-                referencia: ''
-            });
-        } catch (error) {
-            console.error('Error submitting form:', error);
-        }
-    };
+        };
+
+        fetchData();
+    }, [navigate]);
 
     const handleEdit = (direccion) => {
-        setForm(direccion);
         navigate(`/editar-direccion/${direccion.id}`);
     };
 
     const handleDelete = async (id) => {
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         try {
             await axios.delete(`${API_URL}/direcciones/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
             });
-            const response = await axios.get(`${API_URL}/direcciones`, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            setDirecciones(response.data.direcciones || []);
+            setDirecciones(prevDirecciones => prevDirecciones.filter(d => d.id !== id));
         } catch (error) {
             console.error('Error deleting dirección:', error);
+            setError('Error al eliminar la dirección.');
         }
     };
 
     return (
-        <div className="direcciones-cliente-container">
-            <div className="direcciones-cliente-header">
-                <h1 className="direcciones-cliente-title">Direcciones del Cliente</h1>
-                <button 
-                    className="direcciones-cliente-button-agregar" 
+        <div className={styles.direccionesClienteContainer}>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Direcciones del Cliente</h1>
+                <Button 
+                    color="primary"
+                    className={styles.buttonAgregar} 
                     onClick={() => navigate('/agregar-direccion')}
                 >
                     Agregar Dirección
-                </button>
+                </Button>
             </div>
-            <h2 className="direcciones-cliente-subtitle">Direcciones Registradas</h2>
-            {direcciones.length === 0 ? (
-                <p>No tienes direcciones registradas.</p>
+            <h2 className={styles.subtitle}>Direcciones Registradas</h2>
+            {loading ? (
+                <div className={styles.loading}>
+                    <Spinner color="primary" />
+                </div>
+            ) : error ? (
+                <Alert color="danger">{error}</Alert>
+            ) : direcciones.length === 0 ? (
+                <p className={styles.emptyMessage}>No tienes direcciones registradas.</p>
             ) : (
-                <ul className="direcciones-cliente-lista">
+                <ListGroup className={styles.listGroup}>
                     {direcciones.map(direccion => (
-                        <li key={direccion.id} className="direcciones-cliente-lista-item">
+                        <ListGroupItem key={direccion.id} className={styles.listItem}>
                             {direccion.direccion} - {direccion.nombre_contacto}
-                            <div className="direcciones-cliente-action-buttons">
-                                <button 
-                                    className="direcciones-cliente-button direcciones-cliente-button-editar"
+                            <div className={styles.actionButtons}>
+                                <Button 
+                                    color="info"
+                                    className={`${styles.button} ${styles.buttonEditar}`}
                                     onClick={() => handleEdit(direccion)}
                                 >
                                     Editar
-                                </button>
-                                <button 
-                                    className="direcciones-cliente-button direcciones-cliente-button-eliminar"
+                                </Button>
+                                <Button 
+                                    color="danger"
+                                    className={`${styles.button} ${styles.buttonEliminar}`}
                                     onClick={() => handleDelete(direccion.id)}
                                 >
                                     Eliminar
-                                </button>
+                                </Button>
                             </div>
-                        </li>
+                        </ListGroupItem>
                     ))}
-                </ul>
+                </ListGroup>
             )}
         </div>
     );

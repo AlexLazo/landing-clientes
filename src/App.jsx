@@ -19,6 +19,7 @@ import EditarCliente from './pages/EditarCliente';
 import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
+import TrackingOrden from './pages/TrackingOrden';
 import Faq from './pages/FAQ';
 
 // Componente para proteger rutas privadas
@@ -45,6 +46,7 @@ const AppContent = () => {
     '/agregar-cliente',
     '/direcciones-cliente',
     '/agregar-direccion',
+    '/tracking'
   ].some(path => location.pathname.startsWith(path));
 
   console.log('Current Path:', location.pathname);
@@ -76,6 +78,7 @@ const AppContent = () => {
             <Route path="/agregar-cliente" element={<PrivateRoute element={<AgregarCliente />} />} />
             <Route path="/direcciones-cliente" element={<PrivateRoute element={<DireccionesCliente />} />} />
             <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
+            <Route path="/tracking" element={<PrivateRoute element={<TrackingOrden />} />} />
           </Routes>
         </main>
       </div>

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, Button, Alert, FormFeedback } from "reactstrap";
 import AuthService from "/src/services/authService";
 import axios from 'axios';
-import "/src/styles/DireccionesCliente.module.css";
+import "/src/styles/AgregarDireccion.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,6 +20,8 @@ const AgregarDireccion = () => {
     const [errorMensaje, setErrorMensaje] = useState("");
     const [direccionError, setDireccionError] = useState("");
     const [isDireccionValid, setIsDireccionValid] = useState(true);
+
+    const [idCliente, setIdCliente] = useState(""); // Nuevo estado para id_cliente
 
     const token = AuthService.getCurrentUser();
 
@@ -70,6 +72,24 @@ const AgregarDireccion = () => {
         fetchMunicipios();
     }, [departamento, token]);
 
+    useEffect(() => {
+        // Suponiendo que `AuthService` puede proporcionar el id_cliente
+        const fetchIdCliente = async () => {
+            try {
+                const response = await AuthService.getCurrentUserInfo(); // Debe devolver el id_cliente
+                if (response && response.id_cliente) {
+                    setIdCliente(response.id_cliente);
+                } else {
+                    console.error("No se pudo obtener el id_cliente.");
+                }
+            } catch (error) {
+                console.error("Error al obtener el id_cliente:", error);
+            }
+        };
+
+        fetchIdCliente();
+    }, []);
+
     const handleDireccionChange = (e) => {
         const value = e.target.value;
         setDireccion(value);
@@ -111,6 +131,7 @@ const AgregarDireccion = () => {
         }
 
         const direccionData = {
+            id_cliente: idCliente, // Incluir id_cliente en los datos a enviar
             nombre_contacto: nombreContacto,
             telefono: telefono,
             direccion,
@@ -292,9 +313,7 @@ const AgregarDireccion = () => {
                                                     </Input>
                                                 </FormGroup>
                                             </Col>
-                                        </Row>
-                                        <Row form>
-                                            <Col md={12}>
+                                            <Col md={6}>
                                                 <FormGroup className="form-group-custom">
                                                     <Label for="referencia">Referencia</Label>
                                                     <Input
@@ -306,7 +325,7 @@ const AgregarDireccion = () => {
                                                 </FormGroup>
                                             </Col>
                                         </Row>
-                                        <Button color="primary" type="submit">Guardar Dirección</Button>
+                                        <Button type="submit" color="primary">Agregar Dirección</Button>
                                     </Form>
                                 </CardBody>
                             </Card>

@@ -8,7 +8,7 @@ const Sidebar = () => {
   const { logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true); // Sidebar abierto por defecto
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
@@ -49,6 +49,9 @@ const Sidebar = () => {
         <div className="sidebar-toggle" onClick={toggleSidebar} role="button" aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'}>
           {isOpen ? <FaTimes className="toggle-icon" /> : <FaBars className="toggle-icon" />}
         </div>
+        <div className="sidebar-logo">
+          <img src="/public/logo.png" alt="Logo" /> {/* Reemplaza con la ruta a tu logo */}
+        </div>
         <nav className="sidebar-menu">
           <ul>
             {!isAgregarClientePage && (
@@ -72,7 +75,7 @@ const Sidebar = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/rastreo">
+                  <Link to="/tracking">
                     <FaTruck className="menu-icon" />
                     {isOpen && <span>Rastreo</span>}
                   </Link>
