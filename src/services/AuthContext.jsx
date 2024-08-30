@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const { token } = await AuthService.login(email, password);
+      const { token } = await AuthService.loginClient(email, password);
       localStorage.setItem('authToken', token);
       setIsAuthenticated(true);
       navigate('/perfil-cliente');

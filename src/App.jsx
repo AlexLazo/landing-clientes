@@ -1,5 +1,6 @@
-import React from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation, Navigate } from "react-router-dom";
+import { AuthProvider, useAuth } from './services/AuthContext';
 import Header from './components/Layout/Header';
 import Footer from './components/Layout/Footer';
 import Sidebar from './components/Layout/Sidebar';
@@ -19,10 +20,16 @@ import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
 import Faq from './pages/FAQ';
-import PrivateRoute from './components/PrivateRoute';
+
+// Componente para proteger rutas privadas
+const PrivateRoute = ({ element, ...rest }) => {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated ? element : <Navigate to="/login" />;
+};
 
 const AppContent = () => {
   const location = useLocation();
+  const { isAuthenticated } = useAuth();
 
   const isAuthPage = [
     '/login',
@@ -36,12 +43,13 @@ const AppContent = () => {
     '/perfil-cliente',
     '/editar-cliente',
     '/agregar-cliente',
-    '/ordenes',
-    '/rastreo',
-    '/eliminar-cuenta',
     '/direcciones-cliente',
     '/agregar-direccion',
   ].some(path => location.pathname.startsWith(path));
+
+  console.log('Current Path:', location.pathname);
+  console.log('isClientPage:', isClientPage);
+  console.log('isAuthenticated:', isAuthenticated);
 
   return (
     <>
@@ -60,12 +68,14 @@ const AppContent = () => {
             <Route path="/email-verification" element={<EmailVerification />} />
             <Route path="/forget-password" element={<ForgetPassword />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/faq" element={<Faq />} />
+
+            {/* Rutas protegidas */}
             <Route path="/perfil-cliente" element={<PrivateRoute element={<PerfilCliente />} />} />
             <Route path="/editar-cliente" element={<PrivateRoute element={<EditarCliente />} />} />
             <Route path="/agregar-cliente" element={<PrivateRoute element={<AgregarCliente />} />} />
             <Route path="/direcciones-cliente" element={<PrivateRoute element={<DireccionesCliente />} />} />
             <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
-            <Route path="/faq" element={<Faq />} />
           </Routes>
         </main>
       </div>
@@ -75,7 +85,11 @@ const AppContent = () => {
 };
 
 const App = () => (
-  <AppContent />
+  <Router>
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
+  </Router>
 );
 
 export default App;

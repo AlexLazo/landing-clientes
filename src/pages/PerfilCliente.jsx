@@ -13,12 +13,12 @@ export default function PerfilCliente() {
     const [loading, setLoading] = useState(true);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState(false);
-    const [activeTab, setActiveTab] = useState('datos-generales'); // New state for active tab
+    const [activeTab, setActiveTab] = useState('datos-generales');
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCliente = async () => {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("authToken");
 
             if (!token) {
                 navigate("/login");
@@ -35,7 +35,7 @@ export default function PerfilCliente() {
                 setCliente(response.data.cliente);
 
                 if (!response.data.cliente.telefono) {
-                    setModalIsOpen(true); // Open the modal if profile is incomplete
+                    setModalIsOpen(true);
                 }
             } catch (error) {
                 if (error.response && error.response.status === 404) {
@@ -56,27 +56,26 @@ export default function PerfilCliente() {
     };
 
     const handleDeleteAccount = () => {
-        setConfirmDeleteModalIsOpen(true); // Open confirmation modal
+        setConfirmDeleteModalIsOpen(true);
     };
 
     const handleConfirmDelete = async () => {
+        const token = localStorage.getItem("authToken");
+
+        if (!token) {
+            navigate("/login");
+            return;
+        }
+
         try {
-            const token = localStorage.getItem("token");
-
-            if (!token) {
-                navigate("/login");
-                return;
-            }
-
-            await axios.delete(`${API_URL}/clientes/${cliente.id}`, {
+            await axios.delete(`${API_URL}/perfil-cliente`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
             alert("Cuenta eliminada.");
-            localStorage.removeItem("token");
-            localStorage.removeItem("clienteId");
+            localStorage.removeItem("authToken");
             navigate("/login");
         } catch (error) {
             console.error("Error al eliminar cuenta:", error);
@@ -118,8 +117,20 @@ export default function PerfilCliente() {
             </div>
 
             <nav className={styles.navMenu}>
-                <a href="#datos-generales" className={`${styles.navLink} ${activeTab === 'datos-generales' ? styles.active : ''}`} onClick={() => handleTabClick('datos-generales')}>Datos Generales</a>
-                <a href="#direcciones" className={`${styles.navLink} ${activeTab === 'direcciones' ? styles.active : ''}`} onClick={() => handleTabClick('direcciones')}>Direcciones favoritas</a>
+                <a
+                    href="#datos-generales"
+                    className={`${styles.navLink} ${activeTab === 'datos-generales' ? styles.active : ''}`}
+                    onClick={() => handleTabClick('datos-generales')}
+                >
+                    Datos Generales
+                </a>
+                <a
+                    href="#direcciones"
+                    className={`${styles.navLink} ${activeTab === 'direcciones' ? styles.active : ''}`}
+                    onClick={() => handleTabClick('direcciones')}
+                >
+                    Direcciones favoritas
+                </a>
             </nav>
 
             <div className={styles.profileContent}>

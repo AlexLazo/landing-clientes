@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, Button, Alert, FormFeedback } from "reactstrap";
 import AuthService from "/src/services/authService";
 import axios from 'axios';
-import "/src/styles/DireccionesCliente.css";
+import "/src/styles/DireccionesCliente.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 

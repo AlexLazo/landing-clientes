@@ -19,7 +19,7 @@ const EditarCliente = () => {
     useEffect(() => {
         const fetchCliente = async () => {
             try {
-                const token = localStorage.getItem("token");
+                const token = localStorage.getItem("authToken");
                 const clienteId = localStorage.getItem("clienteId");
 
                 if (!clienteId) {
@@ -34,7 +34,8 @@ const EditarCliente = () => {
                     }
                 });
 
-                setCliente(response.data.cliente);
+                console.log('Cliente data:', response.data); // Verifica la respuesta aquí
+                setCliente(response.data.cliente || {}); // Asegúrate de que `cliente` siempre sea un objeto
             } catch (err) {
                 handleFetchError(err);
             } finally {
@@ -112,7 +113,7 @@ const EditarCliente = () => {
                             <input
                                 type={type}
                                 name={name}
-                                value={cliente[name] || ''}
+                                value={cliente[name] || ''} // Asegúrate de que `cliente[name]` sea un string vacío si es undefined
                                 onChange={handleChange}
                                 className="editar-cliente-input"
                             />
