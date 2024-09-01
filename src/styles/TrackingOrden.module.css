@@ -42,13 +42,6 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.package {
-    margin-bottom: 15px;
-    padding: 10px;
-    background-color: #e9ecef;
-    border-radius: 8px;
-}
-
 .loading {
     font-size: 18px;
     color: #007bff;
@@ -59,36 +52,68 @@
     font-weight: bold;
 }
 
-/* Estilos para la barra de progreso */
-.steps {
+.stepsContainer {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    position: relative;
 }
 
 .step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
     text-align: center;
+    position: relative;
 }
 
-.step-icon-wrap {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.stepIcon {
     height: 40px;
     width: 40px;
     border-radius: 50%;
     background-color: #e9ecef;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 20px;
+    color: #999;
 }
 
-.step-icon {
-    font-size: 24px;
-}
-
-.step.completed .step-icon-wrap {
+.step.completed .stepIcon {
     background-color: #007bff;
     color: white;
 }
 
-.step-title {
-    font-size: 14px;
-    margin-top: 8px;
+.stepTitle {
+    font-size: 12px;
+    color: #333;
+    margin-top: 4px;
+}
+
+.stepConnector {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: calc(100% - 80px); /* Adjust the width based on spacing */
+    height: 2px;
+    background-color: #e9ecef;
+    z-index: -1;
+    transform: translateX(-50%);
+}
+
+.step.completed + .stepConnector {
+    background-color: #007bff;
+}
+
+.stepsContainer .step:first-child .stepConnector {
+    left: calc(100% + 20px); /* Adjust the position based on spacing */
+}
+
+.stepsContainer .step:last-child .stepConnector {
+    left: auto;
+    right: calc(100% + 20px); /* Adjust the position based on spacing */
+    width: calc(100% - 40px);
 }

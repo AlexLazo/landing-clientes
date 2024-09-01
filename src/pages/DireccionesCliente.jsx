@@ -22,7 +22,7 @@ const DireccionesCliente = () => {
             }
 
             try {
-                const { data: { id: clienteId } } = await axios.get(`${API_URL}/cliente`, {
+                const { data: { id: clienteId } } = await axios.get(`${API_URL}/clientes`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -39,13 +39,18 @@ const DireccionesCliente = () => {
         };
 
         const handleError = (error) => {
-            if (error.response?.status === 404) {
-                setError('Direcciones no encontradas.');
+            if (error.response) {
+                console.error('Response error:', error.response.data);
+                if (error.response.status === 404) {
+                    setError('Direcciones no encontradas.');
+                } else {
+                    setError(error.response.data.message || 'Error al cargar las direcciones.');
+                }
             } else {
-                console.error('Error fetching data:', error);
+                console.error('Error:', error);
                 setError('Error al cargar las direcciones.');
             }
-        };
+        };        
 
         fetchData();
     }, [navigate]);

@@ -152,42 +152,18 @@ const AgregarDireccion = () => {
 
             console.log("Dirección registrada:", response.data);
             setAlertaExito(true);
-            setTimeout(() => setAlertaExito(false), 2000);
-            resetForm();
             setAlertaError(false);
+            setNombreContacto("");
+            setTelefono("");
+            setDepartamento("");
+            setMunicipio("");
+            setDireccion("");
+            setReferencia("");
         } catch (error) {
-            console.error("Error de solicitud:", error);
-            handleError(error);
+            console.error("Error al registrar la dirección:", error);
+            setAlertaError(true);
+            setErrorMensaje("Hubo un error al registrar la dirección.");
         }
-    };
-
-    const resetForm = () => {
-        setNombreContacto("");
-        setTelefono("");
-        setDireccion("");
-        setDepartamento("");
-        setMunicipio("");
-        setReferencia("");
-    };
-
-    const handleError = (error) => {
-        let errorMessage = "Hubo un error al procesar la solicitud. Por favor, inténtalo de nuevo.";
-
-        if (error.response && error.response.data) {
-            const errorData = error.response.data;
-
-            if (errorData.error) {
-                const errors = errorData.error;
-
-                if (errors.direccion && errors.direccion.length > 0) {
-                    errorMessage = "La dirección ya está registrada.";
-                }
-            }
-        }
-
-        setAlertaExito(false);
-        setAlertaError(true);
-        setErrorMensaje(errorMessage);
     };
 
     return (
@@ -325,7 +301,7 @@ const AgregarDireccion = () => {
                                                 </FormGroup>
                                             </Col>
                                         </Row>
-                                        <Button type="submit" color="primary">Agregar Dirección</Button>
+                                        <Button type="submit" className="btn-custom" color="primary">Agregar Dirección</Button>
                                     </Form>
                                 </CardBody>
                             </Card>

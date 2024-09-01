@@ -10,12 +10,11 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Verificar autenticación del usuario al cargar el componente
     const checkAuth = async () => {
       try {
         const token = localStorage.getItem('authToken');
         if (token) {
-          // Aquí podrías verificar la validez del token si es necesario
+          console.log('Token encontrado:', token); // Log para depuración
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);
@@ -27,9 +26,9 @@ export const AuthProvider = ({ children }) => {
         setLoading(false);
       }
     };
-
+  
     checkAuth();
-  }, []);
+  }, []);  
 
   const login = async (email, password) => {
     try {

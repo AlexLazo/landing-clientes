@@ -368,7 +368,7 @@ const AgregarCliente = () => {
             <div className="page-content">
                 <Container fluid>
                     <Row>
-                        <Col lg="12">
+                        <Col lg="6">
                             <Card>
                                 <CardBody>
                                     {/* Título del formulario */}

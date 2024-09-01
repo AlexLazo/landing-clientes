@@ -10,10 +10,10 @@ const loginClient = async (email, password) => {
   try {
     const response = await axios.post(`${API_URL}/login-cliente`, { email, password });
     if (response.data.token) {
-      //console.log('Token recibido:', response.data.token);
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("clienteId", response.data.user.id);
+      console.log('Token almacenado:', response.data.token); // Log para depuración
       return response.data.token;
     }
     return null;
@@ -22,6 +22,7 @@ const loginClient = async (email, password) => {
     throw new Error("Error al iniciar sesión.");
   }
 };
+
 
 const logout = () => {
   localStorage.removeItem("authToken");

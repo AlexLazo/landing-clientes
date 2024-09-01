@@ -93,6 +93,7 @@ const App = () => (
       <AppContent />
     </AuthProvider>
   </Router>
+
 );
 
 export default App;
