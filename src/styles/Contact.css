@@ -245,3 +245,25 @@ margin: 10px;
   padding: auto;
   margin: 10px;
 }
+
+/* MODO OSCURO | CONTACTANOS */
+
+.dark-mode .contact-board-card {
+  background-color: #3e3b38; 
+}
+
+.dark-mode .contact-info-telefono{
+      background-color: #34332f;
+}
+
+.dark-mode .contact-info-email{
+  background-color: #34332f;
+}
+
+.dark-mode .contact-info-social{
+  background-color: #34332f;
+}
+
+.dark-mode .contact-info-visit{
+  background-color: #34332f;
+}

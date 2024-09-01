@@ -275,3 +275,17 @@
   .alianza-img:hover {
     filter: drop-shadow(0 0 2em var(--primary-color));
   }
+
+  /* DARK MODE | SOBRE NOSOTROS */
+
+  .dark-mode .about-content {
+    background-color: #34332f;
+  }
+
+  .dark-mode .alianzas{
+    background-color: #65574E;
+  }
+
+  .dark-mode .alianzas-card{
+    background-color: #34332f;
+  }

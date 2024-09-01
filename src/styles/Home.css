@@ -5,10 +5,11 @@
     padding: 0;
     color: #333;
     box-sizing: border-box;
+    min-width: 600px;
   }
   
   .hero-section {
-    background-image: url(..\assets\images\servicio-de-paqueteria-4.jpg);
+    background-image: url(../assets/images/servicio-de-paqueteria-4.jpg);
     background-position: 30%  30%;
     background-size: initial;
     background-attachment: inherit;
@@ -19,13 +20,72 @@
   }
   
   .hero-content {
-    background: linear-gradient(to right, #d6d2ce, #e1dfd8);
+    background-color: #d6d2ce;
     text-align: center;
     max-width: 600px;
     margin: 0 auto;
     border-radius: 20px;
     padding: 1rem 1rem;
   }
+
+  /* MODO NOCHE PARA TODAS LAS AREAS */
+
+  /* HOME */
+
+  .dark-mode header .hero-content{
+    background-color: #34332f;
+  }
+
+  /* LETRAS - TODO LANDING PAGE */
+  .dark-mode h1{
+    color: #e1dfd8;
+  }
+
+  .dark-mode h2{
+    color: #e1dfd8;
+  }
+
+  .dark-mode h3{
+    color: #e1dfd8;
+  }
+
+  .dark-mode h4{
+    color: #e1dfd8;
+  }
+
+  .dark-mode p{
+    color: #dfdfdf;
+    font-weight:500;
+  }
+
+  .dark-mode ul{
+    color: #dfdfdf;
+    font-weight:500; 
+  }
+
+    /* JOIN US MR PAQUETES */
+
+  .dark-mode section .join-us-card {
+      background-color: #34332f;
+    }
+  
+  .dark-mode .w-text-container-service p {
+    color: #e1dfd8;
+  }
+
+  .dark-mode .w-text-container-service h1 {
+    color: #e1dfd8;
+  }
+
+  .dark-mode .services-contact-card h1 {
+    color: #e1dfd8;
+  }
+
+  .dark-mode .services-contact-card p {
+    color: #e1dfd8;
+  }
+
+  /* ---------------------------- */
   
   .hero-section h1 {
     font-size: 3rem;
@@ -42,8 +102,27 @@
   .hero-section p {
     font-size: 1.2rem;  
     line-height: 1.5;
+    font-weight:400;
   }
   
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
+    font-size: 16px; /* Tamaño de la fuente */
+    font-weight: bold;
+    color:#E1DFDB; /* Color del texto */
+    background-color: #408345; /* Color de fondo */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados */
+    text-align: center; /* Alinea el texto al centro */
+    text-decoration: none; /* Quita el subrayado */
+    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
+  }
+  
+  .cta-button:hover {
+    background-color: #33691E; /* Color de fondo al pasar el ratón */
+  }
+
   .cta-button {
     display: inline-block;
     padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
@@ -168,6 +247,8 @@
   padding: 60px 20px;
   background-color: #65574E;
   text-align: center;
+  width: auto;
+  min-width: 600px;
 }
 
 .join-us-card {
@@ -175,7 +256,7 @@
   border-radius: 10px;
   padding: 30px 200px;
   margin: 20px auto;
-  max-width: 1100px;
+  max-width: 1200px;
 }
 
 .join-us-card h1 {
@@ -194,6 +275,16 @@
   font-size: 1.2rem;
   margin-bottom: 30px;
   line-height: 1.5;
+}
+
+.dark-mode .join-us-card a {
+  color: #e1dfd8;
+  font-weight: bold;
+}
+
+.join-us-card .contact-btn {
+  color: #34332f;
+  font-weight: bold;
 }
 
 .join-us contact-us-join-us p{
@@ -235,6 +326,8 @@ font-style: bold;
   }
   
 */
+
+
   /* CONTACTO */
   .contact-form {
     padding: 60px 20px;

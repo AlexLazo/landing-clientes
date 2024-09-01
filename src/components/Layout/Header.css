@@ -17,10 +17,10 @@ body, html {
 }
 
 body.dark-mode {
-  --bg-color: #121212;
-  --text-color: #ffffff;
-  --primary-color: #958d86;
-  --primary-hover-color: #65574e;
+  --bg-color: #34332f;
+  --text-color: #dfdfdf;
+  --primary-color: #403E3A;
+  --primary-hover-color: #8c827b;
 }
 
 /* Header Styles */

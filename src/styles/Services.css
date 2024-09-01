@@ -257,3 +257,14 @@
   .services-contact-img:hover {
     filter: drop-shadow(0 0 2em var(--primary-color));
   }
+
+
+  /* MODO OSCURO | NUESTROS SERVICIOS*/
+
+  .dark-mode .w-service-content{
+    background-color: #34332f;
+  }
+
+  .dark-mode .services-contact-card{
+    background-color: #34332f;
+  }
