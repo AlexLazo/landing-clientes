@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from 'react-modal';
 import styles from "/src/styles/PerfilCliente.module.css";
+import { Button, ListGroup, ListGroupItem, Spinner } from 'reactstrap';
+import { Pagination } from '@mui/material'; // Importa el componente Pagination de MUI
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -10,30 +12,34 @@ Modal.setAppElement('#root');
 
 export default function PerfilCliente() {
     const [cliente, setCliente] = useState(null);
+    const [direcciones, setDirecciones] = useState([]);
     const [loading, setLoading] = useState(true);
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [confirmDeleteModalIsOpen, setConfirmDeleteModalIsOpen] = useState(false);
     const [activeTab, setActiveTab] = useState('datos-generales');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const DIRECTIONS_PER_PAGE = 3;
     const navigate = useNavigate();
 
     useEffect(() => {
         const fetchCliente = async () => {
             const token = localStorage.getItem("authToken");
-
+    
             if (!token) {
                 navigate("/login");
                 return;
             }
-
+    
             try {
                 const response = await axios.get(`${API_URL}/perfil-cliente`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-
+    
                 setCliente(response.data.cliente);
-
+    
                 if (!response.data.cliente.telefono) {
                     setModalIsOpen(true);
                 }
@@ -47,9 +53,41 @@ export default function PerfilCliente() {
                 setLoading(false);
             }
         };
-
+    
         fetchCliente();
     }, [navigate]);
+    
+    useEffect(() => {
+        const fetchDirecciones = async () => {
+            const token = localStorage.getItem('authToken');
+
+            if (!token) {
+                navigate('/login');
+                return;
+            }
+
+            try {
+                const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const clienteId = clienteData.cliente.id;
+
+                const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
+                    params: { id_cliente: clienteId, page: currentPage },
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                setDirecciones(direccionesData.direcciones || []);
+                setTotalPages(direccionesData.totalPages || 1);
+            } catch (error) {
+                console.error("Error fetching direcciones:", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchDirecciones();
+    }, [currentPage, navigate]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -91,6 +129,10 @@ export default function PerfilCliente() {
     const handleAddData = () => {
         navigate('/agregar-cliente');
         closeModal();
+    };
+
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
     };
 
     if (loading) {
@@ -189,9 +231,43 @@ export default function PerfilCliente() {
                     </div>
                 )}
                 {activeTab === 'direcciones' && (
-                    <div className={styles.addressSection}>
-                        {/* Placeholder for Address Section */}
-                        <p>Direcciones favoritas</p>
+                    <div className={styles.direccionesClienteContainer}>
+                        {loading ? (
+                            <div className={styles.loading}>
+                                <Spinner color="primary" />
+                            </div>
+                        ) : (
+                            <>
+                                {direcciones.length === 0 ? (
+                                    <div className={styles.emptyMessage}>No tienes direcciones registradas.</div>
+                                ) : (
+                                    <>
+                                        <ListGroup className={styles.listGroup}>
+                                            {direcciones.slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE).map(direccion => (
+                                                <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                                    <div className={styles.direccionDetails}>
+                                                        <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                                        <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                                        <p><strong>Teléfono:</strong> {direccion.telefono}</p>
+                                                        <p><strong>Referencia:</strong> {direccion.referencia}</p>
+                                                    </div>
+                                                </ListGroupItem>
+                                            ))}
+                                        </ListGroup>
+
+                                        <div className={styles.paginationContainer}>
+                                            <Pagination
+                                                count={totalPages}
+                                                page={currentPage}
+                                                onChange={handlePageChange}
+                                                color="primary"
+                                                variant="outlined"
+                                            />
+                                        </div>
+                                    </>
+                                )}
+                            </>
+                        )}
                     </div>
                 )}
             </div>

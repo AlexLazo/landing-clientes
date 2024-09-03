@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
+import { Button, ListGroup, ListGroupItem, Spinner, Alert, Input } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
+import { Pagination } from '@mui/material'; // Importa el componente Pagination de MUI
 import styles from '../styles/Direcciones.module.css';
 import ModalEditarDireccion from './ModalEditarDireccion';
 
 const API_URL = import.meta.env.VITE_API_URL;
+const DIRECTIONS_PER_PAGE = 3;
 
 const DireccionesCliente = () => {
     const [direcciones, setDirecciones] = useState([]);
@@ -14,6 +16,8 @@ const DireccionesCliente = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const [direccionToEdit, setDireccionToEdit] = useState(null);
     const [direccionToDelete, setDireccionToDelete] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [searchQuery, setSearchQuery] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -33,7 +37,7 @@ const DireccionesCliente = () => {
                 const clienteId = clienteData.cliente.id;
 
                 const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
-                    params: { id_cliente: clienteId },
+                    params: { id_cliente: clienteId, page: currentPage, search: searchQuery },
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
@@ -54,7 +58,7 @@ const DireccionesCliente = () => {
         };
 
         fetchData();
-    }, [navigate, modalOpen]); // Add modalOpen to dependencies to refetch when modal closes
+    }, [navigate, modalOpen, currentPage, searchQuery]); // Add dependencies
 
     const handleEdit = (direccion) => {
         setDireccionToEdit(direccion);
@@ -74,7 +78,7 @@ const DireccionesCliente = () => {
             const clienteId = clienteData.cliente.id;
 
             const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
-                params: { id_cliente: clienteId },
+                params: { id_cliente: clienteId, page: currentPage, search: searchQuery },
                 headers: { Authorization: `Bearer ${token}` }
             });
 
@@ -112,6 +116,17 @@ const DireccionesCliente = () => {
         setModalOpen(false);
     };
 
+    const handleSearch = (event) => {
+        setSearchQuery(event.target.value);
+        setCurrentPage(1); // Reset to first page on new search
+    };
+
+    const handlePageChange = (event, newPage) => {
+        setCurrentPage(newPage);
+    };
+
+    const totalPages = Math.ceil(direcciones.length / DIRECTIONS_PER_PAGE);
+
     return (
         <div className={styles.direccionesClienteContainer}>
             <div className={styles.header}>
@@ -124,7 +139,6 @@ const DireccionesCliente = () => {
                     Agregar Dirección
                 </Button>
             </div>
-
             {loading ? (
                 <div className={styles.loading}>
                     <Spinner color="primary" />
@@ -137,10 +151,10 @@ const DireccionesCliente = () => {
                 <>
                     <h2 className={styles.subtitle}>Direcciones Registradas</h2>
                     <ListGroup className={styles.listGroup}>
-                        {direcciones.map(direccion => (
+                        {direcciones.slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE).map(direccion => (
                             <ListGroupItem key={direccion.id} className={styles.listItem}>
                                 <div className={styles.direccionDetails}>
-                                    <h5 className={styles.direccionTitle}>{direccion.direccion}</h5>
+                                    <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
                                     <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
                                     <p><strong>Teléfono:</strong> {direccion.telefono}</p>
                                     <p><strong>Referencia:</strong> {direccion.referencia}</p>
@@ -164,6 +178,17 @@ const DireccionesCliente = () => {
                             </ListGroupItem>
                         ))}
                     </ListGroup>
+
+                    <div className={styles.paginationContainer}> {/* Usa la clase CSS para centrar */}
+                        <Pagination
+                            count={totalPages}
+                            page={currentPage}
+                            onChange={handlePageChange}
+                            color="primary"
+                            variant="outlined"
+                            shape="rounded"
+                        />
+                    </div>
                 </>
             )}
 

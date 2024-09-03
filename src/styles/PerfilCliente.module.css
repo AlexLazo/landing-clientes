@@ -241,3 +241,39 @@
   margin-left: 10px;
 }
 
+.listGroup {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+/* Direcciones.module.css */
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px; /* Ajusta el espacio superior según sea necesario */
+}
+
+
+.direccionDetails p {
+  text-align: left;
+  margin: 5px 0; /* Espacio superior e inferior para separar los párrafos */
+  line-height: 1.5; /* Espaciado entre líneas para mejorar la legibilidad */
+  color: #666; /* Color de texto para los detalles de la dirección */
+}
+
+.direccionDetails strong {
+  color: #333; /* Color del texto en negrita para destacar las etiquetas */
+}
+
+/* Elemento de la lista */
+.listItem {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #fff;
+}

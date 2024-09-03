@@ -20,6 +20,8 @@ const AgregarDireccion = () => {
     const [errorMensaje, setErrorMensaje] = useState("");
     const [direccionError, setDireccionError] = useState("");
     const [isDireccionValid, setIsDireccionValid] = useState(true);
+    const [isTelefonoValid, setIsTelefonoValid] = useState(true);
+    const [telefonoError, setTelefonoError] = useState("");
     
     const [idCliente, setIdCliente] = useState("");
     const [loading, setLoading] = useState(true);
@@ -111,8 +113,35 @@ const AgregarDireccion = () => {
         setDireccionError(isValid ? "" : "La dirección es obligatoria.");
     };
 
+    const handleTelefonoChange = (e) => {
+        let telefonoValue = e.target.value.replace(/[^\d]/g, "");
+
+        // Verificar si el primer dígito es 6, 7 o 2
+        if (telefonoValue.length > 0 && !["6", "7", "2"].includes(telefonoValue[0])) {
+            setTelefonoError("El número de teléfono debe comenzar con 6, 7 o 2");
+            setIsTelefonoValid(false);
+            // Prevent further input by not updating state by default
+            return;
+        } else {
+            setTelefonoError("");
+        }
+
+        // Limit to 8 digits
+        if (telefonoValue.length > 8) {
+            telefonoValue = telefonoValue.slice(0, 8);
+        }
+
+        if (telefonoValue.length > 4) {
+            telefonoValue = telefonoValue.slice(0, 4) + "-" + telefonoValue.slice(4);
+        }
+
+        setTelefono(telefonoValue);
+
+        const isValid = telefonoValue.length === 9;
+        setIsTelefonoValid(isValid);
+    };
+
     const handleNombreContactoChange = (e) => setNombreContacto(e.target.value);
-    const handleTelefonoChange = (e) => setTelefono(e.target.value);
     const handleReferenciaChange = (e) => setReferencia(e.target.value);
     const handleDepartamentoChange = (e) => {
         const selectedDepartamento = e.target.value;
@@ -124,23 +153,23 @@ const AgregarDireccion = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!isDireccionValid || !departamento || !municipio) {
+        if (!isDireccionValid || !departamento || !municipio || !isTelefonoValid) {
             setAlertaError(true);
             setErrorMensaje("Por favor, revisa los campos requeridos.");
             return;
         }
 
-        const direccionData = {
-            id_cliente: idCliente,
-            nombre_contacto: nombreContacto,
-            telefono: telefono,
-            direccion,
-            id_departamento: departamento,
-            id_municipio: municipio,
-            referencia
-        };
-
         try {
+            const direccionData = {
+                id_cliente: idCliente,
+                nombre_contacto: nombreContacto,
+                telefono,
+                direccion,
+                id_departamento: departamento,
+                id_municipio: municipio,
+                referencia
+            };
+
             await axios.post(`${API_URL}/direcciones`, direccionData, {
                 headers: {
                     "Content-Type": "application/json",
@@ -213,31 +242,14 @@ const AgregarDireccion = () => {
                                                             className={styles.input}
                                                             value={telefono}
                                                             onChange={handleTelefonoChange}
+                                                            invalid={!isTelefonoValid}
                                                             required
                                                         />
+                                                        <FormFeedback>{telefonoError}</FormFeedback>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
                                             <Row form>
-                                                <Col md={6}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="direccion">Dirección</Label>
-                                                        <Input
-                                                            type="text"
-                                                            id="direccion"
-                                                            className={styles.input}
-                                                            value={direccion}
-                                                            onChange={handleDireccionChange}
-                                                            required
-                                                            invalid={!isDireccionValid}
-                                                        />
-                                                        {!isDireccionValid && (
-                                                            <FormFeedback className={styles.errorFeedback}>
-                                                                La dirección es obligatoria.
-                                                            </FormFeedback>
-                                                        )}
-                                                    </FormGroup>
-                                                </Col>
                                                 <Col md={6}>
                                                     <FormGroup className={styles.formGroup}>
                                                         <Label className={styles.label} for="departamento">Departamento</Label>
@@ -249,17 +261,13 @@ const AgregarDireccion = () => {
                                                             onChange={handleDepartamentoChange}
                                                             required
                                                         >
-                                                            <option value="">Seleccione</option>
-                                                            {departamentos.map((dep) => (
-                                                                <option key={dep.id} value={dep.id}>
-                                                                    {dep.nombre}
-                                                                </option>
+                                                            <option value="">Seleccionar Departamento</option>
+                                                            {departamentos.map(dep => (
+                                                                <option key={dep.id} value={dep.id}>{dep.nombre}</option>
                                                             ))}
                                                         </Input>
                                                     </FormGroup>
                                                 </Col>
-                                            </Row>
-                                            <Row form>
                                                 <Col md={6}>
                                                     <FormGroup className={styles.formGroup}>
                                                         <Label className={styles.label} for="municipio">Municipio</Label>
@@ -270,18 +278,34 @@ const AgregarDireccion = () => {
                                                             value={municipio}
                                                             onChange={handleMunicipioChange}
                                                             required
-                                                            disabled={!departamento}
                                                         >
-                                                            <option value="">Seleccione</option>
-                                                            {municipiosPorDepartamento[departamento]?.map((mun) => (
-                                                                <option key={mun.id} value={mun.id}>
-                                                                    {mun.nombre}
-                                                                </option>
+                                                            <option value="">Seleccionar Municipio</option>
+                                                            {(municipiosPorDepartamento[departamento] || []).map(mun => (
+                                                                <option key={mun.id} value={mun.id}>{mun.nombre}</option>
                                                             ))}
                                                         </Input>
                                                     </FormGroup>
                                                 </Col>
-                                                <Col md={6}>
+                                            </Row>
+                                            <Row form>
+                                                <Col md={12}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="direccion">Dirección</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="direccion"
+                                                            className={styles.input}
+                                                            value={direccion}
+                                                            onChange={handleDireccionChange}
+                                                            invalid={!isDireccionValid}
+                                                            required
+                                                        />
+                                                        <FormFeedback>{direccionError}</FormFeedback>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row form>
+                                                <Col md={12}>
                                                     <FormGroup className={styles.formGroup}>
                                                         <Label className={styles.label} for="referencia">Referencia</Label>
                                                         <Input
@@ -294,13 +318,7 @@ const AgregarDireccion = () => {
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-                                            <Button
-                                                type="submit"
-                                                color="primary"
-                                                className={styles.submitButton}
-                                            >
-                                                Guardar
-                                            </Button>
+                                            <Button color="primary" type="submit" className={styles.submitButton}>Guardar</Button>
                                         </Form>
                                     )}
                                 </CardBody>
