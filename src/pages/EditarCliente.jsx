@@ -22,6 +22,12 @@ const EditarCliente = () => {
                 const token = localStorage.getItem("authToken");
                 const clienteId = localStorage.getItem("clienteId");
 
+                if (!token) {
+                    setError("Token de autenticación no encontrado.");
+                    navigate('/login');
+                    return;
+                }
+
                 if (!clienteId) {
                     setError("Cliente ID no encontrado.");
                     navigate('/perfil-cliente');
@@ -51,7 +57,12 @@ const EditarCliente = () => {
     });
 
     const handleFetchError = (err) => {
-        setError("Error al cargar datos del cliente.");
+        if (err.response && err.response.status === 401) {
+            setError("No autorizado. Por favor, inicie sesión nuevamente.");
+            navigate('/login');
+        } else {
+            setError("Error al cargar datos del cliente.");
+        }
         console.error("Error:", err);
     };
 
@@ -65,8 +76,14 @@ const EditarCliente = () => {
 
     const handleSave = async () => {
         try {
-            const token = localStorage.getItem("token");
+            const token = localStorage.getItem("authToken");
             const clienteId = localStorage.getItem("clienteId");
+
+            if (!token) {
+                setError("Token de autenticación no encontrado.");
+                navigate('/login');
+                return;
+            }
 
             await axios.put(`${API_URL}/actualizar-perfil-cliente`, cliente, {
                 headers: createAuthHeader(token),
@@ -75,9 +92,20 @@ const EditarCliente = () => {
             alert("Perfil actualizado con éxito.");
             navigate(`/perfil-cliente`);
         } catch (err) {
-            setError("Error al guardar los cambios.");
-            console.error("Error:", err);
+            handleSaveError(err);
         }
+    };
+
+    const handleSaveError = (err) => {
+        if (err.response && err.response.status === 400) {
+            setError("Datos de cliente inválidos. Por favor, revisa los campos.");
+        } else if (err.response && err.response.status === 401) {
+            setError("No autorizado. Por favor, inicie sesión nuevamente.");
+            navigate('/login');
+        } else {
+            setError("Error al guardar los cambios.");
+        }
+        console.error("Error:", err);
     };
 
     if (loading) {

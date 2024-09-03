@@ -1,11 +1,13 @@
+/* Contenedor principal */
 .direccionesClienteContainer {
-    max-width: 800px;
-    margin: 50px auto; /* Centrar el contenedor y darle margen superior */
+    max-width: 900px;
+    margin: 50px auto;
     padding: 20px;
-    background-color: #f7f9fc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    color: #333;
 }
 
 /* Sección del header */
@@ -13,34 +15,41 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 15px;
     margin-bottom: 20px;
 }
 
 .title {
-    font-size: 24px;
-    color: #333;
+    font-size: 26px;
+    font-weight: bold;
+    color: #2c3e50;
 }
 
 .buttonAgregar {
-    background-color: #071e2a;
+    background-color: #3498db;
     color: white;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 24px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .buttonAgregar:hover {
-    background-color: #4e54c8;
+    background-color: #2980b9;
+    transform: scale(1.05);
 }
 
 /* Subtítulo */
 .subtitle {
-    font-size: 20px;
-    color: #333;
-    margin-bottom: 15px;
+    font-size: 22px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
 }
 
 /* Loading y mensajes de error */
@@ -54,52 +63,185 @@
 
 /* Estilo de la lista */
 .listGroup {
-    margin: 0;
     padding: 0;
+    margin: 0;
     list-style: none;
 }
 
+/* Elemento de la lista */
 .listItem {
-    background-color: #ffffff;
+    background-color: #f9f9f9;
     padding: 15px;
     margin-bottom: 10px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
+/* Botones de acción */
 .actionButtons {
     display: flex;
     gap: 10px;
 }
 
-/* Botones de acción */
 .button {
     border: none;
-    padding: 8px 15px;
-    border-radius: 5px;
+    padding: 8px 16px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 14px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Botón Editar */
 .buttonEditar {
-    background-color: #53645e;
+    background-color: #2ecc71;
     color: white;
-    transition: background-color 0.3s;
 }
 
 .buttonEditar:hover {
-    background-color: #6a6eff;
+    background-color: #27ae60;
+    transform: scale(1.05);
 }
 
+/* Botón Eliminar */
 .buttonEliminar {
-    background-color: #ff4d4f;
+    background-color: #e74c3c;
     color: white;
-    transition: background-color 0.3s;
 }
 
 .buttonEliminar:hover {
-    background-color: #ff7875;
+    background-color: #c0392b;
+    transform: scale(1.05);
+}
+
+/* Modal overlay */
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal content */
+.modalContent {
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    width: 350px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal buttons */
+.confirmButton,
+.cancelButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 14px 28px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.cancelButton {
+    background-color: #6c757d;
+}
+
+.confirmButton:hover,
+.cancelButton:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+/* Modal overlay */
+.modalOverlayEdit {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+/* Modal content */
+.modalContentEdit {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    text-align: left;
+    width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Form fields */
+.modalFormGroup {
+    margin-bottom: 15px;
+}
+
+.modalFormGroup label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #2c3e50;
+}
+
+.modalFormGroup input,
+.modalFormGroup textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Buttons */
+.modalButtonGroup {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.modalButton {
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.saveButton {
+    background-color: #3498db;
+    color: white;
+}
+
+.saveButton:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
+.cancelButtonEdit {
+    background-color: #6c757d;
+    color: white;
+}
+
+.cancelButtonEdit:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
 }

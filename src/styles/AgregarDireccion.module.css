@@ -1,199 +1,80 @@
-/* Contenedor general para DireccionesCliente */
-.direcciones-cliente-container {
-    display: flex;
-    flex-direction: column;
+/* AgregarDireccion.module.css */
+
+.direccionesClienteContainer {
+    background-color: #f4f7f9;
+    padding: 2rem;
     min-height: 100vh;
-    padding: 2%;
-    background-color: #f4f4f4;
-    box-sizing: border-box;
 }
 
-/* Título de la sección */
-.direcciones-cliente-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #4e54c8;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-/* Subtítulo */
-.direcciones-cliente-subtitle {
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: #333;
-    margin-bottom: 1rem;
-    text-align: center;
-}
-
-/* Lista de direcciones */
-.direcciones-cliente-lista {
-    list-style: none;
-    padding: 0;
-    margin: 0 auto;
-    max-width: 600px;
-}
-
-/* Elemento de la lista */
-.direcciones-cliente-lista-item {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-/* Botones de acción para cada dirección */
-.direcciones-cliente-action-buttons button {
-    margin-left: 10px;
-}
-
-/* Botón general */
-.direcciones-cliente-button {
-    background-color: #071e2a;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-/* Botón de agregar dirección */
-.direcciones-cliente-button-agregar {
-    background-color: #8f94fb;
-    padding: 10px 20px;
+.card {
+    background-color: #ffffff;
     border-radius: 8px;
-    font-size: 1rem;
-    cursor: pointer;
-    margin-bottom: 20px;
-    transition: background-color 0.3s, transform 0.2s;
-    align-self: flex-start;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
 }
 
-.direcciones-cliente-button-agregar:hover {
-    background-color: #4e54c8;
-    transform: scale(1.05);
-}
-
-/* Botones individuales */
-.direcciones-cliente-button:hover {
-    background-color: #4e54c8;
-}
-
-.direcciones-cliente-button-editar {
-    background-color: #4e54c8;
-}
-
-.direcciones-cliente-button-eliminar {
-    background-color: #e63946;
-}
-
-.direcciones-cliente-button-eliminar:hover {
-    background-color: #b02a37;
-}
-
-/* Modal */
-.direcciones-cliente-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* Contenido del modal */
-.direcciones-cliente-modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 10px;
-    width: 400px;
-    max-width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    position: relative;
-}
-
-/* Formulario dentro del modal */
-.direcciones-cliente-form-group {
-    margin-bottom: 15px;
-}
-
-.direcciones-cliente-label {
-    font-weight: 600;
-    margin-bottom: 5px;
-    display: block;
+.direccionesClienteTitle {
     color: #333;
-}
-
-.direcciones-cliente-input {
-    width: 100%;
-    padding: 8px;
-    font-size: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.direcciones-cliente-form-button {
-    background-color: #071e2a;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    width: 100%;
-    margin-top: 10px;
-}
-
-.direcciones-cliente-button-agregar {
-    width: 50%;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    border: none;
-    background-color: #007bff;
-    color: #fff;
-    cursor: pointer;
-    text-align: center;
-    font-weight: 500;
-    display: block;
-    margin: 0 auto;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.direcciones-cliente-button-agregar:hover {
-    background-color: #0056b3;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.direcciones-cliente-button-agregar:active {
-    background-color: #004080;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.direcciones-cliente-form-button-primary {
-    background-color: #8f94fb;
-}
-
-.direcciones-cliente-form-button:hover {
-    background-color: #4e54c8;
-}
-
-/* Cerrar modal */
-.direcciones-cliente-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
     font-size: 1.5rem;
-    cursor: pointer;
+    margin-bottom: 1.5rem;
+}
+
+.alertSuccessCustom {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+    margin-bottom: 1rem;
+}
+
+.alertDangerCustom {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+    margin-bottom: 1rem;
+}
+
+.loading {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.formGroup {
+    margin-bottom: 1rem;
+}
+
+.label {
+    color: #555;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+}
+
+.input {
+    border-radius: 4px;
+    border: 1px solid #ced4da;
+    padding: 0.5rem;
+    width: 100%; /* Hace que el input ocupe todo el ancho disponible */
+}
+
+.errorFeedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+}
+
+.submitButton {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #ffffff;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s, border-color 0.2s;
+    width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+}
+
+.submitButton:hover {
+    background-color: #0056b3;
+    border-color: #004085;
 }
 
 /* Estilo general para las alertas */

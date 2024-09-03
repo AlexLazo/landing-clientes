@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, Button, Alert, FormFeedback } from "reactstrap";
-import AuthService from "/src/services/authService";
+import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, Button, Alert, FormFeedback, Spinner } from "reactstrap";
 import axios from 'axios';
-import "/src/styles/AgregarDireccion.module.css";
+import { useNavigate } from 'react-router-dom';
+import styles from '/src/styles/AgregarDireccion.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -20,106 +20,106 @@ const AgregarDireccion = () => {
     const [errorMensaje, setErrorMensaje] = useState("");
     const [direccionError, setDireccionError] = useState("");
     const [isDireccionValid, setIsDireccionValid] = useState(true);
+    
+    const [idCliente, setIdCliente] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-    const [idCliente, setIdCliente] = useState(""); // Nuevo estado para id_cliente
-
-    const token = AuthService.getCurrentUser();
+    const navigate = useNavigate();
+    const token = localStorage.getItem('authToken');
 
     useEffect(() => {
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchDepartamentos = async () => {
             try {
                 const response = await axios.get(`${API_URL}/dropdown/get_departamentos`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
+                    headers: { Authorization: `Bearer ${token}` }
                 });
-                if (response.data && Array.isArray(response.data)) {
-                    setDepartamentos(response.data);
-                } else {
-                    console.error("Respuesta no válida para departamentos:", response.data);
-                }
+                setDepartamentos(response.data || []);
             } catch (error) {
                 console.error("Error al obtener los departamentos:", error);
+                setError("Error al cargar los departamentos.");
             }
         };
 
         fetchDepartamentos();
-    }, [token]);
+    }, [token, navigate]);
 
     useEffect(() => {
-        const fetchMunicipios = async () => {
-            if (departamento) {
+        if (departamento) {
+            const fetchMunicipios = async () => {
                 try {
                     const response = await axios.get(`${API_URL}/dropdown/get_municipio/${departamento}`, {
-                        headers: {
-                            Authorization: `Bearer ${token}`
-                        }
+                        headers: { Authorization: `Bearer ${token}` }
                     });
-                    if (response.data.municipio && Array.isArray(response.data.municipio)) {
-                        setMunicipiosPorDepartamento(prev => ({
-                            ...prev,
-                            [departamento]: response.data.municipio
-                        }));
-                    } else {
-                        console.error("Respuesta no válida para municipios:", response.data);
-                    }
+                    setMunicipiosPorDepartamento(prev => ({
+                        ...prev,
+                        [departamento]: response.data.municipio || []
+                    }));
                 } catch (error) {
                     console.error("Error al obtener los municipios:", error);
+                    setError("Error al cargar los municipios.");
                 }
-            }
-        };
+            };
 
-        fetchMunicipios();
+            fetchMunicipios();
+        }
     }, [departamento, token]);
 
     useEffect(() => {
-        // Suponiendo que `AuthService` puede proporcionar el id_cliente
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
         const fetchIdCliente = async () => {
             try {
-                const response = await AuthService.getCurrentUserInfo(); // Debe devolver el id_cliente
-                if (response && response.id_cliente) {
-                    setIdCliente(response.id_cliente);
-                } else {
-                    console.error("No se pudo obtener el id_cliente.");
-                }
+                const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+                setIdCliente(clienteData.cliente.id);
             } catch (error) {
                 console.error("Error al obtener el id_cliente:", error);
+                setError("Error al cargar el id del cliente.");
+            } finally {
+                setLoading(false);
             }
         };
 
         fetchIdCliente();
-    }, []);
+    }, [token, navigate]);
+
+    useEffect(() => {
+        if (alertaExito) {
+            const timer = setTimeout(() => {
+                navigate('/direcciones-cliente');
+            }, 2000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [alertaExito, navigate]);
 
     const handleDireccionChange = (e) => {
         const value = e.target.value;
         setDireccion(value);
-        // Validar dirección si es necesario
-        const isValid = value.length > 0; // Ejemplo simple: dirección no vacía
+        const isValid = value.trim().length > 0;
         setIsDireccionValid(isValid);
         setDireccionError(isValid ? "" : "La dirección es obligatoria.");
     };
 
-    const handleNombreContactoChange = (e) => {
-        setNombreContacto(e.target.value);
-    };
-
-    const handleTelefonoChange = (e) => {
-        setTelefono(e.target.value);
-    };
-
-    const handleReferenciaChange = (e) => {
-        setReferencia(e.target.value);
-    };
-
+    const handleNombreContactoChange = (e) => setNombreContacto(e.target.value);
+    const handleTelefonoChange = (e) => setTelefono(e.target.value);
+    const handleReferenciaChange = (e) => setReferencia(e.target.value);
     const handleDepartamentoChange = (e) => {
         const selectedDepartamento = e.target.value;
         setDepartamento(selectedDepartamento);
-        setMunicipio("");
+        setMunicipio(""); // Reset municipio when departamento changes
     };
-
-    const handleMunicipioChange = (e) => {
-        setMunicipio(e.target.value);
-    };
+    const handleMunicipioChange = (e) => setMunicipio(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -131,7 +131,7 @@ const AgregarDireccion = () => {
         }
 
         const direccionData = {
-            id_cliente: idCliente, // Incluir id_cliente en los datos a enviar
+            id_cliente: idCliente,
             nombre_contacto: nombreContacto,
             telefono: telefono,
             direccion,
@@ -140,17 +140,13 @@ const AgregarDireccion = () => {
             referencia
         };
 
-        console.log("Datos a enviar:", direccionData);
-
         try {
-            const response = await axios.post(`${API_URL}/direcciones`, direccionData, {
+            await axios.post(`${API_URL}/direcciones`, direccionData, {
                 headers: {
                     "Content-Type": "application/json",
                     Authorization: `Bearer ${token}`,
                 }
             });
-
-            console.log("Dirección registrada:", response.data);
             setAlertaExito(true);
             setAlertaError(false);
             setNombreContacto("");
@@ -168,141 +164,145 @@ const AgregarDireccion = () => {
 
     return (
         <React.Fragment>
-            <div className="page-content">
+            <div className={styles.direccionesClienteContainer}>
                 <Container fluid>
                     <Row>
                         <Col lg="12">
-                            <Card>
+                            <Card className={styles.card}>
                                 <CardBody>
-                                    <h3 className="form-title">Agregar Dirección del Cliente</h3>
+                                    <h3 className={styles.direccionesClienteTitle}>Agregar Dirección del Cliente</h3>
 
                                     {alertaExito && (
-                                        <div className="alert-custom alert-success-custom">
-                                            <span>¡Dirección registrada exitosamente!</span>
-                                            <button
-                                                type="button"
-                                                className="alert-close-btn"
-                                                onClick={() => setAlertaExito(false)}
-                                                aria-label="Close"
-                                            >
-                                                &times;
-                                            </button>
-                                        </div>
+                                        <Alert className={styles.alertSuccessCustom}>
+                                            ¡Dirección registrada exitosamente!
+                                        </Alert>
                                     )}
                                     {alertaError && (
-                                        <div className="alert-custom alert-danger-custom">
-                                            <span>{errorMensaje}</span>
-                                            <button
-                                                type="button"
-                                                className="alert-close-btn"
-                                                onClick={() => setAlertaError(false)}
-                                                aria-label="Close"
-                                            >
-                                                &times;
-                                            </button>
-                                        </div>
+                                        <Alert className={styles.alertDangerCustom}>
+                                            {errorMensaje}
+                                        </Alert>
                                     )}
-                                    <Form onSubmit={handleSubmit}>
-                                        <Row form>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="nombre_contacto">Nombre de Contacto</Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="nombre_contacto"
-                                                        value={nombreContacto}
-                                                        onChange={handleNombreContactoChange}
-                                                        required
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="telefono">Teléfono</Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="telefono"
-                                                        value={telefono}
-                                                        onChange={handleTelefonoChange}
-                                                        required
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row form>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="direccion">Dirección</Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="direccion"
-                                                        value={direccion}
-                                                        onChange={handleDireccionChange}
-                                                        required
-                                                        invalid={!isDireccionValid}
-                                                    />
-                                                    {!isDireccionValid && (
-                                                        <FormFeedback className="text-danger">
-                                                            La dirección es obligatoria.
-                                                        </FormFeedback>
-                                                    )}
-                                                </FormGroup>
-                                            </Col>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="departamento">Departamento</Label>
-                                                    <Input
-                                                        type="select"
-                                                        id="departamento"
-                                                        value={departamento}
-                                                        onChange={handleDepartamentoChange}
-                                                        required
-                                                    >
-                                                        <option value="">Seleccione</option>
-                                                        {departamentos.map((dep) => (
-                                                            <option key={dep.id} value={dep.id}>
-                                                                {dep.nombre}
-                                                            </option>
-                                                        ))}
-                                                    </Input>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Row form>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="municipio">Municipio</Label>
-                                                    <Input
-                                                        type="select"
-                                                        id="municipio"
-                                                        value={municipio}
-                                                        onChange={handleMunicipioChange}
-                                                        required
-                                                        disabled={!departamento}
-                                                    >
-                                                        <option value="">Seleccione</option>
-                                                        {municipiosPorDepartamento[departamento]?.map((mun) => (
-                                                            <option key={mun.id} value={mun.id}>
-                                                                {mun.nombre}
-                                                            </option>
-                                                        ))}
-                                                    </Input>
-                                                </FormGroup>
-                                            </Col>
-                                            <Col md={6}>
-                                                <FormGroup className="form-group-custom">
-                                                    <Label for="referencia">Referencia</Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="referencia"
-                                                        value={referencia}
-                                                        onChange={handleReferenciaChange}
-                                                    />
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Button type="submit" className="btn-custom" color="primary">Agregar Dirección</Button>
-                                    </Form>
+                                    {loading ? (
+                                        <div className={styles.loading}>
+                                            <Spinner color="primary" />
+                                        </div>
+                                    ) : error ? (
+                                        <Alert className={styles.alertDangerCustom}>{error}</Alert>
+                                    ) : (
+                                        <Form onSubmit={handleSubmit}>
+                                            <Row form>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="nombre_contacto">Nombre de Contacto</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="nombre_contacto"
+                                                            className={styles.input}
+                                                            value={nombreContacto}
+                                                            onChange={handleNombreContactoChange}
+                                                            required
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="telefono">Teléfono</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="telefono"
+                                                            className={styles.input}
+                                                            value={telefono}
+                                                            onChange={handleTelefonoChange}
+                                                            required
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row form>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="direccion">Dirección</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="direccion"
+                                                            className={styles.input}
+                                                            value={direccion}
+                                                            onChange={handleDireccionChange}
+                                                            required
+                                                            invalid={!isDireccionValid}
+                                                        />
+                                                        {!isDireccionValid && (
+                                                            <FormFeedback className={styles.errorFeedback}>
+                                                                La dirección es obligatoria.
+                                                            </FormFeedback>
+                                                        )}
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="departamento">Departamento</Label>
+                                                        <Input
+                                                            type="select"
+                                                            id="departamento"
+                                                            className={styles.input}
+                                                            value={departamento}
+                                                            onChange={handleDepartamentoChange}
+                                                            required
+                                                        >
+                                                            <option value="">Seleccione</option>
+                                                            {departamentos.map((dep) => (
+                                                                <option key={dep.id} value={dep.id}>
+                                                                    {dep.nombre}
+                                                                </option>
+                                                            ))}
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Row form>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="municipio">Municipio</Label>
+                                                        <Input
+                                                            type="select"
+                                                            id="municipio"
+                                                            className={styles.input}
+                                                            value={municipio}
+                                                            onChange={handleMunicipioChange}
+                                                            required
+                                                            disabled={!departamento}
+                                                        >
+                                                            <option value="">Seleccione</option>
+                                                            {municipiosPorDepartamento[departamento]?.map((mun) => (
+                                                                <option key={mun.id} value={mun.id}>
+                                                                    {mun.nombre}
+                                                                </option>
+                                                            ))}
+                                                        </Input>
+                                                    </FormGroup>
+                                                </Col>
+                                                <Col md={6}>
+                                                    <FormGroup className={styles.formGroup}>
+                                                        <Label className={styles.label} for="referencia">Referencia</Label>
+                                                        <Input
+                                                            type="text"
+                                                            id="referencia"
+                                                            className={styles.input}
+                                                            value={referencia}
+                                                            onChange={handleReferenciaChange}
+                                                        />
+                                                    </FormGroup>
+                                                </Col>
+                                            </Row>
+                                            <Button
+                                                type="submit"
+                                                color="primary"
+                                                className={styles.submitButton}
+                                            >
+                                                Guardar
+                                            </Button>
+                                        </Form>
+                                    )}
                                 </CardBody>
                             </Card>
                         </Col>
