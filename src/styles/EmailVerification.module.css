@@ -58,21 +58,19 @@
 /* Container for email input and resend button */
 .emailContainer {
   display: flex;
-  align-items: center;
+  flex-direction: column; /* Stack vertically on small screens */
   gap: 10px; /* Add some spacing between input and button */
 }
 
 /* Styling for email input */
 .emailInput {
-  flex-grow: 1; /* Allows the input to take up remaining space */
+  width: 100%;
   padding: 0.75rem;
   font-size: 1rem;
   border: 1px solid #ddd;
   border-radius: 6px;
   box-sizing: border-box;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  /* Width adjusted to fit the button and container */
-  min-width: 250px; /* Adjust this value based on your button size */
 }
 
 /* Reenviar button styling */
@@ -86,7 +84,7 @@
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.3s ease;
   text-align: center;
-  width: auto; /* Let width fit the content */
+  width: 100%; /* Make button full width on small screens */
 }
 
 /* Hover and active states for the Reenviar button */
@@ -158,4 +156,72 @@
   display: block;
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .registerCard {
+    padding: 2rem;
+  }
+
+  .registerTitle {
+    font-size: 1.25rem;
+  }
+
+  .message {
+    font-size: 0.875rem;
+    padding: 0.75rem;
+  }
+
+  .emailContainer {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .emailInput {
+    min-width: auto; /* Adjust min-width to fit container */
+  }
+
+  .reenviarButton {
+    width: 100%; /* Make button full width */
+  }
+
+  .formLabel {
+    font-size: 0.875rem;
+  }
+
+  .formInput {
+    font-size: 0.875rem;
+  }
+
+  .submitButton {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .registerCard {
+    padding: 1.5rem;
+  }
+
+  .registerTitle {
+    font-size: 1.125rem;
+  }
+
+  .message {
+    font-size: 0.75rem;
+    padding: 0.5rem;
+  }
+
+  .reenviarButton {
+    font-size: 0.75rem;
+  }
+
+  .submitButton {
+    font-size: 1rem;
+  }
+
+  .logo {
+    width: 90px;
+  }
 }

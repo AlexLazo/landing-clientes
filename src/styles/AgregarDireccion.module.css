@@ -1,11 +1,13 @@
 /* AgregarDireccion.module.css */
 
+/* General container styles */
 .direccionesClienteContainer {
     background-color: #f4f7f9;
     padding: 2rem;
     min-height: 100vh;
 }
 
+/* Card styles */
 .card {
     background-color: #ffffff;
     border-radius: 8px;
@@ -13,12 +15,14 @@
     padding: 1.5rem;
 }
 
+/* Title styles */
 .direccionesClienteTitle {
     color: #333;
     font-size: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
+/* Alert styles */
 .alertSuccessCustom {
     background-color: #d4edda;
     color: #155724;
@@ -33,33 +37,39 @@
     margin-bottom: 1rem;
 }
 
+/* Loading styles */
 .loading {
     text-align: center;
     margin-top: 2rem;
 }
 
+/* Form group styles */
 .formGroup {
     margin-bottom: 1rem;
 }
 
+/* Label styles */
 .label {
     color: #555;
     font-weight: 500;
     margin-bottom: 0.5rem;
 }
 
+/* Input styles */
 .input {
     border-radius: 4px;
     border: 1px solid #ced4da;
     padding: 0.5rem;
-    width: 100%; /* Hace que el input ocupe todo el ancho disponible */
+    width: 100%;
 }
 
+/* Error feedback styles */
 .errorFeedback {
     color: #dc3545;
     font-size: 0.875rem;
 }
 
+/* Submit button styles */
 .submitButton {
     background-color: #007bff;
     border-color: #007bff;
@@ -69,7 +79,7 @@
     font-size: 1rem;
     font-weight: 600;
     transition: background-color 0.2s, border-color 0.2s;
-    width: 100%; /* Asegura que el botón ocupe todo el ancho disponible */
+    width: 100%;
 }
 
 .submitButton:hover {
@@ -77,7 +87,7 @@
     border-color: #004085;
 }
 
-/* Estilo general para las alertas */
+/* General alert styles */
 .alert-custom {
     padding: 15px;
     border-radius: 5px;
@@ -89,21 +99,21 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Alerta de éxito */
+/* Success alert */
 .alert-success-custom {
     background-color: #d4edda;
     color: #155724;
     border: 1px solid #c3e6cb;
 }
 
-/* Alerta de error */
+/* Error alert */
 .alert-danger-custom {
     background-color: #f8d7da;
     color: #721c24;
     border: 1px solid #f5c6cb;
 }
 
-/* Botón de cierre de alerta */
+/* Close button styles for alerts */
 .alert-close-btn {
     background-color: #e0e0e0;
     border: none;
@@ -122,4 +132,73 @@
 .alert-close-btn:hover {
     background-color: #dcdcdc;
     color: #000;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .card {
+        padding: 1rem;
+    }
+
+    .direccionesClienteTitle {
+        font-size: 1.25rem;
+    }
+
+    .formGroup {
+        margin-bottom: 0.75rem;
+    }
+
+    .input {
+        padding: 0.4rem;
+    }
+
+    .submitButton {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.9rem;
+    }
+
+    .alert-custom {
+        font-size: 0.875rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .alert-close-btn {
+        width: 25px;
+        height: 25px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card {
+        padding: 0.75rem;
+    }
+
+    .direccionesClienteTitle {
+        font-size: 1rem;
+    }
+
+    .formGroup {
+        margin-bottom: 0.5rem;
+    }
+
+    .input {
+        padding: 0.3rem;
+    }
+
+    .submitButton {
+        padding: 0.3rem 0.6rem;
+        font-size: 0.875rem;
+    }
+
+    .alert-custom {
+        font-size: 0.75rem;
+    }
+
+    .alert-close-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.875rem;
+    }
 }

@@ -13,10 +13,10 @@ body {
 }
 
 .area {
-    background: #65574E; /* Color de fondo oscuro */
-    background: -webkit-linear-gradient(to right, #ff7e5f, #feb47b); /* Gradiente de color */
+    background: #65574E; /* Dark background color */
+    background: -webkit-linear-gradient(to right, #ff7e5f, #feb47b); /* Gradient color */
     width: 100%;
-    height: 100vh; /* Asegurarse de que cubra toda la pantalla */
+    height: 100vh; /* Full viewport height */
     position: relative;
     overflow: hidden;
     display: flex;
@@ -46,13 +46,12 @@ body {
     position: absolute;
     display: block;
     list-style: none;
-    width: 20px;
-    height: 20px;
     background: #E1DFDB;
     animation: animate 25s linear infinite;
     bottom: -150px;
 }
 
+/* Circle sizes and positions */
 .circles li:nth-child(1) { left: 25%; width: 80px; height: 80px; animation-delay: 0s; }
 .circles li:nth-child(2) { left: 10%; width: 20px; height: 20px; animation-delay: 2s; animation-duration: 12s; }
 .circles li:nth-child(3) { left: 70%; width: 20px; height: 20px; animation-delay: 4s; }
@@ -73,5 +72,46 @@ body {
     position: relative;
     z-index: 1;
     width: 100%;
-    max-width: 420px; /* Limitar el ancho máximo del formulario */
+    max-width: 420px; /* Maximum width of the form */
+    padding: 20px; /* Add padding for smaller screens */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .area {
+        height: auto; /* Adjust height for smaller screens */
+        padding: 20px; /* Add padding */
+    }
+
+    .circles li {
+        width: 15px;
+        height: 15px;
+    }
+
+    .circles li:nth-child(1) { width: 60px; height: 60px; }
+    .circles li:nth-child(4) { width: 50px; height: 50px; }
+    .circles li:nth-child(6) { width: 80px; height: 80px; }
+    .circles li:nth-child(7) { width: 100px; height: 100px; }
+    .circles li:nth-child(8) { width: 20px; height: 20px; }
+    .circles li:nth-child(9) { width: 10px; height: 10px; }
+    .circles li:nth-child(10) { width: 100px; height: 100px; }
+}
+
+@media (max-width: 480px) {
+    .area {
+        padding: 10px; /* Add padding for very small screens */
+    }
+
+    .circles li {
+        width: 10px;
+        height: 10px;
+    }
+
+    .circles li:nth-child(1) { width: 50px; height: 50px; }
+    .circles li:nth-child(4) { width: 40px; height: 40px; }
+    .circles li:nth-child(6) { width: 60px; height: 60px; }
+    .circles li:nth-child(7) { width: 80px; height: 80px; }
+    .circles li:nth-child(8) { width: 15px; height: 15px; }
+    .circles li:nth-child(9) { width: 8px; height: 8px; }
+    .circles li:nth-child(10) { width: 80px; height: 80px; }
 }

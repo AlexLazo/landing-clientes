@@ -1,260 +1,178 @@
 /* Estilos básicos para la página de inicio */
 .home-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    box-sizing: border-box;
-    min-width: 600px;
-  }
-  
-  .hero-section {
-    background-image: url(../assets/images/servicio-de-paqueteria-4.jpg);
-    background-position: 30%  30%;
-    background-size: initial;
-    background-attachment: inherit;
-    /*color: #fff;*/
-    text-align: center;
-    padding: 110px;
-    margin: auto;
-  }
-  
-  .hero-content {
-    background-color: #d6d2ce;
-    text-align: center;
-    max-width: 600px;
-    margin: 0 auto;
-    border-radius: 20px;
-    padding: 1rem 1rem;
-  }
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  box-sizing: border-box;
+  min-width: 300px; /* Adjusted min-width for better responsiveness */
+}
 
-  /* MODO NOCHE PARA TODAS LAS AREAS */
+.hero-section {
+  background-image: url(../assets/images/servicio-de-paqueteria-4.jpg);
+  background-position: center center;
+  background-size: cover; /* Ensures the image covers the area */
+  background-attachment: scroll;
+  text-align: center;
+  padding: 110px 20px; /* Adjusted for smaller screens */
+  margin: auto;
+}
 
-  /* HOME */
+.hero-content {
+  background-color: #d6d2ce;
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 1rem;
+}
 
-  .dark-mode header .hero-content{
-    background-color: #34332f;
-  }
+/* MODO NOCHE PARA TODAS LAS AREAS */
+.dark-mode header .hero-content {
+  background-color: #34332f;
+}
 
-  /* LETRAS - TODO LANDING PAGE */
-  .dark-mode h1{
-    color: #e1dfd8;
-  }
+/* LETRAS - TODO LANDING PAGE */
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4 {
+  color: #e1dfd8;
+}
 
-  .dark-mode h2{
-    color: #e1dfd8;
-  }
+.dark-mode p,
+.dark-mode ul {
+  color: #dfdfdf;
+  font-weight: 500;
+}
 
-  .dark-mode h3{
-    color: #e1dfd8;
-  }
+/* JOIN US MR PAQUETES */
+.dark-mode section .join-us-card {
+  background-color: #34332f;
+}
 
-  .dark-mode h4{
-    color: #e1dfd8;
-  }
+.dark-mode .w-text-container-service p,
+.dark-mode .w-text-container-service h1,
+.dark-mode .services-contact-card h1,
+.dark-mode .services-contact-card p {
+  color: #e1dfd8;
+}
 
-  .dark-mode p{
-    color: #dfdfdf;
-    font-weight:500;
-  }
+.hero-section h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+}
 
-  .dark-mode ul{
-    color: #dfdfdf;
-    font-weight:500; 
-  }
+.hero-section h2 {
+  font-size: 2.6rem;
+  font-weight: normal;
+  font-style: italic;
+  line-height: 1.5;
+}
 
-    /* JOIN US MR PAQUETES */
+.hero-section p {
+  font-size: 1.2rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
 
-  .dark-mode section .join-us-card {
-      background-color: #34332f;
-    }
-  
-  .dark-mode .w-text-container-service p {
-    color: #e1dfd8;
-  }
+.cta-button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #E1DFDB;
+  background-color: #408345;
+  border: none;
+  border-radius: 5px;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
 
-  .dark-mode .w-text-container-service h1 {
-    color: #e1dfd8;
-  }
+.cta-button:hover {
+  background-color: #33691E;
+}
 
-  .dark-mode .services-contact-card h1 {
-    color: #e1dfd8;
-  }
+/* SERVICIOS */
+.services-container {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  box-sizing: border-box;
+}
 
-  .dark-mode .services-contact-card p {
-    color: #e1dfd8;
-  }
+.services-section,
+.content-services {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #1A1514;
+  padding: 0;
+  margin: auto;
+  max-width: auto;
+}
 
-  /* ---------------------------- */
-  
-  .hero-section h1 {
-    font-size: 3rem;
-    line-height: 1.5;
-  }
+.image-container-services {
+  flex: 1;
+  text-align: center;
+  margin-right: auto;
+}
 
-  .hero-section h2 {
-    font-size: 2.6rem;
-    font-weight: normal;
-    font-style: italic;
-    line-height: 1.5;
-  }
-  
-  .hero-section p {
-    font-size: 1.2rem;  
-    line-height: 1.5;
-    font-weight:400;
-  }
-  
-  .cta-button {
-    display: inline-block;
-    padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    font-weight: bold;
-    color:#E1DFDB; /* Color del texto */
-    background-color: #408345; /* Color de fondo */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: center; /* Alinea el texto al centro */
-    text-decoration: none; /* Quita el subrayado */
-    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-  }
-  
-  .cta-button:hover {
-    background-color: #33691E; /* Color de fondo al pasar el ratón */
-  }
+.image-container-services img {
+  width: 100%;
+  max-width: 545px;
+  height: auto;
+  padding: 20px;
+  border-radius: 50px;
+  margin-left: 50px;
+}
 
-  .cta-button {
-    display: inline-block;
-    padding: 10px 20px; /* Ajusta el padding para el tamaño del botón */
-    font-size: 16px; /* Tamaño de la fuente */
-    font-weight: bold;
-    color:#E1DFDB; /* Color del texto */
-    background-color: #408345; /* Color de fondo */
-    border: none; /* Sin borde */
-    border-radius: 5px; /* Bordes redondeados */
-    text-align: center; /* Alinea el texto al centro */
-    text-decoration: none; /* Quita el subrayado */
-    transition: background-color 0.3s ease; /* Transición suave para el color de fondo */
-  }
-  
-  .cta-button:hover {
-    background-color: #33691E; /* Color de fondo al pasar el ratón */
-  }
-  
-  /* SERVICIOS */
+.text-container-services {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  .services-container{
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    box-sizing: border-box;
-  }
+.text-container-services h1 {
+  color: #E1DFDB;
+  text-align: center;
+  font-size: 3rem;
+  line-height: 1.5;
+}
 
-  .services-section{
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #1A1514 ;
-    /*text-align: center;*/
-    padding: 0;
-    margin: auto;
-    max-width: auto;
-  }
+.text-container-services h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  line-height: 5.5rem;
+}
 
-  .content-services {
-    display: flex;
-    flex-wrap: wrap;
-    background-color: #1A1514 ;
-    /*text-align: center;*/
-    padding: 0;
-    margin: auto;
-    max-width: auto;
-  }
-
-  .image-container-services{
-    flex: 1;
-    flex-direction: column;
-    text-align: center;
-    margin-right: auto;
-  }
-  
-  .image-container-services img{
-    width: 545px;
-    height: auto;
-    padding: 20px;
-    border-radius: 50px;
-    margin-left: 50px;
-  }
-
-  .text-container-services{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto 10px auto;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    max-width: 500px;
-    padding: 20px;
-    box-sizing: border-box;
-  }
-  .text-container-services h1 {
-    color: #E1DFDB;
-    text-align: center;
-    /*font-weight: bold;*/
-    font-size: 3rem;
-    line-height: 1.5;
-  }
-
-  .text-container-services h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    line-height: 5.5rem;
-  }
-
-  .text-container-services p{
-    text-align: left;
-    color: #E1DFDB;
-    font-size: 1.2rem;
-    line-height: 1.5;
-    margin-bottom: 30px;
-  }
-  
-/*  .service-cards {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
-  .service-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px;
-    width: 30%;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease;
-  }
-  
-  .service-card:hover {
-    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-  }
-*/
+.text-container-services p {
+  text-align: left;
+  color: #E1DFDB;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  margin-bottom: 30px;
+}
 
 /* JOIN US */
-
-.join-us{
+.join-us {
   padding: 60px 20px;
   background-color: #65574E;
   text-align: center;
   width: auto;
-  min-width: 600px;
 }
 
 .join-us-card {
   background-color: #E1DFDB;
   border-radius: 10px;
-  padding: 30px 200px;
+  padding: 30px;
   margin: 20px auto;
   max-width: 1200px;
 }
@@ -287,95 +205,175 @@
   font-weight: bold;
 }
 
-.join-us contact-us-join-us p{
-font-style: bold;
+.join-us contact-us-join-us p {
+  font-style: bold;
 }
 
-/*.join-us a{
-  font-weight: bold;
-  color: inherit;
-}*/
+/* CONTACTO */
+.contact-form {
+  padding: 60px 20px;
+  background-color: #fff;
+  text-align: center;
+}
 
-  /* TESTIMONIOS 
-  .testimonials {
-    padding: 60px 20px;
-    background-color: #f1f1f1;
-    text-align: center;
-  }
-  
-  .testimonials h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-    line-height: 1.5;
-  }
-  
-  .testimonial-card {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px auto;
-    max-width: 600px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .testimonial-card span {
-    display: block;
-    margin-top: 10px;
-    font-style: italic;
-    color: #555;
-  }
-  
-*/
+.contact-form h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
 
+.contact-form form {
+  max-width: 600px;
+  margin: 0 auto;
+}
 
-  /* CONTACTO */
-  .contact-form {
-    padding: 60px 20px;
-    background-color: #fff;
-    text-align: center;
+.contact-form input,
+.contact-form textarea {
+  width: calc(100% - 22px);
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  padding: 15px 30px;
+  font-size: 1.2rem;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.contact-form button:hover {
+  background-color: #0056b3;
+}
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 20px;
+  text-align: center;
+  border-top: 1px solid #ddd;
+}
+
+.footer p {
+  margin: 0;
+  color: #6c757d;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+      padding: 80px 10px;
   }
-  
+
+  .hero-section h1 {
+      font-size: 2.5rem;
+  }
+
+  .hero-section h2 {
+      font-size: 2rem;
+  }
+
+  .hero-section p {
+      font-size: 1rem;
+  }
+
+  .cta-button {
+      padding: 8px 16px;
+      font-size: 14px;
+  }
+
+  .image-container-services img {
+      width: 100%;
+      margin-left: 0;
+  }
+
+  .text-container-services h1 {
+      font-size: 2rem;
+  }
+
+  .text-container-services h2 {
+      font-size: 1.8rem;
+  }
+
+  .text-container-services p {
+      font-size: 1rem;
+  }
+
+  .join-us-card {
+      padding: 20px;
+  }
+
+  .join-us-card h1 {
+      font-size: 2.5rem;
+  }
+
+  .join-us-card h2 {
+      font-size: 2rem;
+  }
+
+  .join-us-card p {
+      font-size: 1rem;
+  }
+
   .contact-form h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
+      font-size: 2rem;
   }
-  
-  .contact-form form {
-    max-width: 600px;
-    margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+  .hero-section {
+      padding: 60px 5px;
   }
-  
-  .contact-form input, .contact-form textarea {
-    width: calc(100% - 22px);
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+
+  .hero-section h1 {
+      font-size: 2rem;
   }
-  
-  .contact-form button {
-    padding: 15px 30px;
-    font-size: 1.2em;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+
+  .hero-section h2 {
+      font-size: 1.5rem;
   }
-  
-  .contact-form button:hover {
-    background-color: #0056b3;
+
+  .hero-section p {
+      font-size: 0.9rem;
   }
-  
-  .footer {
-    background-color: #f8f9fa;
-    padding: 20px;
-    text-align: center;
-    border-top: 1px solid #ddd;
+
+  .cta-button {
+      padding: 6px 12px;
+      font-size: 12px;
   }
-  
-  .footer p {
-    margin: 0;
-    color: #6c757d;
+
+  .text-container-services h1 {
+      font-size: 1.5rem;
   }
+
+  .text-container-services h2 {
+      font-size: 1.5rem;
+  }
+
+  .text-container-services p {
+      font-size: 0.9rem;
+  }
+
+  .join-us-card {
+      padding: 15px;
+  }
+
+  .join-us-card h1 {
+      font-size: 2rem;
+  }
+
+  .join-us-card h2 {
+      font-size: 1.5rem;
+  }
+
+  .join-us-card p {
+      font-size: 0.9rem;
+  }
+
+  .contact-form h2 {
+      font-size: 1.8rem;
+  }
+}
