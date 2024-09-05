@@ -29,105 +29,244 @@
   padding: 40px 20px;
   background-color: #D6D2CE;
 }
-
-.about-section {
+/* SECCION | MISION */
+.about-content {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 1%;
+  color: #333;
+  box-sizing: border-box;
+  background-color: #D6D2CE;
+}
+.about-section{
   display: flex;
   flex-wrap: wrap;
   padding: 0;
   margin: auto;
-  max-width: 1200px;
+  max-width: auto;
 }
 
-.text-container-about, .image-container-about {
+.content-about {
+  display: flex;
+  flex-wrap: wrap;
+  /*text-align: center;*/
+  padding: 0;
+  margin: auto;
+  max-width: auto;
+}
+.text-container-about{
   flex: 1;
-  margin: 20px;
-  padding: 20px;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-.text-container-about {
   display: flex;
   flex-direction: column;
+  margin: 0 auto 10px auto;
   justify-content: center;
   align-items: center;
+  border: none;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+.image-container-about{
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+  margin-right: auto;
 }
 
-.image-container-about img {
-  width: 100%;
+.image-container-about img{
+  width: 545px;
   height: auto;
+  padding: 20px;
   border-radius: 50px;
+  margin-left: 50px;
 }
 
 .about-section h1 {
-  font-size: 2.5rem;
+  font-size: 3rem;
   line-height: 1.5;
   margin-bottom: 20px;
 }
 
 .about-section h2 {
-  font-size: 2rem;
+  font-size: 2.5em;
   margin-bottom: 20px;
 }
 
 .about-section p, .about-section-mision ul {
-  font-size: 1rem;
+  font-size: 1.2em;
   line-height: 1.6;
 }
-
-.cta-button {
-  font-size: 1rem;
-  padding: 10px 20px;
-  border-radius: 10px;
-  margin: 20px 0;
+.about-section-image-m{
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+  margin-right: auto;
 }
 
-.alianzas {
-  padding: 60px 20px;
-  background-color: #65574E;
-  text-align: center;
-  align-items: center;
+.about-section-image-m img{
+  width: 545px;
+  height: auto;
+  padding: 20px;
+  border-radius: 50px;
+  margin-left: 50px;
+}
+  /* SECCION | VISION */
+  .about-content-v {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 1%;
+    color: #333;
+    box-sizing: border-box;
+    background-color: #65574E;
+  }
+  .about-section-v{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+  .content-about-v {
+    display: flex;
+    flex-wrap: wrap;
+    /*text-align: center;*/
+    padding: 0;
+    margin: auto;
+    max-width: auto;
+  }
+  .text-container-about-v h1 {
+    font-size: 3rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color:#E1DFDB ;
+  }
+
+  .image-container-about-v{
+    flex: 1;
+    flex-direction: column;
+    text-align: center;
+    margin-right: auto;
+  }
+  .text-container-about-v{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto 10px auto;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    max-width: 500px;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .image-container-about-v img{
+    width: 545px;
+    height: auto;
+    padding: 20px;
+    border-radius: 50px;
+    margin-left: 50px;
+  }
+  .text-container-about-v h2 {
+    font-size: 2.5em;
+    margin-bottom: 20px;
+  }
+  
+  .text-container-about-v p{
+    font-size: 1.2em;
+    line-height: 1.6;
+    color:#E1DFDB ;
+  }
+  /* SECCION | VALORES */
+  /* BOTON */
+  
+.cta-button {
+  padding-top: 0.9rem;
+  padding-right: 2rem;
+  padding-bottom: 0.9rem;
+  padding-left: 2rem;
+  font-size: 1.2rem;
+  font-weight: 500;
+  font-style: normal;
+  line-height: inherit;
+  color: #fff;
+  background-color: #408345;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin: 0 auto;
+  width: auto;
+}
+
+.cta-button:hover {
+  background-color: #33691e;
+}
+
+/* ALIANZAS */
+.alianzas{
+padding: 60px 20px;
+background-color: #65574E;
+text-align: center;
+align-items: center;
 }
 
 .alianzas-card {
-  background-color: #E1DFDB;
-  border-radius: 10px;
-  padding: 30px 20px;
-  margin: auto;
-  max-width: 100%;
+background-color: #E1DFDB;
+border-radius: 10px;
+padding: 30px 200px;
+margin: auto auto;
+max-width: 1200px;
 }
 
 .alianzas-card h1 {
-  font-size: 2.5rem;
-  line-height: 1.5;
+font-size: 3rem;
+line-height: 1.5;
 }
 
 .alianzas-card h2 {
-  font-size: 2rem;
-  font-weight: normal;
-  font-style: italic;
-  line-height: 1.5;
+font-size: 2.6rem;
+font-weight: normal;
+font-style: italic;
+line-height: 1.5;
 }
 
 .alianzas-card p {
-  font-size: 1rem;
-  margin-bottom: 30px;
-  line-height: 1.5;
+font-size: 1.2rem;
+margin-bottom: 30px;
+line-height: 1.5;
 }
-
+.alianzas a{
+font-weight: bold;
+color: inherit;
+}
 .alianza {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
+  align-items: inherit;
 }
 
 .alianza-img {
   height: 140px;
   border-radius: 20%;
-  padding: 10px;
-  margin: 10px;
+  padding: 1%;
   transition: filter 0.3s ease;
+}
+
+.alianza-img:hover {
+  filter: drop-shadow(0 0 2em var(--primary-color));
+}
+
+/* DARK MODE | SOBRE NOSOTROS */
+
+.dark-mode .about-content {
+  background-color: #34332f;
+}
+
+.dark-mode .alianzas{
+  background-color: #65574E;
+}
+
+.dark-mode .alianzas-card{
+  background-color: #34332f;
 }
 
 /* Responsive styles */
@@ -199,16 +338,3 @@
       font-size: 1.5rem;
   }
 }
-  /* DARK MODE | SOBRE NOSOTROS */
-
-  .dark-mode .about-content {
-    background-color: #34332f;
-  }
-
-  .dark-mode .alianzas{
-    background-color: #65574E;
-  }
-
-  .dark-mode .alianzas-card{
-    background-color: #34332f;
-  }

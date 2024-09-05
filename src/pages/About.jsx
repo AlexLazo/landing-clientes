@@ -46,7 +46,7 @@ const About = () => {
         <img src={vision} alt="Empaque" />
       </div>
       <div className='text-container-about-v'>
-        <h1>VISION</h1>
+        <h1>VISIÓN</h1>
         <br />
         <p>
         «Ser la empresa líder en servicios de paquetería en la región oriental de El Salvador, reconocidos por nuestra eficiencia, innovación y compromiso con la satisfacción del cliente.»
