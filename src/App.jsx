@@ -20,6 +20,8 @@ import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
 import TrackingOrden from './pages/TrackingOrden';
+import PreOrder from './pages/PreOrden';
+import HistorialOrdenesCliente from "./pages/HistorialOrdenes";
 import Faq from './pages/FAQ';
 
 // Componente para proteger rutas privadas
@@ -46,7 +48,9 @@ const AppContent = () => {
     '/agregar-cliente',
     '/direcciones-cliente',
     '/agregar-direccion',
-    '/tracking'
+    '/tracking',
+    '/pre-orden',
+    '/historial-ordenes'
   ].some(path => location.pathname.startsWith(path));
 
   console.log('Current Path:', location.pathname);
@@ -79,6 +83,9 @@ const AppContent = () => {
             <Route path="/direcciones-cliente" element={<PrivateRoute element={<DireccionesCliente />} />} />
             <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
             <Route path="/tracking" element={<PrivateRoute element={<TrackingOrden />} />} />
+            <Route path="/pre-orden" element={<PrivateRoute element={<PreOrder />} />} />
+            <Route path="/historial-ordenes" element={<PrivateRoute element={<HistorialOrdenesCliente />} />} />
+            
           </Routes>
         </main>
       </div>

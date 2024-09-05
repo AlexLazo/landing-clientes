@@ -1,3 +1,11 @@
+/* Importar la fuente desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Aplicar la fuente a todo el sitio */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 /* Sidebar container */
 .sidebar {
   position: fixed;
@@ -7,7 +15,7 @@
   width: 80px; /* Ancho inicial del sidebar */
   background-color: #333; /* Color de fondo del sidebar */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease, box-shadow 0.4s ease; /* Mejora la transición */
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -16,7 +24,7 @@
 
 /* Sidebar when open */
 .sidebar.open {
-  width: 200px; /* Ancho del sidebar cuando está abierto */
+  width: 220px; /* Ancho del sidebar cuando está abierto */
 }
 
 /* Sidebar toggle button */
@@ -35,11 +43,13 @@
   justify-content: center;
   cursor: pointer;
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Agrega una animación de transformación */
+  margin: 10px;
 }
 
 .sidebar-toggle:hover {
   background-color: #555; /* Cambia el color al pasar el cursor */
+  transform: scale(1.1); /* Escala ligeramente el botón al pasar el cursor */
 }
 
 /* Sidebar logo */
@@ -49,18 +59,20 @@
   align-items: center;
   padding: 20px;
   margin-top: 70px; /* Separación del botón de toggle */
+  margin-bottom: 20px; /* Espacio inferior para alinear con el resto del contenido */
+  transition: margin 0.4s ease; /* Transición para el logo */
 }
 
 /* Sidebar logo image */
 .sidebar-logo img {
   width: 50px; /* Tamaño del logo cuando el sidebar está cerrado */
   height: auto;
-  transition: width 0.3s ease;
+  transition: width 0.4s ease; /* Mejora la transición del tamaño del logo */
 }
 
 /* Sidebar logo when open */
 .sidebar.open .sidebar-logo img {
-  width: 90px; /* Tamaño del logo cuando el sidebar está abierto */
+  width: 100px; /* Tamaño del logo cuando el sidebar está abierto */
 }
 
 /* Sidebar menu */
@@ -81,7 +93,7 @@
 
 /* Sidebar menu items */
 .sidebar-menu li {
-  margin: 10px 0;
+  margin: 10px 0; /* Espaciado entre los ítems del menú */
 }
 
 /* Sidebar menu links */
@@ -91,31 +103,39 @@
   color: white;
   display: flex;
   align-items: center;
-  padding: 15px;
-  transition: all 0.3s ease;
+  padding: 12px 20px; /* Ajustar padding para un mejor espaciado */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Mejora las transiciones */
   border-radius: 8px;
+  font-size: 1rem; /* Tamaño de fuente para los enlaces */
+  font-weight: 500; /* Peso de fuente moderado */
+  letter-spacing: 0.5px; /* Espaciado entre letras */
 }
 
-/* Background color on hover */
 .sidebar-menu a:hover,
 .logout-button:hover {
   background-color: #0056b3; /* Fondo al hacer hover */
+  color: #e0e0e0; /* Color del texto al hacer hover */
+  transform: translateX(10px); /* Efecto de desplazamiento al hacer hover */
 }
 
 /* Menu icons */
 .menu-icon {
-  font-size: 1.5rem;
-  margin-right: 15px;
+  font-size: 1.5rem; /* Tamaño del ícono */
+  margin-right: 15px; /* Espaciado entre ícono y texto */
+  vertical-align: middle; /* Alineación vertical del ícono */
 }
 
 /* Hide the text when the sidebar is closed */
 .sidebar .sidebar-menu a span {
   display: none; /* Ocultar texto cuando el sidebar está cerrado */
+  opacity: 0; /* Asegura que el texto esté completamente oculto */
+  transition: opacity 0.4s ease; /* Transición suave para la opacidad */
 }
 
 /* Show the text when the sidebar is open */
 .sidebar.open .sidebar-menu a span {
   display: inline; /* Mostrar texto cuando el sidebar está abierto */
+  opacity: 1; /* Asegura que el texto sea visible */
 }
 
 /* Logout button */
@@ -124,8 +144,18 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-top: auto;
-  padding: 15px;
+  margin-top: auto; /* Asegurarse de que el botón de logout esté al final del sidebar */
+  padding: 12px 20px; /* Ajustar padding para alinear con otros enlaces */
+  font-size: 1rem; /* Tamaño de fuente para el botón de logout */
+  font-weight: 500; /* Peso de fuente moderado */
+  display: flex;
+  align-items: center;
+}
+
+/* Align logout button icon */
+.logout-button .menu-icon {
+  font-size: 1.5rem; /* Tamaño del ícono de logout */
+  margin-right: 10px; /* Espaciado entre ícono y texto */
 }
 
 /* Modal overlay */
@@ -140,36 +170,68 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  transition: opacity 0.3s ease; /* Transición para el overlay */
 }
 
 /* Modal content */
 .modal-content {
   background: white;
-  padding: 25px;
+  padding: 20px; /* Ajustar padding para el modal */
   border-radius: 8px;
   text-align: center;
   width: 320px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  font-size: 1rem; /* Tamaño de fuente para el contenido del modal */
+  font-weight: 400; /* Peso de fuente normal */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transición para el contenido del modal */
+  transform: scale(0.9); /* Escala inicial del modal */
+  opacity: 0; /* Opacidad inicial del modal */
+}
+
+.modal-overlay.show .modal-content {
+  transform: scale(1); /* Escala final del modal */
+  opacity: 1; /* Opacidad final del modal */
 }
 
 /* Modal buttons */
 .confirm-button,
 .cancel-button {
-  background-color: #007bff;
-  color: white;
   border: none;
-  padding: 12px 24px;
+  color: white;
+  padding: 10px 20px;
   margin: 5px;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-size: 0.875rem; /* Tamaño de fuente para los botones del modal */
+  font-weight: 500; /* Peso de fuente moderado */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Mejora las transiciones */
+}
+
+.confirm-button {
+  background-color: #007bff; /* Azul */
+}
+
+.confirm-button:hover {
+  background-color: #0056b3; /* Azul oscuro */
+  transform: scale(1.05); /* Escala ligeramente al hacer hover */
 }
 
 .cancel-button {
-  background-color: #6c757d;
+  background-color: #6c757d; /* Gris */
 }
 
-.confirm-button:hover,
 .cancel-button:hover {
-  background-color: #0056b3;
+  background-color: #5a6268; /* Gris oscuro */
+  transform: scale(1.05); /* Escala ligeramente al hacer hover */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Reducir el ancho en pantallas más pequeñas */
+  }
+
+  .sidebar.open {
+    width: 200px; /* Ajustar ancho cuando está abierto */
+  }
 }
