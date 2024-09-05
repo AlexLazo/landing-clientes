@@ -1,208 +1,186 @@
+/* General Styles */
 .services-container {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    box-sizing: border-box;
-  }
-  
-  .services-hero {
-    background: linear-gradient(to right, #65574E, #65574E);
-    color: #E1DFDB;
-    text-align: center;
-    padding: 80px 20px;
-  }
-  
-  .services-hero h1 {
-    font-size: 3em;
-    margin-bottom: 20px;
-  }
-  
-  .services-hero p {
-    font-size: 1.5em;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* Hero Section */
+.services-hero {
+  background: linear-gradient(to right, #65574E, #65574E);
+  color: #E1DFDB;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.services-hero h1 {
+  font-size: 3em;
+  margin-bottom: 20px;
+}
+
+.services-hero p {
+  font-size: 1.5em;
   font-weight: medium;
-    color: #E1DFDB
-  }
-  
-  .services-list {
-    padding: 40px 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .service-item {
-    background-color: #fff;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 10px 0;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  }
-  
-  .service-item h2 {
-    font-size: 2em;
-    margin-bottom: 15px;
-  }
-  
-  .service-item p {
-    font-size: 1.5em;
-    line-height: 1.6;
-    color: #E1DFDB;
-  }
-  
+  color: #E1DFDB;
+}
 
-  /* SECCION | CARDS SERVICIOS | CAFE */
+/* Services List */
+.services-list {
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
 
-      .service-content {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        margin: 0;
-        padding: 1%;
-        color: #333;
-        box-sizing: border-box;
-        background-color: #65574E;
-      }
-  
-      .service-section{
-        display: flex;
-        flex-wrap: wrap;
-        padding: 0;
-        margin: auto;
-        max-width: auto;
-      }
-  
-      .content-service {
-        display: flex;
-        flex-wrap: wrap;
-        /*text-align: center;*/
-        padding: 0;
-        margin: auto;
-        max-width: auto;
-      }
-  
-      .text-container-service h1 {
-        font-size: 3rem;
-        line-height: 1.5;
-        margin-bottom: 20px;
-        color:#E1DFDB ;
-      }
-    
-      .image-container-service{
-        flex: 1;
-        flex-direction: column;
-        text-align: center;
-        margin-right: auto;
-      }
-  
-      .text-container-service{
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        margin: 0 auto 10px auto;
-        justify-content: center;
-        align-items: center;
-        border: none;
-        max-width: 500px;
-        padding: 20px;
-        box-sizing: border-box;
-      }
-  
-      .image-container-service img{
-        width: 545px;
-        height: auto;
-        padding: 20px;
-        border-radius: 50px;
-        margin-left: 50px;
-      }
-  
-      .text-container-service h2 {
-        font-size: 2.5em;
-        margin-bottom: 20px;
-      }
-      
-      .text-container-service p{
-        font-size: 1.5em;
-        line-height: 1.6;
-        color:#E1DFDB ;
-      }
+.service-item {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 10px 0;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
 
-      
-  /* SECCION | CARDS SERVICIOS | CAFE CLARO */
+.service-item h2 {
+  font-size: 2em;
+  margin-bottom: 15px;
+}
 
-  .w-service-content {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    margin: 0;
-    padding: 1%;
-    color: #333;
-    box-sizing: border-box;
-    background-color: #D6D2CE;
-  }
+.service-item p {
+  font-size: 1.5em;
+  line-height: 1.6;
+  color: #E1DFDB;
+}
 
-  .w-service-section{
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0;
-    margin: auto;
-    max-width: auto;
-  }
+/* Service Cards - Dark Mode */
+.service-content {
+  margin: 0;
+  padding: 1%;
+  color: #333;
+  box-sizing: border-box;
+  background-color: #65574E;
+}
 
-  .w-content-service {
-    display: flex;
-    flex-wrap: wrap;
-    /*text-align: center;*/
-    padding: 0;
-    margin: auto;
-    max-width: auto;
-  }
+.service-section, .content-service {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: auto;
+  max-width: auto;
+}
 
-  .w-text-container-service h1 {
-    font-size: 3rem;
-    line-height: 1.5;
-    margin-bottom: 20px;
-    color:#65574E ;
-  }
+.text-container-service h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #E1DFDB;
+}
 
-  .w-image-container-service{
-    flex: 1;
-    flex-direction: column;
-    text-align: center;
-    margin-right: auto;
-  }
+.image-container-service {
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+  margin-right: auto;
+}
 
-  .w-text-container-service{
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto 10px auto;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    max-width: 500px;
-    padding: 20px;
-    box-sizing: border-box;
-  }
+.text-container-service {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 10px auto;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
 
-  .w-image-container-service img{
-    width: 545px;
-    height: auto;
-    padding: 20px;
-    border-radius: 50px;
-    margin-left: 50px;
-  }
+.image-container-service img {
+  width: 100%; /* Adjusted to be responsive */
+  max-width: 545px;
+  height: auto;
+  padding: 20px;
+  border-radius: 50px;
+  margin-left: 50px;
+}
 
-  .w-text-container-service h2 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  
-  .w-text-container-service p{
-    font-size: 1.5em;
-    line-height: 1.6;
-    color:#65574E ;
-  }
+.text-container-service h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
 
-/* CONTACTANOS */
+.text-container-service p {
+  font-size: 1.5em;
+  line-height: 1.6;
+  color: #E1DFDB;
+}
 
+/* Service Cards - Light Mode */
+.w-service-content {
+  margin: 0;
+  padding: 1%;
+  color: #333;
+  box-sizing: border-box;
+  background-color: #D6D2CE;
+}
 
+.w-service-section, .w-content-service {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: auto;
+  max-width: auto;
+}
 
-.services-contact{
+.w-text-container-service h1 {
+  font-size: 3rem;
+  line-height: 1.5;
+  margin-bottom: 20px;
+  color: #65574E;
+}
+
+.w-image-container-service {
+  flex: 1;
+  flex-direction: column;
+  text-align: center;
+  margin-right: auto;
+}
+
+.w-text-container-service {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto 10px auto;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  max-width: 500px;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.w-image-container-service img {
+  width: 100%; /* Adjusted to be responsive */
+  max-width: 545px;
+  height: auto;
+  padding: 20px;
+  border-radius: 50px;
+  margin-left: 50px;
+}
+
+.w-text-container-service h2 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.w-text-container-service p {
+  font-size: 1.5em;
+  line-height: 1.6;
+  color: #65574E;
+}
+
+/* Contact Us Section */
+.services-contact {
   padding: 60px 20px;
   background-color: #65574E;
   text-align: center;
@@ -212,8 +190,8 @@
 .services-contact-card {
   background-color: #D6D2CE;
   border-radius: 20px;
-  padding: 30px 200px;
-  margin: auto auto;
+  padding: 30px;
+  margin: auto;
   max-width: 1200px;
 }
 
@@ -238,25 +216,194 @@
   color: #65574E;
 }
 
-
-.services-contact a{
+.services-contact a {
   font-weight: bold;
 }
 
-  .services-contact {
-    display: flex;
-    align-items: inherit;
-  }
-  .services-contact-img {
-    height: 140px;
-    border-radius: 20%;
-    padding: 1%;
-    transition: filter 0.3s ease;
+.services-contact {
+  display: flex;
+  align-items: inherit;
+}
+
+.services-contact-img {
+  height: 140px;
+  border-radius: 20%;
+  padding: 1%;
+  transition: filter 0.3s ease;
+}
+
+.services-contact-img:hover {
+  filter: drop-shadow(0 0 2em var(--primary-color));
+}
+
+/* Dark Mode */
+.dark-mode .w-service-content {
+  background-color: #34332f;
+}
+
+.dark-mode .services-contact-card {
+  background-color: #34332f;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .services-hero h1 {
+    font-size: 2.5em;
   }
 
-  .services-contact-img:hover {
-    filter: drop-shadow(0 0 2em var(--primary-color));
+  .services-hero p {
+    font-size: 1.25em;
   }
+
+  .service-item h2 {
+    font-size: 1.5em;
+  }
+
+  .service-item p {
+    font-size: 1.25em;
+  }
+
+  .text-container-service h1,
+  .w-text-container-service h1 {
+    font-size: 2.5rem;
+  }
+
+  .text-container-service h2,
+  .w-text-container-service h2 {
+    font-size: 2em;
+  }
+
+  .text-container-service p,
+  .w-text-container-service p {
+    font-size: 1.25em;
+  }
+
+  .services-contact-card {
+    padding: 30px 20px;
+  }
+
+  .services-contact-card h1 {
+    font-size: 2.5rem;
+  }
+
+  .services-contact-card h2 {
+    font-size: 2rem;
+  }
+
+  .services-contact-card p {
+    font-size: 1rem;
+  }
+
+  .services-contact-img {
+    height: 100px;
+  }
+}
+
+@media (max-width: 768px) {
+  .services-hero h1 {
+    font-size: 2em;
+  }
+
+  .services-hero p {
+    font-size: 1.15em;
+  }
+
+  .service-item h2 {
+    font-size: 1.25em;
+  }
+
+  .service-item p {
+    font-size: 1.1em;
+  }
+
+  .text-container-service h1,
+  .w-text-container-service h1 {
+    font-size: 2rem;
+  }
+
+  .text-container-service h2,
+  .w-text-container-service h2 {
+    font-size: 1.75em;
+  }
+
+  .text-container-service p,
+  .w-text-container-service p {
+    font-size: 1.1em;
+  }
+
+  .services-contact-card {
+    padding: 20px;
+  }
+
+  .services-contact-card h1 {
+    font-size: 2rem;
+  }
+
+  .services-contact-card h2 {
+    font-size: 1.75rem;
+  }
+
+  .services-contact-card p {
+    font-size: 0.9rem;
+  }
+
+  .services-contact-img {
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .services-hero h1 {
+    font-size: 1.5em;
+  }
+
+  .services-hero p {
+    font-size: 1em;
+  }
+
+  .service-item h2 {
+    font-size: 1.1em;
+  }
+
+  .service-item p {
+    font-size: 1em;
+  }
+
+  .text-container-service h1,
+  .w-text-container-service h1 {
+    font-size: 1.5rem;
+  }
+
+  .text-container-service h2,
+  .w-text-container-service h2 {
+    font-size: 1.5em;
+  }
+
+  .text-container-service p,
+  .w-text-container-service p {
+    font-size: 1em;
+  }
+
+  .services-contact-card {
+    padding: 15px;
+  }
+
+  .services-contact-card h1 {
+    font-size: 1.5rem;
+  }
+
+  .services-contact-card h2 {
+    font-size: 1.25rem;
+  }
+
+  .services-contact-card p {
+    font-size: 0.8rem;
+  }
+
+  .services-contact-img {
+    height: 60px;
+  }
+}
 
 
   /* MODO OSCURO | NUESTROS SERVICIOS*/

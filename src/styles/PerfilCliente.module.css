@@ -209,18 +209,6 @@
 .closeModalButton:hover {
   background-color: #4e54c8;
 }
-/* Modal Styles */
-.modal {
-  max-width: 500px;
-  margin: auto;
-  padding: 20px;
-  background: white;
-  border-radius: 8px;
-}
-
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-}
 
 .confirmDeleteButton {
   background-color: #d9534f;
@@ -246,6 +234,7 @@
   margin: 0;
   list-style: none;
 }
+
 /* Direcciones.module.css */
 
 .paginationContainer {
@@ -253,7 +242,6 @@
   justify-content: center;
   margin-top: 20px; /* Ajusta el espacio superior según sea necesario */
 }
-
 
 .direccionDetails p {
   text-align: left;
@@ -276,4 +264,158 @@
   border-radius: 5px;
   margin-bottom: 10px;
   background-color: #fff;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .headerLeft {
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+
+  .headerText h2 {
+    font-size: 20px;
+  }
+
+  .headerText p {
+    font-size: 14px;
+  }
+
+  .navLink {
+    font-size: 14px;
+    margin: 0 10px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .editButton,
+  .deleteButton {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+
+  .modal {
+    padding: 20px;
+    max-width: 90%;
+  }
+
+  .addDataButton,
+  .closeModalButton {
+    font-size: 14px;
+    padding: 8px 16px;
+  }
+}
+
+@media (max-width: 768px) {
+  .header {
+    padding-bottom: 10px;
+  }
+
+  .headerText h2 {
+    font-size: 18px;
+  }
+
+  .headerText p {
+    font-size: 12px;
+  }
+
+  .navLink {
+    font-size: 12px;
+    margin: 0 8px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .actions {
+    margin-top: 15px;
+  }
+
+  .editButton,
+  .deleteButton {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+
+  .modal {
+    padding: 15px;
+    max-width: 90%;
+  }
+
+  .addDataButton,
+  .closeModalButton {
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .profileContainer {
+    padding: 10px;
+  }
+
+  .avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+  }
+
+  .headerText h2 {
+    font-size: 16px;
+  }
+
+  .headerText p {
+    font-size: 10px;
+  }
+
+  .navLink {
+    font-size: 10px;
+    margin: 0 5px;
+  }
+
+  .detailsGrid {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+
+  .actions {
+    margin-top: 10px;
+  }
+
+  .editButton,
+  .deleteButton {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .modal {
+    padding: 10px;
+    max-width: 95%;
+  }
+
+  .addDataButton,
+  .closeModalButton {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }
