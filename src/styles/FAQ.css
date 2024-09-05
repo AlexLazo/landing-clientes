@@ -12,36 +12,39 @@
     background-size: initial;
     background-attachment: inherit;
     text-align: left;
-    padding: 110px;
+    padding: 110px 20px; /* Added horizontal padding for small screens */
     margin: auto;
 }
 
+/* Responsive adjustments */
 .faq-content {
     background: linear-gradient(to right, #1A1514, #1A1514);
     text-align: left;
     max-width: 1200px;
     margin: 0 auto;
     border-radius: 20px;
-    padding: 1rem 1rem;
+    padding: 1rem;
 }
 
 .faq-section h1 {
-    font-size: 3rem;
+    font-size: 2rem; /* Adjusted for smaller screens */
     color: #D6D2CE;
-    line-height: 1.5;
+    line-height: 1.4;
+    margin-bottom: 1rem;
 }
 
 .faq-section h4 {
-    font-size: 1.5rem;
+    font-size: 1.25rem; /* Adjusted for smaller screens */
     font-weight: normal;
     color: #D6D2CE;
     font-style: italic;
-    line-height: 1.5;
+    line-height: 1.4;
     text-align: left;
+    margin-bottom: 1rem;
 }
 
 .faq-section p {
-    font-size: 1.2rem;
+    font-size: 1rem; /* Adjusted for smaller screens */
     color: #D6D2CE;  
     line-height: 1.5;
     text-align: left;
@@ -52,5 +55,49 @@
     border-bottom: 2px solid #ffffff; 
     width: 100%; 
     margin: 20px auto;
+}
 
+/* Responsive design */
+@media (max-width: 768px) {
+    .faq-section {
+        padding: 80px 10px; /* Adjusted padding for medium screens */
+    }
+
+    .faq-content {
+        padding: 1rem; /* Adjusted padding for medium screens */
+    }
+
+    .faq-section h1 {
+        font-size: 1.75rem; /* Further reduced font size for smaller screens */
+    }
+
+    .faq-section h4 {
+        font-size: 1.1rem; /* Further reduced font size for smaller screens */
+    }
+
+    .faq-section p {
+        font-size: 0.9rem; /* Further reduced font size for smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    .faq-section {
+        padding: 60px 5px; /* Adjusted padding for smaller screens */
+    }
+
+    .faq-content {
+        padding: 0.75rem; /* Adjusted padding for smaller screens */
+    }
+
+    .faq-section h1 {
+        font-size: 1.5rem; /* Further reduced font size for very small screens */
+    }
+
+    .faq-section h4 {
+        font-size: 1rem; /* Further reduced font size for very small screens */
+    }
+
+    .faq-section p {
+        font-size: 0.85rem; /* Further reduced font size for very small screens */
+    }
 }

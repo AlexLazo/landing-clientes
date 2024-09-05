@@ -1,0 +1,61 @@
+.historialOrdenesContainer {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.searchInput {
+    width: 100%;
+    max-width: 400px;
+    margin-top: 10px;
+}
+
+.loading {
+    text-align: center;
+}
+
+.emptyMessage {
+    text-align: center;
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.listGroup {
+    margin-bottom: 20px;
+}
+
+.listItem {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+}
+
+.ordenDetails {
+    flex: 1;
+}
+
+.ordenTitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}

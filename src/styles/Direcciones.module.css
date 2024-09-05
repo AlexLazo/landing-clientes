@@ -67,25 +67,6 @@
     margin: 0;
     list-style: none;
 }
-/* Direcciones.module.css */
-
-.paginationContainer {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px; /* Ajusta el espacio superior según sea necesario */
-}
-
-
-.direccionDetails p {
-    text-align: left;
-    margin: 5px 0; /* Espacio superior e inferior para separar los párrafos */
-    line-height: 1.5; /* Espaciado entre líneas para mejorar la legibilidad */
-    color: #666; /* Color de texto para los detalles de la dirección */
-}
-
-.direccionDetails strong {
-    color: #333; /* Color del texto en negrita para destacar las etiquetas */
-}
 
 /* Elemento de la lista */
 .listItem {
@@ -183,7 +164,7 @@
     transform: scale(1.05);
 }
 
-/* Modal overlay */
+/* Modal overlay Edit */
 .modalOverlayEdit {
     position: fixed;
     top: 0;
@@ -197,7 +178,7 @@
     z-index: 1000;
 }
 
-/* Modal content */
+/* Modal content Edit */
 .modalContentEdit {
     background: #ffffff;
     padding: 30px;
@@ -262,4 +243,95 @@
 .cancelButtonEdit:hover {
     background-color: #5a6268;
     transform: scale(1.05);
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .direccionesClienteContainer {
+        margin: 20px;
+        padding: 15px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        font-size: 22px;
+    }
+
+    .buttonAgregar {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+    .subtitle {
+        font-size: 18px;
+    }
+
+    .listItem {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .modalContent {
+        width: 90%;
+        max-width: 400px;
+    }
+
+    .modalContentEdit {
+        width: 90%;
+        max-width: 400px;
+    }
+}
+
+@media (max-width: 480px) {
+    .direccionesClienteContainer {
+        margin: 10px;
+        padding: 10px;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .title {
+        font-size: 18px;
+    }
+
+    .buttonAgregar {
+        padding: 8px 16px;
+        font-size: 12px;
+    }
+
+    .subtitle {
+        font-size: 16px;
+    }
+
+    .listItem {
+        padding: 8px;
+    }
+
+    .actionButtons {
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .modalContent {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .modalContentEdit {
+        width: 90%;
+        max-width: 350px;
+    }
 }

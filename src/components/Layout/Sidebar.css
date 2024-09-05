@@ -1,13 +1,21 @@
+/* Importar la fuente desde Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+/* Aplicar la fuente a todo el sitio */
+body {
+  font-family: 'Roboto', sans-serif;
+}
+
 /* Sidebar container */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 80px; /* Ancho inicial del sidebar */
-  background-color: #333; /* Color de fondo del sidebar */
+  width: 80px; /* Initial width of the sidebar */
+  background-color: #333; /* Background color of the sidebar */
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s ease;
+  transition: width 0.4s ease, box-shadow 0.4s ease; /* Mejora la transición */
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
@@ -23,7 +31,7 @@
 .sidebar-toggle {
   position: absolute;
   top: 15px;
-  left: 15px; /* Alinea el botón con los íconos del menú */
+  left: 15px;
   background-color: #444;
   color: white;
   border: none;
@@ -35,7 +43,8 @@
   justify-content: center;
   cursor: pointer;
   z-index: 1000;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Agrega una animación de transformación */
+  margin: 10px;
 }
 
 .sidebar-toggle:hover {
@@ -53,9 +62,9 @@
 
 /* Sidebar logo image */
 .sidebar-logo img {
-  width: 50px; /* Tamaño del logo cuando el sidebar está cerrado */
+  width: 50px; /* Logo size when the sidebar is closed */
   height: auto;
-  transition: width 0.3s ease;
+  transition: width 0.4s ease; /* Mejora la transición del tamaño del logo */
 }
 
 /* Sidebar logo when open */
@@ -68,8 +77,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 10px; /* Espacio desde el botón de toggle */
-  padding-bottom: 20px; /* Espacio desde el logo */
+  padding-top: 10px; /* Space from the toggle button */
+  padding-bottom: 20px; /* Space from the logo */
 }
 
 /* Sidebar menu list */
@@ -81,7 +90,7 @@
 
 /* Sidebar menu items */
 .sidebar-menu li {
-  margin: 10px 0;
+  margin: 10px 0; /* Espaciado entre los ítems del menú */
 }
 
 /* Sidebar menu links */
@@ -91,12 +100,14 @@
   color: white;
   display: flex;
   align-items: center;
-  padding: 15px;
-  transition: all 0.3s ease;
+  padding: 12px 20px; /* Ajustar padding para un mejor espaciado */
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease; /* Mejora las transiciones */
   border-radius: 8px;
+  font-size: 1rem; /* Tamaño de fuente para los enlaces */
+  font-weight: 500; /* Peso de fuente moderado */
+  letter-spacing: 0.5px; /* Espaciado entre letras */
 }
 
-/* Background color on hover */
 .sidebar-menu a:hover,
 .logout-button:hover {
   background-color: #0056b3; /* Fondo al hacer hover */
@@ -104,8 +115,9 @@
 
 /* Menu icons */
 .menu-icon {
-  font-size: 1.5rem;
-  margin-right: 15px;
+  font-size: 1.5rem; /* Tamaño del ícono */
+  margin-right: 15px; /* Espaciado entre ícono y texto */
+  vertical-align: middle; /* Alineación vertical del ícono */
 }
 
 /* Hide the text when the sidebar is closed */
@@ -124,8 +136,18 @@
   border: none;
   color: white;
   cursor: pointer;
-  margin-top: auto;
-  padding: 15px;
+  margin-top: auto; /* Asegurarse de que el botón de logout esté al final del sidebar */
+  padding: 12px 20px; /* Ajustar padding para alinear con otros enlaces */
+  font-size: 1rem; /* Tamaño de fuente para el botón de logout */
+  font-weight: 500; /* Peso de fuente moderado */
+  display: flex;
+  align-items: center;
+}
+
+/* Align logout button icon */
+.logout-button .menu-icon {
+  font-size: 1.5rem; /* Tamaño del ícono de logout */
+  margin-right: 10px; /* Espaciado entre ícono y texto */
 }
 
 /* Modal overlay */
@@ -140,36 +162,143 @@
   align-items: center;
   justify-content: center;
   z-index: 1000;
+  transition: opacity 0.3s ease; /* Transición para el overlay */
 }
 
 /* Modal content */
 .modal-content {
   background: white;
-  padding: 25px;
+  padding: 20px; /* Ajustar padding para el modal */
   border-radius: 8px;
   text-align: center;
   width: 320px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  font-size: 1rem; /* Tamaño de fuente para el contenido del modal */
+  font-weight: 400; /* Peso de fuente normal */
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transición para el contenido del modal */
+  transform: scale(0.9); /* Escala inicial del modal */
+  opacity: 0; /* Opacidad inicial del modal */
+}
+
+.modal-overlay.show .modal-content {
+  transform: scale(1); /* Escala final del modal */
+  opacity: 1; /* Opacidad final del modal */
 }
 
 /* Modal buttons */
 .confirm-button,
 .cancel-button {
-  background-color: #007bff;
-  color: white;
   border: none;
-  padding: 12px 24px;
+  color: white;
+  padding: 10px 20px;
   margin: 5px;
   cursor: pointer;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  font-size: 0.875rem; /* Tamaño de fuente para los botones del modal */
+  font-weight: 500; /* Peso de fuente moderado */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Mejora las transiciones */
+}
+
+.confirm-button {
+  background-color: #007bff; /* Azul */
+}
+
+.confirm-button:hover {
+  background-color: #0056b3; /* Azul oscuro */
+  transform: scale(1.05); /* Escala ligeramente al hacer hover */
 }
 
 .cancel-button {
-  background-color: #6c757d;
+  background-color: #6c757d; /* Gris */
 }
 
-.confirm-button:hover,
 .cancel-button:hover {
-  background-color: #0056b3;
+  background-color: #5a6268; /* Gris oscuro */
+  transform: scale(1.05); /* Escala ligeramente al hacer hover */
+}
+
+/* Responsive design adjustments */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 60px; /* Reducir el ancho en pantallas más pequeñas */
+  }
+
+  .sidebar.open {
+    width: 200px; /* Ajustar ancho cuando está abierto */
+  }
+}
+
+/* Responsiveness */
+
+/* Tablets and small devices */
+@media (max-width: 1024px) {
+  .sidebar {
+    width: 60px; /* Smaller width for tablets */
+  }
+
+  .sidebar.open {
+    width: 180px; /* Adjust width when open */
+  }
+
+  .sidebar-logo img {
+    width: 40px; /* Smaller logo size */
+  }
+
+  .sidebar.open .sidebar-logo img {
+    width: 80px; /* Adjusted logo size when open */
+  }
+}
+
+/* Mobile devices */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 50px; /* Smaller width for mobile */
+  }
+
+  .sidebar.open {
+    width: 150px; /* Adjusted width when open */
+  }
+
+  .sidebar-logo img {
+    width: 30px; /* Smaller logo size */
+  }
+
+  .sidebar.open .sidebar-logo img {
+    width: 70px; /* Adjusted logo size when open */
+  }
+
+  .sidebar-menu a {
+    padding: 10px;
+  }
+
+  .menu-icon {
+    font-size: 1.25rem;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .sidebar {
+    width: 40px; /* Minimal width for small devices */
+  }
+
+  .sidebar.open {
+    width: 120px; /* Adjusted width when open */
+  }
+
+  .sidebar-logo img {
+    width: 25px; /* Minimal logo size */
+  }
+
+  .sidebar.open .sidebar-logo img {
+    width: 60px; /* Adjusted logo size when open */
+  }
+
+  .sidebar-menu a {
+    padding: 8px;
+  }
+
+  .menu-icon {
+    font-size: 1rem;
+  }
 }

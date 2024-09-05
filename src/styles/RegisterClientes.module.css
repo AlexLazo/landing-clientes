@@ -1,5 +1,6 @@
 /* Container styling for the registration form */
 .registerContainer {
+  display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
@@ -137,4 +138,97 @@
 
 .registerButton:hover {
   background-color: #212322;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .registerCard {
+    padding: 15px;
+  }
+
+  .registerTitle {
+    font-size: 1.25rem;
+  }
+
+  .message {
+    font-size: 14px;
+  }
+
+  .formLabel {
+    font-size: 17px;
+  }
+
+  .formInput {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .submitButton,
+  .registerButton {
+    font-size: 17px;
+    padding: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .registerCard {
+    padding: 10px;
+  }
+
+  .registerTitle {
+    font-size: 1.125rem;
+  }
+
+  .message {
+    font-size: 13px;
+  }
+
+  .formLabel {
+    font-size: 16px;
+  }
+
+  .formInput {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  .submitButton,
+  .registerButton {
+    font-size: 16px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .registerContainer {
+    padding: 10px;
+  }
+
+  .registerCard {
+    padding: 8px;
+    max-width: 100%;
+  }
+
+  .registerTitle {
+    font-size: 1rem;
+  }
+
+  .message {
+    font-size: 12px;
+  }
+
+  .formLabel {
+    font-size: 14px;
+  }
+
+  .formInput {
+    font-size: 12px;
+    padding: 6px;
+  }
+
+  .submitButton,
+  .registerButton {
+    font-size: 15px;
+    padding: 8px;
+  }
 }
