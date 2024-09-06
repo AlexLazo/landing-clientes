@@ -338,3 +338,48 @@ color: inherit;
       font-size: 1.5rem;
   }
 }
+
+/* Responsive Images */
+.image-container-about img, 
+.image-container-about-v img, 
+.alianza-img {
+  width: 100%;
+  height: auto;
+  max-width: 545px;
+  border-radius: 50px;
+}
+
+/* Alianzas - Responsive */
+.alianza {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.alianza-img {
+  max-height: 140px;
+  width: auto;
+}
+
+@media (max-width: 768px) {
+  .content-about, .content-about-v {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .alianza-img {
+    max-height: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-about, .content-about-v {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .alianza-img {
+    max-height: 80px;
+  }
+}
