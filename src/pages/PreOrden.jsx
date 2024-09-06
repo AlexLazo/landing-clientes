@@ -1,32 +1,39 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Button, Alert, Input, Spinner, ListGroup, ListGroupItem } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import '../styles/PreOrden.module.css';
+import styles from '../styles/PreOrden.module.css'; // Asegúrate de que el archivo esté en la ruta correcta
 
 const API_URL = import.meta.env.VITE_API_URL;
+
+const TIPOS_PAGO = [
+  { id: 1, nombre: 'Efectivo' },
+  { id: 2, nombre: 'Tarjeta' }
+];
 
 const PreOrden = () => {
   const [cliente, setCliente] = useState(null);
   const [direcciones, setDirecciones] = useState([]);
-  const [tipoPago, setTipoPago] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const [formData, setFormData] = useState({
     id_direccion: '',
     id_tipo_pago: '',
     total_pagar: '',
-    id_estado_paquetes: '',
-    costo_adicional: '',
-    concepto: '',
-    tipo_documento: '',
-    tipo_orden: '',
-    detalles: []
+    concepto: ''
   });
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [direccionToEdit, setDireccionToEdit] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const DIRECTIONS_PER_PAGE = 5;
+  const totalPages = Math.ceil(direcciones.length / DIRECTIONS_PER_PAGE);
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchClienteData = async () => {
+    const fetchData = async () => {
       const token = localStorage.getItem('authToken');
 
       if (!token) {
@@ -40,39 +47,22 @@ const PreOrden = () => {
         });
 
         setCliente(clienteData.cliente);
+
+        const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
+          params: { id_cliente: clienteData.cliente.id, search: searchQuery },
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        setDirecciones(direccionesData.direcciones || []);
       } catch (error) {
-        setError('Error al cargar los datos del cliente.');
+        setError('Error al cargar datos.');
       } finally {
         setLoading(false);
       }
     };
 
-    const fetchDireccionesYPago = async () => {
-      const token = localStorage.getItem('authToken');
-
-      try {
-        // Obtener direcciones del cliente
-        const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
-          headers: { Authorization: `Bearer ${token}` },
-          params: { id_cliente: cliente?.id }
-        });
-        setDirecciones(direccionesData.direcciones);
-
-        // Obtener tipos de pago
-        const { data: pagosData } = await axios.get(`${API_URL}/tipo-pago`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-        setTipoPago(pagosData.tipo_pago);
-      } catch (error) {
-        setError('Error al cargar direcciones o tipos de pago.');
-      }
-    };
-
-    fetchClienteData();
-    if (cliente) {
-      fetchDireccionesYPago();
-    }
-  }, [navigate, cliente]);
+    fetchData();
+  }, [navigate, searchQuery]);
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -96,73 +86,99 @@ const PreOrden = () => {
     }
   };
 
-  if (loading) return <p>Cargando...</p>;
-  if (error) return <p>{error}</p>;
+  const handleSearch = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const handleSave = async (updatedDireccion) => {
+    const token = localStorage.getItem('authToken');
+    try {
+      await axios.put(`${API_URL}/direcciones/${updatedDireccion.id}`, updatedDireccion, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setDirecciones(direcciones.map(direccion =>
+        direccion.id === updatedDireccion.id ? updatedDireccion : direccion
+      ));
+      setModalOpen(false);
+    } catch (error) {
+      setError('Error al actualizar dirección.');
+    }
+  };
 
   return (
-    <div>
-      <h1>Crear Pre Orden</h1>
-      {successMessage && <p>{successMessage}</p>}
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="id_direccion">Dirección:</label>
-          <select
-            id="id_direccion"
-            name="id_direccion"
-            value={formData.id_direccion}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Seleccione una dirección</option>
-            {direcciones.map((direccion) => (
-              <option key={direccion.id} value={direccion.id}>
-                {direccion.direccion}
-              </option>
-            ))}
-          </select>
+    <div className={styles.preOrdenContainer}>
+      <div className={styles.header}>
+        <h1 className={styles.title}>Crear Pre-Orden</h1>
+      </div>
+      {loading ? (
+        <div className={styles.loading}>
+          <Spinner color="primary" />
         </div>
-        <div>
-          <label htmlFor="id_tipo_pago">Tipo de Pago:</label>
-          <select
-            id="id_tipo_pago"
-            name="id_tipo_pago"
-            value={formData.id_tipo_pago}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Seleccione un tipo de pago</option>
-            {tipoPago.map((pago) => (
-              <option key={pago.id} value={pago.id}>
-                {pago.nombre}
-              </option>
-            ))}
-          </select>
-        </div>
-        {/* Otros campos del formulario */}
-        <div>
-          <label htmlFor="total_pagar">Total a Pagar:</label>
-          <input
-            type="number"
-            id="total_pagar"
-            name="total_pagar"
-            value={formData.total_pagar}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="concepto">Concepto:</label>
-          <input
-            type="text"
-            id="concepto"
-            name="concepto"
-            value={formData.concepto}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit">Crear Pre Orden</button>
-      </form>
+      ) : (
+        <>
+          {successMessage && <Alert color="success" className={styles.alert}>{successMessage}</Alert>}
+          {error && <Alert color="danger" className={styles.alert}>{error}</Alert>}
+          <form className={styles.preOrdenForm} onSubmit={handleSubmit}>
+            <div className={styles.formGroup}>
+              <label htmlFor="id_direccion">Dirección:</label>
+              <select
+                id="id_direccion"
+                name="id_direccion"
+                value={formData.id_direccion}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Seleccione una dirección</option>
+                {direcciones.map((direccion) => (
+                  <option key={direccion.id} value={direccion.id}>
+                    {direccion.direccion}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="id_tipo_pago">Tipo de Pago:</label>
+              <select
+                id="id_tipo_pago"
+                name="id_tipo_pago"
+                value={formData.id_tipo_pago}
+                onChange={handleChange}
+                required
+              >
+                <option value="">Seleccione un tipo de pago</option>
+                {TIPOS_PAGO.map((pago) => (
+                  <option key={pago.id} value={pago.id}>
+                    {pago.nombre}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="total_pagar">Total a Pagar:</label>
+              <input
+                type="number"
+                id="total_pagar"
+                name="total_pagar"
+                value={formData.total_pagar}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="concepto">Concepto:</label>
+              <input
+                type="text"
+                id="concepto"
+                name="concepto"
+                value={formData.concepto}
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <Button className={styles.submitButton} type="submit">Crear Pre Orden</Button>
+          </form>
+        </>
+      )}
     </div>
   );
 };

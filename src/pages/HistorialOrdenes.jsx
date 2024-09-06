@@ -2,40 +2,54 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Button, ListGroup, ListGroupItem, Spinner, Alert, Input } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { Pagination } from '@mui/material'; // Importa el componente Pagination de MUI
+import { Pagination } from '@mui/material';
 import styles from '../styles/HistorialOrdenes.module.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const HISTORIAL_PER_PAGE = 10;
+const ORDENES_PER_PAGE = 10;
 
 const HistorialOrdenesCliente = () => {
-    const [historial, setHistorial] = useState([]);
+    const [ordenes, setOrdenes] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const navigate = useNavigate();
 
     useEffect(() => {
-        const fetchHistorial = async () => {
+        const fetchData = async () => {
             const token = localStorage.getItem('authToken');
 
             if (!token) {
-                navigate('/login');
+                navigate('/login'); // Redirigir si no hay token
                 return;
             }
 
             try {
-                const fetchUrl = searchQuery
-                    ? `${API_URL}/historial/${searchQuery}`
-                    : `${API_URL}/historial/ordenes?page=${currentPage}`;
-                
+                setLoading(true);
+
+                // Obtener el perfil del cliente para extraer el ID del cliente
+                const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                const clienteId = clienteData.cliente.id; // Extrae el ID del cliente
+
+                // Construir la URL sin el parámetro de búsqueda
+                const fetchUrl = `${API_URL}/mis-ordenes?id_cliente=${clienteId}&page=${currentPage}`;
+
+                console.log('Fetching data from:', fetchUrl);
+
                 const { data } = await axios.get(fetchUrl, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
-                // Asegúrate de que el historial sea un array
-                setHistorial(Array.isArray(data) ? data : (data.historial || []));
+                console.log('Fetched data:', data);
+
+                // Si la respuesta es un array, se ajusta el estado
+                setOrdenes(Array.isArray(data) ? data : []);
+                setTotalPages(Math.ceil(data.length / ORDENES_PER_PAGE)); // Establecer total de páginas
             } catch (error) {
                 handleError(error);
             } finally {
@@ -45,25 +59,23 @@ const HistorialOrdenesCliente = () => {
 
         const handleError = (error) => {
             if (error.response) {
-                setError(`Error: ${error.response.data.message || 'Error al cargar el historial.'}`);
+                setError(`Error: ${error.response.data.message || 'Error al cargar las órdenes.'}`);
             } else {
-                setError('Error al cargar el historial.');
+                setError('Error al cargar las órdenes.');
             }
         };
 
-        fetchHistorial();
-    }, [navigate, currentPage, searchQuery]); // Add dependencies
+        fetchData();
+    }, [navigate, currentPage]);
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1); // Resetear a la primera página en una nueva búsqueda
     };
 
     const handlePageChange = (event, newPage) => {
         setCurrentPage(newPage);
     };
-
-    const totalPages = Math.ceil(historial.length / HISTORIAL_PER_PAGE);
 
     return (
         <div className={styles.historialOrdenesContainer}>
@@ -71,9 +83,8 @@ const HistorialOrdenesCliente = () => {
                 <h1 className={styles.title}>Historial de Órdenes</h1>
                 <Input
                     type="text"
-                    placeholder="Buscar por número de seguimiento o ID de orden"
+                    placeholder="Buscar por concepto o ID de orden"
                     className={styles.searchInput}
-                    value={searchQuery}
                     onChange={handleSearch}
                 />
             </div>
@@ -83,16 +94,16 @@ const HistorialOrdenesCliente = () => {
                 </div>
             ) : error ? (
                 <Alert color="danger">{error}</Alert>
-            ) : historial.length === 0 ? (
-                <div className={styles.emptyMessage}>No hay historial disponible.</div>
+            ) : ordenes.length === 0 ? (
+                <div className={styles.emptyMessage}>No tienes órdenes registradas.</div>
             ) : (
                 <>
                     <ListGroup className={styles.listGroup}>
-                        {historial.slice((currentPage - 1) * HISTORIAL_PER_PAGE, currentPage * HISTORIAL_PER_PAGE).map(orden => (
+                        {ordenes.map(orden => (
                             <ListGroupItem key={orden.id} className={styles.listItem}>
                                 <div className={styles.ordenDetails}>
-                                    <h4 className={styles.ordenTitle}>Número de Seguimiento: {orden.numero_seguimiento}</h4>
-                                    <p><strong>Estado:</strong> {orden.estadoPaquete.descripcion}</p>
+                                    <h4 className={styles.ordenTitle}>Concepto: {orden.concepto}</h4>
+                                    <p><strong>Total a Pagar:</strong> {orden.total_pagar}</p>
                                     <p><strong>Fecha:</strong> {new Date(orden.created_at).toLocaleDateString()}</p>
                                 </div>
                             </ListGroupItem>
