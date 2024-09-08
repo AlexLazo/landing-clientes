@@ -1,61 +1,105 @@
 .historialOrdenesContainer {
     padding: 20px;
-    max-width: 1200px;
+    max-width: 900px; /* Reducido de 1200px */
     margin: 0 auto;
+    margin-left: 250px; /* Ajusta este valor según el ancho de tu menú */
 }
 
-.header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+.headerCard {
     margin-bottom: 20px;
 }
 
 .title {
     font-size: 24px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+    margin-top: 10px;
 }
 
 .searchInput {
-    width: 100%;
-    max-width: 400px;
     margin-top: 10px;
 }
 
 .loading {
     text-align: center;
+    padding: 20px;
 }
 
 .emptyMessage {
     text-align: center;
     font-size: 18px;
-    color: #6c757d;
 }
 
 .listGroup {
     margin-bottom: 20px;
+    list-style-type: none;
+    
 }
 
 .listItem {
-    display: flex;
-    flex-direction: column;
-    padding: 15px;
-    border: 1px solid #ddd;
-    margin-bottom: 10px;
+    padding: 0;
+    margin-bottom: 20px;
+    text-align: left;
 }
 
-.ordenDetails {
-    flex: 1;
+.ordenCard {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.ordenHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f8f9fa;
+    padding: 10px 15px;
 }
 
 .ordenTitle {
     font-size: 18px;
     font-weight: bold;
+    margin: 10px;
 }
 
+.detailsButton {
+    margin-top: 10px;
+}
+
+.paqueteDetails {
+    text-align: left;
+    background-color: #f8f9fa;
+}
+
+.paqueteCard {
+    margin-top: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+p{
+    text-align: left;
+}
+h4{
+    font-size: 20px;
+    margin-left: 10px;
+    margin-top: 10px;
+}
 .paginationContainer {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .historialOrdenesContainer {
+        margin-left: 0;
+        padding: 10px;
+    }
+
+    .ordenHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ordenTitle {
+        margin-bottom: 10px;
+    }
 }
