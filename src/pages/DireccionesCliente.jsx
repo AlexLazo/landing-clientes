@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Button, ListGroup, ListGroupItem, Spinner, Alert, Input } from 'reactstrap';
+import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import { Pagination } from '@mui/material'; // Importa el componente Pagination de MUI
+import { Pagination } from '@mui/material';
 import styles from '../styles/Direcciones.module.css';
 import ModalEditarDireccion from './ModalEditarDireccion';
 
@@ -14,6 +14,7 @@ const DireccionesCliente = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modalOpen, setModalOpen] = useState(false);
+    const [modalDeleteOpen, setModalDeleteOpen] = useState(false); // Nuevo estado para eliminar
     const [direccionToEdit, setDireccionToEdit] = useState(null);
     const [direccionToDelete, setDireccionToDelete] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
@@ -58,7 +59,7 @@ const DireccionesCliente = () => {
         };
 
         fetchData();
-    }, [navigate, modalOpen, currentPage, searchQuery]); // Add dependencies
+    }, [navigate, modalOpen, currentPage, searchQuery]);
 
     const handleEdit = (direccion) => {
         setDireccionToEdit(direccion);
@@ -67,7 +68,6 @@ const DireccionesCliente = () => {
 
     const handleSave = async () => {
         setModalOpen(false);
-        // Refetch or update the state to reflect changes
         const token = localStorage.getItem('authToken');
 
         try {
@@ -90,7 +90,7 @@ const DireccionesCliente = () => {
 
     const handleDelete = (id) => {
         setDireccionToDelete(id);
-        setModalOpen(true);
+        setModalDeleteOpen(true); // Abre el modal de confirmación
     };
 
     const confirmDelete = async () => {
@@ -106,19 +106,19 @@ const DireccionesCliente = () => {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setDirecciones(prevDirecciones => prevDirecciones.filter(d => d.id !== direccionToDelete));
-            setModalOpen(false);
+            setModalDeleteOpen(false); // Cierra el modal tras eliminar
         } catch (error) {
             setError('Error al eliminar la dirección.');
         }
     };
 
-    const closeModal = () => {
-        setModalOpen(false);
+    const closeDeleteModal = () => {
+        setModalDeleteOpen(false); // Cierra el modal de eliminación
     };
 
     const handleSearch = (event) => {
         setSearchQuery(event.target.value);
-        setCurrentPage(1); // Reset to first page on new search
+        setCurrentPage(1);
     };
 
     const handlePageChange = (event, newPage) => {
@@ -179,7 +179,7 @@ const DireccionesCliente = () => {
                         ))}
                     </ListGroup>
 
-                    <div className={styles.paginationContainer}> {/* Usa la clase CSS para centrar */}
+                    <div className={styles.paginationContainer}>
                         <Pagination
                             count={totalPages}
                             page={currentPage}
@@ -195,11 +195,26 @@ const DireccionesCliente = () => {
             {modalOpen && (
                 <ModalEditarDireccion
                     isOpen={modalOpen}
-                    onClose={closeModal}
+                    onClose={() => setModalOpen(false)}
                     direccion={direccionToEdit}
                     onSave={handleSave}
                 />
             )}
+
+            {modalDeleteOpen && (
+                <div className={styles.modalDeleteOverlay}>
+                    <div className={styles.modalDelete}>
+                        <p>¿Estás seguro que deseas eliminar esta dirección?</p>
+                        <Button color="danger" onClick={confirmDelete}>
+                            Confirmar
+                        </Button>
+                        <Button color="secondary" onClick={closeDeleteModal}>
+                            Cancelar
+                        </Button>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 };
