@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/About.css'; // Ensure this CSS file contains responsive styles
+import '../styles/About.css';
 import valores from '../assets/images/servicio-de-paqueteria-22.jpg';
 import mision from '../assets/images/servicio-de-paqueteria-24.jpg';
 import vision from '../assets/images/servicio-de-paqueteria-25.jpg';
