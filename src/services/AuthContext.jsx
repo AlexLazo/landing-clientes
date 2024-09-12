@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
       try {
         const token = localStorage.getItem('authToken');
         if (token) {
-          console.log('Token encontrado:', token); // Log para depuración
+          //console.log('Token encontrado:', token); // Log para depuración
           setIsAuthenticated(true);
         } else {
           setIsAuthenticated(false);

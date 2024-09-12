@@ -13,16 +13,17 @@ const loginClient = async (email, password) => {
       localStorage.setItem("authToken", response.data.token);
       localStorage.setItem("user", JSON.stringify(response.data.user));
       localStorage.setItem("clienteId", response.data.user.id);
-      console.log('Token almacenado:', response.data.token); // Log para depuración
+      //console.log('Token almacenado:', response.data.token); // Log para depuración
       return response.data.token;
+    } else {
+      throw new Error("No se recibió un token en la respuesta.");
     }
-    return null;
   } catch (error) {
     console.error("Error al iniciar sesión:", error);
-    throw new Error("Error al iniciar sesión.");
+    // Manejo específico del error según el tipo de error o respuesta del servidor
+    throw new Error("Error al iniciar sesión. Verifique sus credenciales y vuelva a intentarlo.");
   }
 };
-
 
 const logout = () => {
   localStorage.removeItem("authToken");
