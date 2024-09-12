@@ -1,9 +1,9 @@
 /* General Styles */
 .services-container {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
   margin: 0;
   padding: 0;
-  color: #333;
   box-sizing: border-box;
 }
 
@@ -16,319 +16,156 @@
 }
 
 .services-hero h1 {
-  font-size: 3em;
+  font-size: 3rem;
   margin-bottom: 20px;
 }
 
 .services-hero p {
-  font-size: 1.5em;
-  font-weight: medium;
-  color: #E1DFDB;
+  font-size: 1.5rem;
+  font-weight: 400;
 }
 
-/* Services List */
-.services-list {
+/* Service Sections */
+.service-content, .w-service-content {
   padding: 40px 20px;
-  background-color: #f9f9f9;
 }
 
-.service-item {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  margin: 10px 0;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-}
-
-.service-item h2 {
-  font-size: 2em;
-  margin-bottom: 15px;
-}
-
-.service-item p {
-  font-size: 1.5em;
-  line-height: 1.6;
-  color: #E1DFDB;
-}
-
-/* Service Cards - Dark Mode */
-.service-content {
-  margin: 0;
-  padding: 1%;
-  color: #333;
-  box-sizing: border-box;
-  background-color: #65574E;
-}
-
-.service-section, .content-service {
+.service-section, .w-service-section {
   display: flex;
   flex-wrap: wrap;
-  padding: 0;
-  margin: auto;
-  max-width: auto;
-}
-
-.text-container-service h1 {
-  font-size: 3rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  color: #E1DFDB;
-}
-
-.image-container-service {
-  flex: 1;
-  flex-direction: column;
-  text-align: center;
-  margin-right: auto;
-}
-
-.text-container-service {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto 10px auto;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: none;
-  max-width: 500px;
-  padding: 20px;
-  box-sizing: border-box;
 }
 
-.image-container-service img {
-  width: 100%; /* Adjusted to be responsive */
-  max-width: 545px;
-  height: auto;
-  padding: 20px;
-  border-radius: 50px;
-  margin-left: 50px;
-}
-
-.text-container-service h2 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-}
-
-.text-container-service p {
-  font-size: 1.5em;
-  line-height: 1.6;
-  color: #E1DFDB;
-}
-
-/* Service Cards - Light Mode */
-.w-service-content {
-  margin: 0;
-  padding: 1%;
-  color: #333;
-  box-sizing: border-box;
-  background-color: #D6D2CE;
-}
-
-.w-service-section, .w-content-service {
+.content-service, .w-content-service {
   display: flex;
   flex-wrap: wrap;
-  padding: 0;
-  margin: auto;
-  max-width: auto;
-}
-
-.w-text-container-service h1 {
-  font-size: 3rem;
-  line-height: 1.5;
-  margin-bottom: 20px;
-  color: #65574E;
-}
-
-.w-image-container-service {
-  flex: 1;
-  flex-direction: column;
-  text-align: center;
-  margin-right: auto;
-}
-
-.w-text-container-service {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  margin: 0 auto 10px auto;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  border: none;
+}
+
+/* Text and Image Containers */
+.text-container-service, .w-text-container-service {
+  flex: 1;
   max-width: 500px;
   padding: 20px;
-  box-sizing: border-box;
 }
 
-.w-image-container-service img {
-  width: 100%; /* Adjusted to be responsive */
-  max-width: 545px;
-  height: auto;
-  padding: 20px;
-  border-radius: 50px;
-  margin-left: 50px;
-}
-
-.w-text-container-service h2 {
-  font-size: 2.5em;
+.text-container-service h1, .w-text-container-service h1 {
+  font-size: 2.5rem;
   margin-bottom: 20px;
 }
 
-.w-text-container-service p {
-  font-size: 1.5em;
+.text-container-service p, .w-text-container-service p {
+  font-size: 1.2rem;
   line-height: 1.6;
-  color: #65574E;
 }
 
-/* Contact Us Section */
+.image-container-service, .w-image-container-service {
+  flex: 1;
+  padding: 20px;
+  text-align: center;
+}
+
+.image-container-service img, .w-image-container-service img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+/* Contact Section */
 .services-contact {
   padding: 60px 20px;
   background-color: #65574E;
   text-align: center;
-  align-items: center;
 }
 
 .services-contact-card {
   background-color: #D6D2CE;
   border-radius: 20px;
   padding: 30px;
-  margin: auto;
   max-width: 1200px;
+  margin: auto;
 }
 
 .services-contact-card h1 {
-  font-size: 3rem;
-  line-height: 1.5;
+  font-size: 2.5rem;
   color: #65574E;
-}
-
-.services-contact-card h2 {
-  font-size: 2.6rem;
-  font-weight: normal;
-  font-style: italic;
-  line-height: 1.5;
 }
 
 .services-contact-card p {
   font-size: 1.2rem;
   margin-bottom: 30px;
   line-height: 1.5;
-  font-weight: medium;
-  color: #65574E;
 }
 
-.services-contact a {
-  font-weight: bold;
+/* CTA Button */
+.cta-button {
+  padding: 10px 20px;
+  background-color: #408345;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
 }
 
-.services-contact {
-  display: flex;
-  align-items: inherit;
+.cta-button:hover {
+  background-color: #33691e;
 }
 
-.services-contact-img {
-  height: 140px;
-  border-radius: 20%;
-  padding: 1%;
-  transition: filter 0.3s ease;
-}
-
-.services-contact-img:hover {
-  filter: drop-shadow(0 0 2em var(--primary-color));
-}
-
-/* Dark Mode */
-.dark-mode .w-service-content {
-  background-color: #34332f;
-}
-
-.dark-mode .services-contact-card {
-  background-color: #34332f;
-}
-
-/* Responsive Design */
+/* Responsive Styles */
 @media (max-width: 1024px) {
   .services-hero h1 {
-    font-size: 2.5em;
+    font-size: 2.5rem;
   }
 
   .services-hero p {
-    font-size: 1.25em;
+    font-size: 1.25rem;
   }
 
-  .service-item h2 {
-    font-size: 1.5em;
+  .text-container-service h1, .w-text-container-service h1 {
+    font-size: 2rem;
   }
 
-  .service-item p {
-    font-size: 1.25em;
-  }
-
-  .text-container-service h1,
-  .w-text-container-service h1 {
-    font-size: 2.5rem;
-  }
-
-  .text-container-service h2,
-  .w-text-container-service h2 {
-    font-size: 2em;
-  }
-
-  .text-container-service p,
-  .w-text-container-service p {
-    font-size: 1.25em;
-  }
-
-  .services-contact-card {
-    padding: 30px 20px;
+  .text-container-service p, .w-text-container-service p {
+    font-size: 1.15rem;
   }
 
   .services-contact-card h1 {
-    font-size: 2.5rem;
-  }
-
-  .services-contact-card h2 {
     font-size: 2rem;
   }
 
   .services-contact-card p {
     font-size: 1rem;
   }
-
-  .services-contact-img {
-    height: 100px;
-  }
 }
 
 @media (max-width: 768px) {
+  .service-section, .w-service-section {
+    flex-direction: column;
+  }
+
+  .image-container-service img, .w-image-container-service img {
+    width: 100%;
+    height: auto;
+  }
+
   .services-hero h1 {
-    font-size: 2em;
-  }
-
-  .services-hero p {
-    font-size: 1.15em;
-  }
-
-  .service-item h2 {
-    font-size: 1.25em;
-  }
-
-  .service-item p {
-    font-size: 1.1em;
-  }
-
-  .text-container-service h1,
-  .w-text-container-service h1 {
     font-size: 2rem;
   }
 
-  .text-container-service h2,
-  .w-text-container-service h2 {
-    font-size: 1.75em;
+  .services-hero p {
+    font-size: 1.15rem;
   }
 
-  .text-container-service p,
-  .w-text-container-service p {
-    font-size: 1.1em;
+  .text-container-service h1, .w-text-container-service h1 {
+    font-size: 1.75rem;
+  }
+
+  .text-container-service p, .w-text-container-service p {
+    font-size: 1rem;
   }
 
   .services-contact-card {
@@ -336,52 +173,29 @@
   }
 
   .services-contact-card h1 {
-    font-size: 2rem;
-  }
-
-  .services-contact-card h2 {
     font-size: 1.75rem;
   }
 
   .services-contact-card p {
     font-size: 0.9rem;
   }
-
-  .services-contact-img {
-    height: 80px;
-  }
 }
 
 @media (max-width: 480px) {
   .services-hero h1 {
-    font-size: 1.5em;
-  }
-
-  .services-hero p {
-    font-size: 1em;
-  }
-
-  .service-item h2 {
-    font-size: 1.1em;
-  }
-
-  .service-item p {
-    font-size: 1em;
-  }
-
-  .text-container-service h1,
-  .w-text-container-service h1 {
     font-size: 1.5rem;
   }
 
-  .text-container-service h2,
-  .w-text-container-service h2 {
-    font-size: 1.5em;
+  .services-hero p {
+    font-size: 1rem;
   }
 
-  .text-container-service p,
-  .w-text-container-service p {
-    font-size: 1em;
+  .text-container-service h1, .w-text-container-service h1 {
+    font-size: 1.5rem;
+  }
+
+  .text-container-service p, .w-text-container-service p {
+    font-size: 0.9rem;
   }
 
   .services-contact-card {
@@ -392,18 +206,16 @@
     font-size: 1.5rem;
   }
 
-  .services-contact-card h2 {
-    font-size: 1.25rem;
-  }
-
   .services-contact-card p {
     font-size: 0.8rem;
   }
 
-  .services-contact-img {
-    height: 60px;
+  .image-container-service img, .w-image-container-service img {
+    width: 100%;
+    height: auto;
   }
 }
+
 
 
   /* MODO OSCURO | NUESTROS SERVICIOS*/

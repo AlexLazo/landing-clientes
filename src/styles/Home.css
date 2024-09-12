@@ -250,6 +250,11 @@
   background-color: #0056b3;
 }
 
+.help-text {
+  text-align: center;
+  margin: 20px 0;
+}
+
 .footer {
   background-color: #f8f9fa;
   padding: 20px;

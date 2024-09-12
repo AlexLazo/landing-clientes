@@ -143,7 +143,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .registerCard {
-    padding: 15px;
+    padding: 20px;
   }
 
   .registerTitle {
@@ -172,7 +172,7 @@
 
 @media (max-width: 768px) {
   .registerCard {
-    padding: 10px;
+    padding: 20px;
   }
 
   .registerTitle {
@@ -201,11 +201,11 @@
 
 @media (max-width: 480px) {
   .registerContainer {
-    padding: 10px;
+    padding: 30px;
   }
 
   .registerCard {
-    padding: 8px;
+    padding: 20px;
     max-width: 100%;
   }
 
