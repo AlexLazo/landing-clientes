@@ -1,229 +1,62 @@
+/* Sidebar.css */
+
 /* Sidebar container */
 .sidebar {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100vh;
-  width: 80px; /* Ancho inicial del sidebar */
-  background-color: #333; /* Color de fondo del sidebar */
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-  transition: width 0.3s ease;
-  overflow-x: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-/* Sidebar when open */
-.sidebar.open {
-  width: 200px; /* Ancho del sidebar cuando está abierto */
-}
-
-/* Sidebar toggle button */
-.sidebar-toggle {
-  position: absolute;
-  top: 15px;
-  left: 15px; /* Alinea el botón con los íconos del menú */
-  background-color: #444;
+  height: 100%;
+  width: 250px; /* Adjust as needed */
+  background-color: #333;
   color: white;
-  border: none;
-  border-radius: 50%;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  z-index: 1000;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar-toggle:hover {
-  background-color: #555; /* Cambia el color al pasar el cursor */
-}
-
-/* Sidebar logo */
-.sidebar-logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  margin-top: 70px; /* Separación del botón de toggle */
-}
-
-/* Sidebar logo image */
-.sidebar-logo img {
-  width: 50px; /* Tamaño del logo cuando el sidebar está cerrado */
-  height: auto;
   transition: width 0.3s ease;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's above other content */
 }
 
-/* Sidebar logo when open */
-.sidebar.open .sidebar-logo img {
-  width: 90px; /* Tamaño del logo cuando el sidebar está abierto */
+.sidebar.closed {
+  width: 60px; /* Adjust as needed for collapsed state */
 }
 
-/* Sidebar menu */
+.sidebar-logo img {
+  width: 100%;
+  height: auto;
+  margin: 10px;
+}
+
 .sidebar-menu {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  padding-top: 10px; /* Espacio desde el botón de toggle */
-  padding-bottom: 20px; /* Espacio desde el logo */
+  margin-top: 20px;
 }
 
-/* Sidebar menu list */
 .sidebar-menu ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-/* Sidebar menu items */
 .sidebar-menu li {
-  margin: 10px 0;
-}
-
-/* Sidebar menu links */
-.sidebar-menu a,
-.logout-button {
-  text-decoration: none;
-  color: white;
-  display: flex;
-  align-items: center;
-  padding: 15px;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-}
-
-/* Background color on hover */
-.sidebar-menu a:hover,
-.logout-button:hover {
-  background-color: #0056b3; /* Fondo al hacer hover */
-}
-
-/* Menu icons */
-.menu-icon {
-  font-size: 1.5rem;
-  margin-right: 15px;
-}
-
-/* Hide the text when the sidebar is closed */
-.sidebar .sidebar-menu a span {
-  display: none; /* Ocultar texto cuando el sidebar está cerrado */
-}
-
-/* Show the text when the sidebar is open */
-.sidebar.open .sidebar-menu a span {
-  display: inline; /* Mostrar texto cuando el sidebar está abierto */
-}
-
-/* Logout button */
-.logout-button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  margin-top: auto;
-  padding: 15px;
-}
-
-/* Modal overlay */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-/* Modal content */
-.modal-content {
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
-  text-align: center;
-  width: 320px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Modal buttons */
-.confirm-button,
-.cancel-button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  margin: 5px;
-  cursor: pointer;
-  border-radius: 5px;
-  transition: background-color 0.3s ease;
-}
-
-.cancel-button {
-  background-color: #6c757d;
-}
-
-.confirm-button:hover,
-.cancel-button:hover {
-  background-color: #0056b3;
-}
-/* Sidebar Styles */
-.sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 250px; /* Fixed width */
-  height: 100%;
-  background-color: #333;
-  color: white;
-  transition: transform 0.3s ease-in-out;
-  transform: translateX(0); /* Sidebar visible */
-  z-index: 100; /* Ensure it stays above main content */
-}
-
-.sidebar.closed {
-  transform: translateX(-100%); /* Hide sidebar */
-}
-
-.sidebar-toggle {
-  position: absolute;
-  top: 20px;
-  right: -40px; /* Ensure toggle button is visible even when sidebar is closed */
-  background-color: #333;
-  color: white;
-  padding: 10px;
-  cursor: pointer;
-  z-index: 110;
-}
-
-.sidebar.open .sidebar-toggle {
-  right: -40px;
-}
-
-.sidebar-menu ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-.sidebar-menu li {
-  padding: 15px;
+  margin: 15px 0;
 }
 
 .menu-icon {
   margin-right: 10px;
 }
 
-.logout-button {
-  background: none;
+.sidebar-toggle {
+  position: absolute;
+  top: 10px;
+  right: -30px; /* Position the toggle button outside the sidebar */
+  background-color: #333;
   border: none;
   color: white;
+  font-size: 24px;
   cursor: pointer;
+  padding: 10px;
+  transition: right 0.3s ease;
+}
+
+.sidebar.open .sidebar-toggle {
+  right: -60px; /* Adjust position when the sidebar is open */
 }
 
 .modal-overlay {
@@ -232,39 +65,20 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .modal-content {
-  background-color: white;
+  background: white;
   padding: 20px;
   border-radius: 5px;
+  text-align: center;
 }
 
-/* Main content area */
-.main-content {
-  margin-left: 250px; /* Adjust based on sidebar width */
-  padding: 20px;
-  transition: margin-left 0.3s ease-in-out;
-}
-
-/* Adjust main content when sidebar is closed */
-.sidebar.closed ~ .main-content {
-  margin-left: 0;
-}
-
-/* Responsive behavior */
-@media screen and (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-  }
-  .main-content {
-    margin-left: 200px;
-  }
-  .sidebar.closed ~ .main-content {
-    margin-left: 0;
-  }
+.confirm-button,
+.cancel-button {
+  margin: 5px;
 }
