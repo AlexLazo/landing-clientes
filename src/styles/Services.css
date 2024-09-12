@@ -9,8 +9,8 @@
 
 /* Hero Section */
 .services-hero {
-  background: linear-gradient(to right, #65574E, #65574E);
-  color: #E1DFDB;
+background-color: #D6D2CE;
+  color: #333;
   text-align: center;
   padding: 80px 20px;
 }
@@ -30,6 +30,16 @@
   padding: 40px 20px;
 }
 
+.service-content, .content-service{
+  /*background-color: #D6D2CE;*/
+  background-color: #65574E;
+}
+
+.w-service-content, .w-content-service{
+  /*background-color: #65574E;*/
+  background-color: #D6D2CE;
+}
+
 .service-section, .w-service-section {
   display: flex;
   flex-wrap: wrap;
@@ -44,6 +54,9 @@
   align-items: center;
 }
 
+.content-service, .content-service p{
+  color: #D6D2CE;
+}
 /* Text and Image Containers */
 .text-container-service, .w-text-container-service {
   flex: 1;
@@ -220,7 +233,7 @@
 
   /* MODO OSCURO | NUESTROS SERVICIOS*/
 
-  .dark-mode .w-service-content{
+  .dark-mode .w-service-content, .dark-mode .services-hero,.dark-mode .w-content-service{
     background-color: #34332f;
   }
 

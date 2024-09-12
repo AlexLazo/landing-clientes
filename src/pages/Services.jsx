@@ -13,9 +13,9 @@ const Services = () => {
   return (
     <div className="services-container">
       <header className="services-hero">
-        <div className='service-content'>
+        <div className='w-service-content'>
           <section className="service-section">
-            <div className='content-service'>
+            <div className='w-content-service'>
               <div className='text-container-service'>
                 <h1>Nuestros Servicios</h1>
                 <p>Descubre en Mr. Paquetes, nos dedicamos a ofrecer soluciones logísticas completas y eficientes para satisfacer las necesidades de nuestros clientes. A continuación, te presentamos los principales servicios que ofrecemos:</p>
@@ -67,9 +67,9 @@ const Services = () => {
           alt: "Asesoría Logística",
         }
       ].map((service, index) => (
-        <div key={index} className={index % 2 === 0 ? 'w-service-content' : 'service-content'}>
-          <section className={index % 2 === 0 ? "w-service-section" : "service-section"}>
-            <div className={index % 2 === 0 ? 'w-content-service' : 'content-service'}>
+        <div key={index} className={index % 2 === 0 ? 'service-content' : 'w-service-content'}>
+          <section className={index % 2 === 0 ? "service-section" : "w-service-section"}>
+            <div className={index % 2 === 0 ? 'content-service' : 'w-content-service'}>
               {index % 2 === 0 ? (
                 <>
                   <div className='w-image-container-service'>
