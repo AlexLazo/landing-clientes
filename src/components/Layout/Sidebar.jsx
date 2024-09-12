@@ -2,13 +2,13 @@ import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaTruck, FaTrashAlt, FaSignOutAlt, FaBoxOpen, FaHistory } from 'react-icons/fa';
 import './Sidebar.css';
-import { useAuth } from '/src/services/AuthContext'; // Ajusta la ruta según tu estructura
+import { useAuth } from '/src/services/AuthContext'; // Adjust the path based on your structure
 
 const Sidebar = () => {
   const { logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(true); // Sidebar abierto por defecto
+  const [isOpen, setIsOpen] = useState(true); // Sidebar open by default
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const toggleSidebar = useCallback(() => {
@@ -22,7 +22,7 @@ const Sidebar = () => {
   const handleConfirmLogout = useCallback(() => {
     logout();
     setIsModalOpen(false);
-    window.location.href = "/login"; // Redirige al login después de cerrar sesión
+    window.location.href = "/login"; // Redirect to login after logout
   }, [logout]);
 
   const handleCloseModal = useCallback(() => {
@@ -45,12 +45,12 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+      <div className={`sidebar ${isOpen ? 'open' : 'closed'}`}>
         <div className="sidebar-toggle" onClick={toggleSidebar} role="button" aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'}>
           {isOpen ? <FaTimes className="toggle-icon" /> : <FaBars className="toggle-icon" />}
         </div>
         <div className="sidebar-logo">
-          <img src="/public/logo.png" alt="Logo" /> {/* Reemplaza con la ruta a tu logo */}
+          <img src="/public/logo.png" alt="Logo" /> {/* Replace with your logo path */}
         </div>
         <nav className="sidebar-menu">
           <ul>

@@ -173,3 +173,98 @@
 .cancel-button:hover {
   background-color: #0056b3;
 }
+/* Sidebar Styles */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px; /* Fixed width */
+  height: 100%;
+  background-color: #333;
+  color: white;
+  transition: transform 0.3s ease-in-out;
+  transform: translateX(0); /* Sidebar visible */
+  z-index: 100; /* Ensure it stays above main content */
+}
+
+.sidebar.closed {
+  transform: translateX(-100%); /* Hide sidebar */
+}
+
+.sidebar-toggle {
+  position: absolute;
+  top: 20px;
+  right: -40px; /* Ensure toggle button is visible even when sidebar is closed */
+  background-color: #333;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  z-index: 110;
+}
+
+.sidebar.open .sidebar-toggle {
+  right: -40px;
+}
+
+.sidebar-menu ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.sidebar-menu li {
+  padding: 15px;
+}
+
+.menu-icon {
+  margin-right: 10px;
+}
+
+.logout-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* Main content area */
+.main-content {
+  margin-left: 250px; /* Adjust based on sidebar width */
+  padding: 20px;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+/* Adjust main content when sidebar is closed */
+.sidebar.closed ~ .main-content {
+  margin-left: 0;
+}
+
+/* Responsive behavior */
+@media screen and (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+  .main-content {
+    margin-left: 200px;
+  }
+  .sidebar.closed ~ .main-content {
+    margin-left: 0;
+  }
+}
