@@ -5,11 +5,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  text-align: center;
 }
 
 /* Hero Section */
 .services-hero {
-background-color: #D6D2CE;
+  background-color: #D6D2CE;
   color: #333;
   text-align: center;
   padding: 80px 20px;
