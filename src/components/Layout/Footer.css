@@ -3,3 +3,7 @@
 .dark-mode .footer-group{
     background-color: #34332f;
 }
+
+.footer-group p{
+    text-align: center;
+}
