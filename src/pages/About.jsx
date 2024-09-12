@@ -22,6 +22,7 @@ const About = () => {
               «En Mr. Paquetes, nos dedicamos a ofrecer servicios de envío y logística de alta calidad, asegurando que cada paquete llegue a su destino de manera rápida y segura, superando las expectativas de nuestros clientes.»
             </p>
             <p>“Conectando destinos, siempre a tiempo y seguro”</p>
+            <br />
             <Link to="/services" className="cta-button">¿Qué ofrecemos?</Link>
           </div>
           <div className='image-container-about'>
@@ -30,7 +31,7 @@ const About = () => {
         </div>
       </section>
 
-      <section className="about-section about-section-v">
+      <section className="about-section-v">
         <div className='content-about-v'>
           <div className='image-container-about-v'>
             <img src={vision} alt="Visión" />
@@ -59,6 +60,7 @@ const About = () => {
               <li><strong>Responsabilidad.</strong></li>
               <li><strong>Sostenibilidad.</strong></li>
             </ul>
+            <br />
             <Link to="/services" className="cta-button">Conoce nuestros servicios</Link>
           </div>
           <div className='image-container-about'>
@@ -70,7 +72,9 @@ const About = () => {
       <section className="alianzas">
         <div className="alianzas-card">
           <h1>¡Nuestros Aliados!</h1>
+          <br />
           <p>En Mr. Paquetes, creemos en la fuerza de las alianzas estratégicas para ofrecer un servicio más completo y eficiente a nuestros clientes. Hemos establecido colaboraciones con diversas empresas y organizaciones en el país.</p>
+          <br />
           <div className="alianza">
             <a href="https://www.bancocuscatlan.com" target="_blank" rel="noopener noreferrer">
               <img src={cuscatlan} alt="Banco Cuscatlán" className="alianza-img" />
