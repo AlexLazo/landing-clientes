@@ -48,7 +48,7 @@ const Home = () => {
           <p>¿Listo para experimentar el mejor servicio de envío y logística en San Miguel, El Salvador? En Mr. Paquetes, te ofrecemos más que solo envíos; te brindamos una experiencia sin igual basada en confiabilidad, rapidez y tecnología avanzada.</p>
           <Link to="/register" className="cta-button"> Registrate</Link>
           <br /> <br />
-          <p>¿Necesitas ayuda? <Link to="/Contact" className='contact-btn'>Contáctanos</Link></p>
+          <p className="help-text">¿Necesitas ayuda? <Link to="/Contact" className="contact-btn">Contáctanos</Link></p>
         </div>
       </section>
 
