@@ -4,26 +4,27 @@
   top: 0;
   left: 0;
   height: 100vh;
-  width: 80px; /* Ancho inicial del sidebar */
-  background-color: #333; /* Color de fondo del sidebar */
+  width: 80px; /* Initial width for closed state */
+  background-color: #333;
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
   transition: width 0.3s ease;
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  z-index: 999;
 }
 
 /* Sidebar when open */
 .sidebar.open {
-  width: 200px; /* Ancho del sidebar cuando está abierto */
+  width: 200px; /* Expanded width */
 }
 
 /* Sidebar toggle button */
 .sidebar-toggle {
   position: absolute;
   top: 15px;
-  left: 15px; /* Alinea el botón con los íconos del menú */
+  left: 15px;
   background-color: #444;
   color: white;
   border: none;
@@ -39,7 +40,7 @@
 }
 
 .sidebar-toggle:hover {
-  background-color: #555; /* Cambia el color al pasar el cursor */
+  background-color: #555;
 }
 
 /* Sidebar logo */
@@ -48,19 +49,19 @@
   justify-content: center;
   align-items: center;
   padding: 20px;
-  margin-top: 70px; /* Separación del botón de toggle */
+  margin-top: 70px;
 }
 
 /* Sidebar logo image */
 .sidebar-logo img {
-  width: 50px; /* Tamaño del logo cuando el sidebar está cerrado */
+  width: 50px;
   height: auto;
   transition: width 0.3s ease;
 }
 
 /* Sidebar logo when open */
 .sidebar.open .sidebar-logo img {
-  width: 90px; /* Tamaño del logo cuando el sidebar está abierto */
+  width: 90px;
 }
 
 /* Sidebar menu */
@@ -68,8 +69,8 @@
   flex-grow: 1;
   display: flex;
   flex-direction: column;
-  padding-top: 10px; /* Espacio desde el botón de toggle */
-  padding-bottom: 20px; /* Espacio desde el logo */
+  padding-top: 10px;
+  padding-bottom: 20px;
 }
 
 /* Sidebar menu list */
@@ -99,7 +100,7 @@
 /* Background color on hover */
 .sidebar-menu a:hover,
 .logout-button:hover {
-  background-color: #0056b3; /* Fondo al hacer hover */
+  background-color: #0056b3;
 }
 
 /* Menu icons */
@@ -108,14 +109,14 @@
   margin-right: 15px;
 }
 
-/* Hide the text when the sidebar is closed */
+/* Hide text when the sidebar is closed */
 .sidebar .sidebar-menu a span {
-  display: none; /* Ocultar texto cuando el sidebar está cerrado */
+  display: none;
 }
 
-/* Show the text when the sidebar is open */
+/* Show text when the sidebar is open */
 .sidebar.open .sidebar-menu a span {
-  display: inline; /* Mostrar texto cuando el sidebar está abierto */
+  display: inline;
 }
 
 /* Logout button */
@@ -172,4 +173,42 @@
 .confirm-button:hover,
 .cancel-button:hover {
   background-color: #0056b3;
+}
+
+/* Responsive adjustments */
+
+/* Collapse sidebar by default on smaller screens */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 0; /* Hide the sidebar */
+    transition: width 0.3s ease;
+  }
+
+  .sidebar.open {
+    width: 200px; /* Expand on toggle */
+  }
+
+  .sidebar-toggle {
+    left: 5px; /* Adjust the toggle button position for smaller screens */
+  }
+
+  .sidebar-menu a {
+    padding: 10px; /* Reduce padding for smaller screens */
+  }
+
+  .menu-icon {
+    font-size: 1.2rem; /* Reduce icon size */
+  }
+
+  .sidebar.open .menu-icon {
+    font-size: 1.5rem;
+  }
+
+  .sidebar-logo img {
+    width: 40px; /* Smaller logo */
+  }
+
+  .sidebar.open .sidebar-logo img {
+    width: 80px;
+  }
 }
