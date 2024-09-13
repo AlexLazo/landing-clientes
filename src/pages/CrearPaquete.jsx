@@ -1,11 +1,9 @@
 import React, { useState, useEffect, useCallback } from "react";
-import {Card, CardBody, Container, Form, FormGroup, Label, Input, Button, FormFeedback, Row, Col, CardHeader,} from "reactstrap";
+import { Card, CardBody, Container, Form, FormGroup, Label, Input, Button, FormFeedback, Row, Col, CardHeader, } from "reactstrap";
 import { toast, ToastContainer } from "react-toastify";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import '../styles/DatosPaquetesPreOrden.css';
-
-import AuthService from "../services/authService";
 
 export default function DatosPaquetePreOrden() {
   const { idCliente } = useParams();
@@ -41,79 +39,62 @@ export default function DatosPaquetePreOrden() {
   const API_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
-  const verificarEstadoUsuarioLogueado = useCallback(async () => {
-    try {
-      const clienteId = localStorage.getItem("clienteId");
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("authToken");
 
-      if (clienteId && token) {
-        const response = await axios.get(`${API_URL}/auth/show/${clienteId}`, {
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      try {
+        const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        // Verifica si el token es inválido
-        if (response.data.status === "Token is Invalid") {
-          console.error("Token is invalid. Logging out...");
-          AuthService.logout();
-          window.location.href = "/login"; // Redirige a login si el token es inválido
-          return;
-        }
-      }
-    } catch (error) {
-      console.error("Error al verificar el estado del usuario:", error);
-      //AuthService.logout();
-      //window.location.href = "/login";
-    }
-  }, [token, API_URL]);
+        const clienteId = clienteData.cliente.id;
+        setCliente(clienteData.cliente || {});
 
+        const [tiposPaqueteRes, empaquesRes, tarifasRes] = await Promise.all([
+          axios.get(`${API_URL}/dropdown/get_tipo_paquete`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`${API_URL}/dropdown/get_empaques`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+          axios.get(`${API_URL}/tarifa-destinos`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
+        ]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const [clienteRes, tiposPaqueteRes, empaquesRes, tarifasRes] =
-          await Promise.all([
-            axios.get(`${API_URL}/clientes/${idCliente}`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            axios.get(`${API_URL}/dropdown/get_tipo_paquete`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            axios.get(`${API_URL}/dropdown/get_empaques`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-            axios.get(`${API_URL}/tarifa-destinos`, {
-              headers: { Authorization: `Bearer ${token}` },
-            }),
-          ]);
-    
-        console.log("Cliente Response:", clienteRes.data);
         console.log("Tipos Paquete Response:", tiposPaqueteRes.data);
         console.log("Empaques Response:", empaquesRes.data);
         console.log("Tarifas Response:", tarifasRes.data);
-    
-        setCliente(clienteRes.data.cliente || {});
+
         setTiposPaquete(tiposPaqueteRes.data.tipo_paquete || []);
         setEmpaques(empaquesRes.data.empaques || []);
         setTarifas(tarifasRes.data || []);
-    
+
         const storedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
         setSelectedAddress(storedAddress);
         console.log("Selected address:", storedAddress);
-    
+
       } catch (error) {
-        console.error("Error al obtener los datos:", error);
-        toast.error("Error al obtener los datos");
+        handleError(error);
       }
-    };        
+    };
+
+    const handleError = (error) => {
+      if (error.response) {
+        setError(`Error: ${error.response.data.message || "Error al cargar los datos."}`);
+      } else {
+        setError("Error al cargar los datos.");
+      }
+    };
+
     fetchData();
-  }, [idCliente, token, API_URL, verificarEstadoUsuarioLogueado]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      verificarEstadoUsuarioLogueado(); // Verifica el estado del usuario cada cierto tiempo
-    }, 30000); // Verifica cada 30 segundos, ajusta según sea necesario
-
-    return () => clearInterval(interval); // Limpia el intervalo al desmontar el componente
-  }, [verificarEstadoUsuarioLogueado]);
+  }, [navigate, API_URL]);
 
   const validateField = (name, value) => {
     let error = "";
@@ -138,14 +119,6 @@ export default function DatosPaquetePreOrden() {
       case "instrucciones_entrega":
         if (!value.trim()) {
           error = "Debe rellenar este campo.";
-        }
-        break;
-
-      case "fecha_envio":
-      case "fecha_entrega_estimada":
-      case "fecha_entrega":
-        if (!value) {
-          error = "Debe seleccionar una fecha.";
         }
         break;
 
@@ -355,284 +328,266 @@ export default function DatosPaquetePreOrden() {
   };
 
   return (
-  <Container fluid>
-    <h1 className="text-center titulo-pasos">
-      Agregar datos de los Paquetes para Pre-Orden
-    </h1>
-    <Card>
-      <CardHeader className="CardHeaderDatosPAquetes">
-        {cliente && (
-          <h3>
-            Cliente: {cliente.nombre} {cliente.apellido}
-          </h3>
-        )}
-        {selectedAddress && (
-          <h6>Dirección seleccionada: {selectedAddress.direccion}</h6>
-        )}
-      </CardHeader>
-      <CardBody>
-        <Form onSubmit={handleSubmit}>
-          <Card className="mb-3">
-            <CardBody>
-              <h5>Datos Comunes para todos los Paquetes</h5>
-              <Row>
-                <Col md={4}>
-                  <FormGroup>
-                    <Label for="estado_paquete">Estado del Paquete</Label>
-                    <Input
-                      type="text"
-                      name="estado_paquete"
-                      id="estado_paquete"
-                      value="En Recepción"
-                      disabled
-                    />
-                  </FormGroup>
-                </Col>
-              </Row>
-              <Row>
-                <Col md={4}>
-                  <FormGroup>
-                    <Label for="tipo_entrega">Tipo de Entrega</Label>
-                    <Input
-                      type="text"
-                      name="tipo_entrega"
-                      id="tipo_entrega"
-                      value="Normal"
-                      disabled
-                    />
-                  </FormGroup>
-                </Col>
-                <Col md={4}>
-                  <FormGroup>
-                    <Label for="instrucciones_entrega">
-                      Instrucciones de Entrega
-                    </Label>
-                    <Input
-                      type="text"
-                      name="instrucciones_entrega"
-                      id="instrucciones_entrega"
-                      value={commonData.instrucciones_entrega}
-                      onChange={handleChangeCommonData}
-                      invalid={!!errors.commonData.instrucciones_entrega}
-                    />
-                    {errors.commonData.instrucciones_entrega && (
-                      <FormFeedback>
-                        {errors.commonData.instrucciones_entrega}
-                      </FormFeedback>
-                    )}
-                  </FormGroup>
-                </Col>
-              </Row>
-            </CardBody>
-          </Card>
-
-          {paquetes.map((paquete, index) => (
-            <Card key={index} className="mb-3">
+    <Container fluid>
+      <h1 className="text-center titulo-pasos">
+        Agregar datos de los Paquetes para Pre-Orden
+      </h1>
+      <Card>
+        <CardHeader className="CardHeaderDatosPAquetes">
+          {cliente && (
+            <h3>
+              Cliente: {cliente.nombre} {cliente.apellido}
+            </h3>
+          )}
+          {selectedAddress && (
+            <h6>Dirección seleccionada: {selectedAddress.direccion}</h6>
+          )}
+        </CardHeader>
+        <CardBody>
+          <Form onSubmit={handleSubmit}>
+            <Card className="mb-3">
               <CardBody>
-                <h5>Paquete {index + 1}</h5>
+                <h5>Datos Comunes para todos los Paquetes</h5>
                 <Row>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for={`tipo_paquete_${index}`}>
-                        Tipo de Paquete
-                      </Label>
-                      <Input
-                        type="select"
-                        name="tipo_paquete"
-                        id={`tipo_paquete_${index}`}
-                        value={paquete.id_tipo_paquete}
-                        onChange={(e) => handleChangePaquete(index, e)}
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].id_tipo_paquete
-                          )
-                        }
-                      >
-                        <option value="">
-                          Seleccione un tipo de paquete
-                        </option>
-                        {tiposPaquete.map((tipo) => (
-                          <option key={tipo.id} value={tipo.id}>
-                            {tipo.nombre}
-                          </option>
-                        ))}
-                      </Input>
-                      {errors.paquetes[index]?.id_tipo_paquete && (
-                        <FormFeedback>
-                          {errors.paquetes[index].id_tipo_paquete}
-                        </FormFeedback>
-                      )}
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label for={`empaque_${index}`}>Empaque</Label>
-                      <Input
-                        type="select"
-                        name="empaque"
-                        id={`empaque_${index}`}
-                        value={paquete.id_empaque}
-                        onChange={(e) => handleChangePaquete(index, e)}
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].id_empaque
-                          )
-                        }
-                      >
-                        <option value="">Seleccione un empaque</option>
-                        {empaques.map((empaque) => (
-                          <option key={empaque.id} value={empaque.id}>
-                            {empaque.empaquetado}
-                          </option>
-                        ))}
-                      </Input>
-                      {errors.paquetes[index]?.id_empaque && (
-                        <FormFeedback>
-                          {errors.paquetes[index].id_empaque}
-                        </FormFeedback>
-                      )}
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label for={`peso_${index}`}>Peso</Label>
-                      <Input
-                        type="number"
-                        name="peso"
-                        id={`peso_${index}`}
-                        value={paquete.peso}
-                        onChange={(e) => handleChangePaquete(index, e)}
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].peso
-                          )
-                        }
-                      />
-                      {errors.paquetes[index]?.peso && (
-                        <FormFeedback>
-                          {errors.paquetes[index].peso}
-                        </FormFeedback>
-                      )}
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label for={`descripcion_${index}`}>Descripción</Label>
+                      <Label for="estado_paquete">Estado del Paquete</Label>
                       <Input
                         type="text"
-                        name="descripcion"
-                        id={`descripcion_${index}`}
-                        value={paquete.descripcion}
-                        onChange={(e) => handleChangePaquete(index, e)}
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].descripcion
-                          )
-                        }
+                        name="estado_paquete"
+                        id="estado_paquete"
+                        value="En Recepción"
+                        disabled
                       />
-                      {errors.paquetes[index]?.descripcion && (
-                        <FormFeedback>
-                          {errors.paquetes[index].descripcion}
-                        </FormFeedback>
-                      )}
                     </FormGroup>
                   </Col>
-
+                </Row>
+                <Row>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for={`tamano_paquete_${index}`}>
-                        Tamaño del Paquete
-                      </Label>
-                      <Input
-                        type="select"
-                        name="tamano_paquete"
-                        id={`tamano_paquete_${index}`}
-                        value={paquete.tamano_paquete}
-                        onChange={(e) => handleChangePaquete(index, e)}
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].tamano_paquete
-                          )
-                        }
-                      >
-                        <option value="">Seleccione un tamaño</option>
-                        <option value="1">Pequeño</option>
-                        <option value="2">Mediano</option>
-                        <option value="3">Grande</option>
-                      </Input>
-                      {errors.paquetes[index]?.tamano_paquete && (
-                        <FormFeedback>
-                          {errors.paquetes[index].tamano_paquete}
-                        </FormFeedback>
-                      )}
-                    </FormGroup>
-                  </Col>
-                  <Col md={4}>
-                    <FormGroup>
-                      <Label for={`precio_${index}`}>Precio</Label>
+                      <Label for="tipo_entrega">Tipo de Entrega</Label>
                       <Input
                         type="text"
-                        name="precio"
-                        id={`precio_${index}`}
-                        value={paquete.precio}
-                        readOnly
-                        invalid={
-                          !!(
-                            errors.paquetes[index] &&
-                            errors.paquetes[index].precio
-                          )
-                        }
+                        name="tipo_entrega"
+                        id="tipo_entrega"
+                        value="Normal"
+                        disabled
                       />
-                      {errors.paquetes[index]?.precio && (
+                    </FormGroup>
+                  </Col>
+                  <Col md={4}>
+                    <FormGroup>
+                      <Label for="instrucciones_entrega">
+                        Instrucciones de Entrega
+                      </Label>
+                      <Input
+                        type="text"
+                        name="instrucciones_entrega"
+                        id="instrucciones_entrega"
+                        value={commonData.instrucciones_entrega}
+                        onChange={handleChangeCommonData}
+                        invalid={!!errors.commonData.instrucciones_entrega}
+                      />
+                      {errors.commonData.instrucciones_entrega && (
                         <FormFeedback>
-                          {errors.paquetes[index].precio}
+                          {errors.commonData.instrucciones_entrega}
                         </FormFeedback>
                       )}
                     </FormGroup>
                   </Col>
                 </Row>
-                {index > 0 && (
-                  <Row className="mt-3">
-                    <Col>
-                      <Button
-                        color="danger"
-                        onClick={() => removerPaquete(index)}
-                      >
-                        Eliminar Paquete
-                      </Button>
-                    </Col>
-                  </Row>
-                )}
               </CardBody>
             </Card>
-          ))}
-          <Row className="mb-3">
-            <Col className="d-flex justify-content-start">
-              <Button color="primary" onClick={agregarPaquete}>
-                Agregar Paquete
-              </Button>
-            </Col>
-          </Row>
-          <Row className="mb-3">
-            <Col className="d-flex justify-content-start">
-              <Button
-                className="btnGuardarDatosPaquete"
-                color="success"
-                type="submit"
-              >
-                Guardar Paquetes
-              </Button>
-            </Col>
-          </Row>
-        </Form>
-      </CardBody>
-    </Card>
-  </Container>
-);
+
+            {paquetes.map((paquete, index) => (
+              <Card key={index} className="mb-3">
+                <CardBody>
+                  <h5>Paquete {index + 1}</h5>
+                  <Row>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete</Label>
+                        <Input
+                          type="select"
+                          name="id_tipo_paquete"
+                          id={`id_tipo_paquete_${index}`}
+                          value={paquete.id_tipo_paquete}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!errors.paquetes[index]?.id_tipo_paquete}
+                        >
+                          <option value="">Selecciona un tipo de paquete</option>
+                          {tiposPaquete.map((tipo) => (
+                            <option key={tipo.id} value={tipo.id}>
+                              {tipo.nombre}
+                            </option>
+                          ))}
+                        </Input>
+                        {errors.paquetes[index]?.id_tipo_paquete && (
+                          <FormFeedback>{errors.paquetes[index].id_tipo_paquete}</FormFeedback>
+                        )}
+                      </FormGroup>
+
+                      <FormGroup>
+                        <Label for={`id_empaque_${index}`}>Tipo de Empaque</Label>
+                        <Input
+                          type="select"
+                          name="id_empaque"
+                          id={`id_empaque_${index}`}
+                          value={paquete.id_empaque}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!errors.paquetes[index]?.id_empaque}
+                        >
+                          <option value="">Selecciona un tipo de empaque</option>
+                          {empaques.map((empaque) => (
+                            <option key={empaque.id} value={empaque.id}>
+                              {empaque.empaquetado}
+                            </option>
+                          ))}
+                        </Input>
+                        {errors.paquetes[index]?.id_empaque && (
+                          <FormFeedback>{errors.paquetes[index].id_empaque}</FormFeedback>
+                        )}
+                      </FormGroup>
+
+                    </Col>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label for={`peso_${index}`}>Peso</Label>
+                        <Input
+                          type="number"
+                          name="peso"
+                          id={`peso_${index}`}
+                          value={paquete.peso}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={
+                            !!(
+                              errors.paquetes[index] &&
+                              errors.paquetes[index].peso
+                            )
+                          }
+                        />
+                        {errors.paquetes[index]?.peso && (
+                          <FormFeedback>
+                            {errors.paquetes[index].peso}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label for={`descripcion_${index}`}>Descripción</Label>
+                        <Input
+                          type="text"
+                          name="descripcion"
+                          id={`descripcion_${index}`}
+                          value={paquete.descripcion}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={
+                            !!(
+                              errors.paquetes[index] &&
+                              errors.paquetes[index].descripcion
+                            )
+                          }
+                        />
+                        {errors.paquetes[index]?.descripcion && (
+                          <FormFeedback>
+                            {errors.paquetes[index].descripcion}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label for={`tamano_paquete_${index}`}>
+                          Tamaño del Paquete
+                        </Label>
+                        <Input
+                          type="select"
+                          name="tamano_paquete"
+                          id={`tamano_paquete_${index}`}
+                          value={paquete.tamano_paquete}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={
+                            !!(
+                              errors.paquetes[index] &&
+                              errors.paquetes[index].tamano_paquete
+                            )
+                          }
+                        >
+                          <option value="">Seleccione un tamaño</option>
+                          <option value="1">Pequeño</option>
+                          <option value="2">Mediano</option>
+                          <option value="3">Grande</option>
+                        </Input>
+                        {errors.paquetes[index]?.tamano_paquete && (
+                          <FormFeedback>
+                            {errors.paquetes[index].tamano_paquete}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                    <Col md={4}>
+                      <FormGroup>
+                        <Label for={`precio_${index}`}>Precio</Label>
+                        <Input
+                          type="text"
+                          name="precio"
+                          id={`precio_${index}`}
+                          value={paquete.precio}
+                          readOnly
+                          invalid={
+                            !!(
+                              errors.paquetes[index] &&
+                              errors.paquetes[index].precio
+                            )
+                          }
+                        />
+                        {errors.paquetes[index]?.precio && (
+                          <FormFeedback>
+                            {errors.paquetes[index].precio}
+                          </FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+                  {index > 0 && (
+                    <Row className="mt-3">
+                      <Col>
+                        <Button
+                          color="danger"
+                          onClick={() => removerPaquete(index)}
+                        >
+                          Eliminar Paquete
+                        </Button>
+                      </Col>
+                    </Row>
+                  )}
+                </CardBody>
+              </Card>
+            ))}
+            <Row className="mb-3">
+              <Col className="d-flex justify-content-start">
+                <Button color="primary" onClick={agregarPaquete}>
+                  Agregar Paquete
+                </Button>
+              </Col>
+            </Row>
+            <Row className="mb-3">
+              <Col className="d-flex justify-content-start">
+                <Button
+                  className="btnGuardarDatosPaquete"
+                  color="success"
+                  type="submit"
+                >
+                  Guardar Paquetes
+                </Button>
+              </Col>
+            </Row>
+          </Form>
+        </CardBody>
+      </Card>
+    </Container>
+  );
 
 }
