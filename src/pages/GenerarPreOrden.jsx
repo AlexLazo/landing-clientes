@@ -23,51 +23,28 @@ export default function GenerarPreOrden() {
     id_estado_paquete: 1,
     id_estado_paquetes: 1,
     total_pagar: 0,
-    costo_adicional: "",
+    costo_adicional: null, // Establecer costo_adicional como nulo inicialmente
     concepto: "Envío de paquetes",
     tipo_documento: "consumidor_final",
     detalles: [],
   });
 
-  const token = localStorage.getItem("token");
-
-  const verificarEstadoUsuarioLogueado = useCallback(async () => {
-    try {
-      const userId = localStorage.getItem("userId");
-
-      if (userId && token) {
-        const response = await axios.get(`${API_URL}/auth/show/${userId}`, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        if (response.data.status === "Token is Invalid") {
-          console.error("Token is invalid. Logging out...");
-          AuthService.logout();
-          window.location.href = "/login";
-          return;
-        }
-      }
-    } catch (error) {
-      console.error("Error al verificar el estado del usuario:", error);
-    }
-  }, [token]);
-
+  const token = localStorage.getItem("authToken");
   const [errors, setErrors] = useState({});
-  const [currentStep, setCurrentStep] = useState(4);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [addressChanged, setAddressChanged] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`${API_URL}/clientes/${idCliente}`, {
+        const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setCliente(response.data.cliente);
 
-        const storedAddress = JSON.parse(
-          localStorage.getItem("selectedAddress") || "{}"
-        );
+        const clienteId = clienteData.cliente.id;
+        setCliente(clienteData.cliente || {});
+
+        const storedAddress = JSON.parse(localStorage.getItem("selectedAddress") || "{}");
         setSelectedAddress(storedAddress);
 
         setFormData((prevState) => ({
@@ -87,19 +64,9 @@ export default function GenerarPreOrden() {
               id_tipo_entrega: 1,
               id_direccion: Number(storedAddress.id),
               precio: Number(detalle.precio),
-              fecha_envio: detalle.fecha_envio
-                ? new Date(detalle.fecha_envio).toISOString().split("T")[0] +
-                  "T00:00:00"
-                : null,
-              fecha_entrega_estimada: detalle.fecha_entrega_estimada
-                ? new Date(detalle.fecha_entrega_estimada)
-                    .toISOString()
-                    .split("T")[0] + "T00:00:00"
-                : null,
-              fecha_entrega: detalle.fecha_entrega
-                ? new Date(detalle.fecha_entrega).toISOString().split("T")[0] +
-                  "T00:00:00"
-                : null,
+              fecha_envio: new Date().toISOString().split("T")[0] + "T00:00:00", // Fecha actual para fecha_envio
+              fecha_entrega_estimada: null, // Fecha de entrega estimada como nulo
+              fecha_entrega: null, // Fecha de entrega como nulo
               descripcion_contenido: detalle.descripcion || "",
             })) || [],
           ...location.state?.commonData,
@@ -111,17 +78,8 @@ export default function GenerarPreOrden() {
         setLoading(false);
       }
     };
-
     fetchData();
   }, [idCliente, location.state]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      verificarEstadoUsuarioLogueado();
-    }, 30000);
-
-    return () => clearInterval(interval);
-  }, [verificarEstadoUsuarioLogueado]);
 
   const validateField = (name, value) => {
     let error = "";
@@ -254,7 +212,7 @@ export default function GenerarPreOrden() {
     }
 
     try {
-      const token = AuthService.getCurrentUser();
+      const token = AuthService.getClienteId();
       await updateAddress();
 
       const orderData = {
@@ -272,16 +230,12 @@ export default function GenerarPreOrden() {
         id_estado_paquetes: Number(formData.id_estado_paquetes),
       };
 
-      const response = await axios.post(
-        `${API_URL}/preordenes`,
-        orderData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.post(`${API_URL}/ordenes`, orderData, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
       if (response.status === 201) {
         toast.success("Pre-orden creada con éxito");

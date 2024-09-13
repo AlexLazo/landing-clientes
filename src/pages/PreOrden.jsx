@@ -129,7 +129,7 @@ const PreOrden = () => {
 
     const handlePreOrdenSuccess = () => {
         alert("PreOrden creada con éxito");
-        navigate('/historial-preorden');  // Redirigir a una página de historial o similar
+        navigate('/Historial');
     };
 
     return (
