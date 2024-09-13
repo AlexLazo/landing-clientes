@@ -76,6 +76,9 @@
   font-weight: 400;
 }
 
+.hero-content p{
+  text-align: center;
+}
 .cta-button {
   display: inline-block;
   padding: 10px 20px;
