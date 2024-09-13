@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
 const SeleccionarDireccion = ({ direcciones, onDireccionSelect }) => {
     const handleSelect = (direccion) => {
+        // Asegúrate de que todos los campos requeridos estén incluidos en el objeto
         localStorage.setItem("selectedAddress", JSON.stringify(direccion));
         onDireccionSelect(direccion);
     };
@@ -16,6 +17,8 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect }) => {
                     <tr>
                         <th>Nombre Contacto</th>
                         <th>Dirección</th>
+                        <th>Departamento</th>
+                        <th>Municipio</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
@@ -24,6 +27,8 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect }) => {
                         <tr key={direccion.id}>
                             <td>{direccion.nombre_contacto}</td>
                             <td>{direccion.direccion}</td>
+                            <td>{direccion.departamento_nombre}</td>
+                            <td>{direccion.municipio_nombre}</td>
                             <td>
                                 <Button 
                                     color="primary" 

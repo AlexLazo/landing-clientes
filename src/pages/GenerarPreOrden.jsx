@@ -4,13 +4,6 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faMapMarkerAlt,
-  faBook,
-  faDollarSign,
-} from "@fortawesome/free-solid-svg-icons";
 import AuthService from "../services/authService";
 
 const API_URL = import.meta.env.VITE_API_URL;

@@ -28,19 +28,62 @@ const PreOrden = () => {
             }
 
             try {
+                // Obtener los datos del cliente
                 const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
 
                 const clienteId = clienteData.cliente.id;
 
-                const { data: direccionesData } = await axios.get(`${API_URL}/direcciones`, {
+                // Obtener las direcciones del cliente
+                const response = await axios.get(`${API_URL}/direcciones`, {
                     params: { id_cliente: clienteId },
-                    headers: { Authorization: `Bearer ${token}` }
+                    headers: { Authorization: `Bearer ${token}` },
                 });
+                const direccionesData = response.data.direcciones || [];
 
-                setDirecciones(direccionesData.direcciones || []);
+                // Obtener detalles adicionales de las direcciones
+                const direccionesWithDetails = await Promise.all(
+                    direccionesData.map(async (direccion) => {
+                        // Obtener los municipios relacionados con el departamento
+                        const municipiosResponse = await axios.get(
+                            `${API_URL}/dropdown/get_municipio/${direccion.id_departamento}`,
+                            {
+                                headers: { Authorization: `Bearer ${token}` },
+                            }
+                        );
+                        const municipio = municipiosResponse.data.municipio.find(
+                            (m) => m.id === direccion.id_municipio
+                        );
+
+                        // Obtener el nombre del departamento desde el endpoint
+                        const departamentoResponse = await axios.get(
+                            `${API_URL}/dropdown/get_departamentos`,
+                            {
+                                headers: { Authorization: `Bearer ${token}` },
+                            }
+                        );
+                        const departamento = departamentoResponse.data.find(
+                            (d) => d.id === direccion.id_departamento
+                        );
+
+                        // Log para verificar
+                        console.log("Municipio encontrado:", municipio);
+                        console.log("Departamento encontrado:", departamento);
+
+                        return {
+                            ...direccion,
+                            departamento_nombre: departamento
+                                ? departamento.nombre
+                                : "No disponible",
+                            municipio_nombre: municipio ? municipio.nombre : "No disponible",
+                        };
+                    })
+                );
+
+                setDirecciones(direccionesWithDetails);
             } catch (error) {
+                console.error("Error fetching direcciones:", error);
                 setError('Error al cargar las direcciones.');
             } finally {
                 setLoading(false);
@@ -74,11 +117,11 @@ const PreOrden = () => {
     const handleSubmitPaquete = async (event) => {
         event.preventDefault();
         try {
-            // Replace with your API call for package submission
+            // Reemplaza con tu llamada a la API para la presentación del paquete
             console.log('Paquete submitted:', paquete);
-            // Example submission:
+            // Ejemplo de envío:
             // await axios.post(`${API_URL}/crear-paquete`, { paquete });
-            setStep(3);  // Move to the next step
+            setStep(3);  // Pasar al siguiente paso
         } catch (error) {
             setError('Error al crear el paquete.');
         }

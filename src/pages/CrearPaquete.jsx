@@ -158,7 +158,7 @@ export default function DatosPaquetePreOrden() {
       default:
         return "";
     }
-  };
+  };  
 
   const calculatePrice = (tamanoPaquete) => {
     if (!selectedAddress || !tamanoPaquete) {
@@ -212,12 +212,12 @@ export default function DatosPaquetePreOrden() {
     console.log("Found tarifa:", tarifa);
     return tarifa.monto;
   };
-
+  
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
     const updatedPaquetes = [...paquetes];
     updatedPaquetes[index] = { ...updatedPaquetes[index], [name]: value };
-
+  
     if (name === "tamano_paquete") {
       if (selectedAddress) {
         const calculatedPrice = calculatePrice(value);
@@ -227,18 +227,18 @@ export default function DatosPaquetePreOrden() {
         console.log("No selectedAddress available, price calculation skipped");
       }
     }
-
+  
     setPaquetes(updatedPaquetes);
-
+  
     const error = validateField(name, value);
     setErrors((prev) => {
       const newPaquetesErrors = [...(prev.paquetes || [])];
       newPaquetesErrors[index] = { ...newPaquetesErrors[index], [name]: error };
       return { ...prev, paquetes: newPaquetesErrors };
     });
-
+  
     console.log("Updated paquete:", updatedPaquetes[index]);
-  };
+  };  
 
   const agregarPaquete = () => {
     setPaquetes((prev) => [
