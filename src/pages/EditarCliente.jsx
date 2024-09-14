@@ -165,9 +165,6 @@ const EditarCliente = () => {
                     </div>
                 </form>
             </main>
-            <footer className="editar-cliente-footer">
-                <p>© 2024 Mi Aplicación</p>
-            </footer>
         </div>
     );
 };

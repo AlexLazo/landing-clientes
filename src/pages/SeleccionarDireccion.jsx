@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Table, Spinner, Alert } from 'reactstrap';
+import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { Pagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom'; // Importa useNavigate
@@ -9,7 +9,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
     
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
-    const DIRECTIONS_PER_PAGE = 3;
+    const DIRECTIONS_PER_PAGE = 2;
 
     const navigate = useNavigate(); // Define navigate
 
@@ -47,7 +47,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                 <Button
                     color="primary"
                     className={styles.buttonAgregar}
-                    onClick={() => navigate('/agregar-direccion')} // Usa navigate aquí
+                    onClick={() => navigate('/agregar-direccion')}
                 >
                     Agregar Dirección
                 </Button>
@@ -63,37 +63,28 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                 <div className={styles.emptyMessage}>No hay direcciones disponibles.</div>
             ) : (
                 <>
-                    <Table striped>
-                        <thead>
-                            <tr>
-                                <th>Nombre Contacto</th>
-                                <th>Dirección</th>
-                                <th>Departamento</th>
-                                <th>Municipio</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {filteredDirecciones
-                                .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
-                                .map((direccion) => (
-                                    <tr key={direccion.id}>
-                                        <td>{direccion.nombre_contacto}</td>
-                                        <td>{direccion.direccion}</td>
-                                        <td>{direccion.departamento_nombre}</td>
-                                        <td>{direccion.municipio_nombre}</td>
-                                        <td>
-                                            <Button
-                                                color="primary"
-                                                onClick={() => handleSelect(direccion)}
-                                            >
-                                                Seleccionar
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                ))}
-                        </tbody>
-                    </Table>
+                    <ListGroup className={styles.listGroup}>
+                        {filteredDirecciones
+                            .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
+                            .map((direccion) => (
+                                <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                    <div className={styles.direccionDetails}>
+                                        <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                        <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                        <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
+                                        <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
+                                    </div>
+                                    <div className={styles.actionButtons}>
+                                        <Button
+                                            color="primary"
+                                            onClick={() => handleSelect(direccion)}
+                                        >
+                                            Seleccionar
+                                        </Button>
+                                    </div>
+                                </ListGroupItem>
+                            ))}
+                    </ListGroup>
 
                     <div className={styles.paginationContainer}>
                         <Pagination

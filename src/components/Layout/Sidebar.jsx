@@ -1,8 +1,8 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaTruck, FaTrashAlt, FaSignOutAlt, FaBoxOpen, FaHistory } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaTruck, FaBoxOpen, FaHistory, FaSignOutAlt } from 'react-icons/fa';
 import './Sidebar.css';
-import { useAuth } from '/src/services/AuthContext'; // Ajusta la ruta según tu estructura
+import { useAuth } from '/src/services/AuthContext';
 
 const Sidebar = () => {
   const { logout } = useAuth();
@@ -22,8 +22,8 @@ const Sidebar = () => {
   const handleConfirmLogout = useCallback(() => {
     logout();
     setIsModalOpen(false);
-    window.location.href = "/login"; // Redirige al login después de cerrar sesión
-  }, [logout]);
+    navigate('/login'); // Redirige al login después de cerrar sesión
+  }, [logout, navigate]);
 
   const handleCloseModal = useCallback(() => {
     setIsModalOpen(false);
@@ -44,13 +44,14 @@ const Sidebar = () => {
   const isAgregarClientePage = location.pathname === '/agregar-cliente';
 
   return (
-    <>
+    <div className={`app-container ${isOpen ? 'sidebar-open' : ''}`}>
+      <div className="main-content">
       <div className={`sidebar ${isOpen ? 'open' : ''}`}>
         <div className="sidebar-toggle" onClick={toggleSidebar} role="button" aria-label={isOpen ? 'Close Sidebar' : 'Open Sidebar'}>
           {isOpen ? <FaTimes className="toggle-icon" /> : <FaBars className="toggle-icon" />}
         </div>
         <div className="sidebar-logo">
-          <img src="/public/logo.png" alt="Logo" /> {/* Reemplaza con la ruta a tu logo */}
+          <img src="/logo.png" alt="Logo" /> {/* Reemplaza con la ruta a tu logo */}
         </div>
         <nav className="sidebar-menu">
           <ul>
@@ -92,12 +93,6 @@ const Sidebar = () => {
                     {isOpen && <span>Rastreo</span>}
                   </Link>
                 </li>
-                <li>
-                  <Link to="/eliminar-cuenta">
-                    <FaTrashAlt className="menu-icon" />
-                    {isOpen && <span>Eliminar Cuenta</span>}
-                  </Link>
-                </li>
               </>
             )}
             <li>
@@ -108,6 +103,7 @@ const Sidebar = () => {
             </li>
           </ul>
         </nav>
+      </div>
       </div>
 
       {isModalOpen && (
@@ -120,7 +116,7 @@ const Sidebar = () => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

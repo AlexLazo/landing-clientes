@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import axios from "axios";
 import styles from "/src/styles/TrackingOrden.module.css";
+import { useNavigate } from "react-router-dom"; // Importar useNavigate para redirección
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 export default function TrackingOrden() {
     const [numeroSeguimiento, setNumeroSeguimiento] = useState("");
-    const [orden, setOrden] = useState(null);
+    const [trackingData, setTrackingData] = useState([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
+    const navigate = useNavigate(); // Usar useNavigate para redireccionar
 
     const handleInputChange = (e) => {
         setNumeroSeguimiento(e.target.value);
@@ -18,16 +20,22 @@ export default function TrackingOrden() {
         setLoading(true);
         setError(null);
 
-        try {
-            const response = await axios.get(`${API_URL}/seguimiento-orden`, {
-                params: { numero_seguimiento: numeroSeguimiento },
-            });
+        const token = localStorage.getItem('authToken'); // Obtener el token del almacenamiento local
 
-            console.log("Respuesta del servidor:", response.data);
-            setOrden(response.data);
+        if (!token) {
+            navigate('/login'); // Redirigir al login si no hay token
+            return;
+        }
+
+        try {
+            const response = await axios.get(`${API_URL}/paquete/tracking-paquete/${numeroSeguimiento}`, {
+                headers: { Authorization: `Bearer ${token}` } // Incluir el token en las cabeceras
+            });
+            console.log("Datos de la API:", response.data); // Verifica los datos aquí
+            setTrackingData(response.data);
         } catch (error) {
-            console.error("Error fetching tracking data:", error);
-            setError("No se encontró la orden o ocurrió un error.");
+            console.error("Error en la API:", error); // Muestra el error en la consola
+            setError("No se encontró el paquete o ocurrió un error.");
         } finally {
             setLoading(false);
         }
@@ -55,7 +63,7 @@ export default function TrackingOrden() {
             <div className={styles.steps}>
                 {estados.map((step, index) => (
                     <div
-                        key={index}
+                        key={step.id}
                         className={`${styles.step} ${index <= currentStep ? styles.completed : ""}`}
                     >
                         <div className={styles.stepIconWrap}>
@@ -73,7 +81,7 @@ export default function TrackingOrden() {
 
     return (
         <div className={styles.trackingContainer}>
-            <h1>Seguimiento de Orden</h1>
+            <h1>Seguimiento de Paquete</h1>
 
             <div className={styles.inputContainer}>
                 <input
@@ -91,31 +99,21 @@ export default function TrackingOrden() {
             {loading && <p className={styles.loading}>Cargando...</p>}
             {error && <p className={styles.error}>{error}</p>}
 
-            {orden && (
-                <div className={styles.orderDetails}>
-                    <h2>Detalles de la Orden</h2>
-                    <p><strong>ID Orden:</strong> {orden.id}</p>
-                    <p><strong>ID Cliente:</strong> {orden.id_cliente}</p>
-                    <p><strong>Total a Pagar:</strong> ${orden.total_pagar}</p>
-                    <p><strong>Estado del Pago:</strong> {orden.estado_pago}</p>
-                    <p><strong>Fecha de Creación:</strong> {new Date(orden.created_at).toLocaleString()}</p>
-                    <p><strong>Última Actualización:</strong> {new Date(orden.updated_at).toLocaleString()}</p>
+            {trackingData.length === 0 && !loading && !error && (
+                <p>No se han encontrado datos. Intenta con otro número de seguimiento.</p>
+            )}
 
-                    <h3>Estado del Paquete</h3>
-                    {orden.paquetes && orden.paquetes.length > 0 ? (
-                        orden.paquetes.map((paquete) => (
-                            <div key={paquete.id} className={styles.package}>
-                                <h4>ID Paquete: {paquete.id}</h4>
-                                <div>{renderProgressBar(paquete.estado.nombre)}</div>
-                                <p><strong>Peso:</strong> {paquete.peso} kg</p>
-                                <p><strong>Fecha de Envío:</strong> {new Date(paquete.fecha_envio).toLocaleString()}</p>
-                                <p><strong>Fecha de Entrega Estimada:</strong> {paquete.fecha_entrega_estimada ? new Date(paquete.fecha_entrega_estimada).toLocaleString() : 'Pendiente'}</p>
-                                <p><strong>Descripción del Contenido:</strong> {paquete.descripcion_contenido}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No se encontraron paquetes para esta orden.</p>
-                    )}
+            {trackingData.length > 0 && (
+                <div className={styles.orderDetails}>
+                    <h2>Detalles del Paquete</h2>
+                    {trackingData.map((movimiento) => (
+                        <div key={movimiento.id_paquete} className={styles.package}>
+                            <h4>ID Paquete: {movimiento.id_paquete}</h4>
+                            <div>{renderProgressBar(movimiento.estado)}</div>
+                            <p><strong>Número de Ingreso:</strong> {movimiento.numero_ingreso}</p>
+                            <p><strong>Fecha de Movimiento:</strong> {new Date(movimiento.fecha_movimiento).toLocaleString()}</p>
+                        </div>
+                    ))}
                 </div>
             )}
         </div>

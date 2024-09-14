@@ -277,9 +277,6 @@ export default function PerfilCliente() {
                     <button onClick={() => navigate(`/editar-cliente`)} className={styles.editButton}>
                         Editar Perfil
                     </button>
-                    <button onClick={handleDeleteAccount} className={styles.deleteButton}>
-                        Eliminar Cuenta
-                    </button>
                 </div>
             )}
 
@@ -298,24 +295,6 @@ export default function PerfilCliente() {
                 </button>
                 <button onClick={closeModal} className={styles.closeModalButton}>
                     Cerrar
-                </button>
-            </Modal>
-
-            {/* Modal for Account Deletion Confirmation */}
-            <Modal
-                isOpen={confirmDeleteModalIsOpen}
-                onRequestClose={() => setConfirmDeleteModalIsOpen(false)}
-                contentLabel="Confirm Account Deletion"
-                className={styles.modal}
-                overlayClassName={styles.overlay}
-            >
-                <h2>Confirmar Eliminación de Cuenta</h2>
-                <p>¿Estás seguro de que deseas eliminar tu cuenta? Esta acción es irreversible.</p>
-                <button onClick={handleConfirmDelete} className={styles.confirmDeleteButton}>
-                    Confirmar
-                </button>
-                <button onClick={() => setConfirmDeleteModalIsOpen(false)} className={styles.closeModalButton}>
-                    Cancelar
                 </button>
             </Modal>
         </div>

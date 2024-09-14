@@ -1,6 +1,6 @@
 /* Container styling for the registration form */
 .registerContainer {
-  display: flex;
+  display: fixed;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
