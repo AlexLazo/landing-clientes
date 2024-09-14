@@ -17,7 +17,8 @@ const ClienteLogin = ({ logo, onLogin = () => {} }) => {
       const token = await AuthService.loginClient(email, password);
       if (token) {
         onLogin();
-        navigate("/perfil-cliente"); // Redirige directamente al perfil del cliente
+        navigate("/perfil-cliente"); 
+        window.location.reload(); 
       } else {
         setError("Credenciales inválidas");
       }
