@@ -3,9 +3,9 @@ import axios from 'axios';
 import SeleccionarDireccion from './SeleccionarDireccion';
 import CrearPaquete from './CrearPaquete';
 import GenerarPreOrden from './GenerarPreOrden';
-import { Spinner, Alert, Button } from 'reactstrap';
+import { Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../styles/PreOrden.module.css';
+import styles from '../styles/PreOrden.module.css'; // Asegúrate de que el archivo CSS tenga las clases correctas
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -66,10 +66,6 @@ const PreOrden = () => {
                         const departamento = departamentoResponse.data.find(
                             (d) => d.id === direccion.id_departamento
                         );
-
-                        // Log para verificar
-                        console.log("Municipio encontrado:", municipio);
-                        console.log("Departamento encontrado:", departamento);
 
                         return {
                             ...direccion,
@@ -134,11 +130,13 @@ const PreOrden = () => {
 
     return (
         <div className={styles.preOrdenContainer}>
-            <h1 className={styles.title}>Crear PreOrden</h1>
+            <div className={styles.header}>
+                <h1 className={styles.title}>Crear PreOrden</h1>
+            </div>
             {loading ? (
-                <Spinner color="primary" />
+                <div className={styles.loading}><Spinner color="primary" /></div>
             ) : error ? (
-                <Alert color="danger">{error}</Alert>
+                <div className={styles.error}><Alert color="danger">{error}</Alert></div>
             ) : (
                 <>
                     {step === 1 && (

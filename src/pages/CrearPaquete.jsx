@@ -13,11 +13,11 @@ export default function DatosPaquetePreOrden() {
   const [tarifas, setTarifas] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [commonData, setCommonData] = useState({
-    id_estado_paquete: "1", // Assuming '1' is the ID for "recepción"
+    id_estado_paquete: "3", // Assuming '1' is the ID for "recepción"
     fecha_envio: "",
     fecha_entrega_estimada: "",
     fecha_entrega: "",
-    id_tipo_entrega: "1", // Set to '1' for "normal" delivery
+    id_tipo_entrega: "", // Set to '1' for "normal" delivery
     instrucciones_entrega: "",
   });
   const [paquetes, setPaquetes] = useState([
@@ -158,7 +158,18 @@ export default function DatosPaquetePreOrden() {
       default:
         return "";
     }
-  };  
+  };
+
+  const getTipoPaquete = (tamanoPaquete) => {
+    switch (tamanoPaquete) {
+      case "1":
+        return "normal";
+      case "2":
+        return "express";
+      default:
+        return "";
+    }
+  };
 
   const calculatePrice = (tamanoPaquete) => {
     if (!selectedAddress || !tamanoPaquete) {
@@ -212,12 +223,12 @@ export default function DatosPaquetePreOrden() {
     console.log("Found tarifa:", tarifa);
     return tarifa.monto;
   };
-  
+
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
     const updatedPaquetes = [...paquetes];
     updatedPaquetes[index] = { ...updatedPaquetes[index], [name]: value };
-  
+
     if (name === "tamano_paquete") {
       if (selectedAddress) {
         const calculatedPrice = calculatePrice(value);
@@ -227,18 +238,18 @@ export default function DatosPaquetePreOrden() {
         console.log("No selectedAddress available, price calculation skipped");
       }
     }
-  
+
     setPaquetes(updatedPaquetes);
-  
+
     const error = validateField(name, value);
     setErrors((prev) => {
       const newPaquetesErrors = [...(prev.paquetes || [])];
       newPaquetesErrors[index] = { ...newPaquetesErrors[index], [name]: error };
       return { ...prev, paquetes: newPaquetesErrors };
     });
-  
+
     console.log("Updated paquete:", updatedPaquetes[index]);
-  };  
+  };
 
   const agregarPaquete = () => {
     setPaquetes((prev) => [
@@ -365,15 +376,24 @@ export default function DatosPaquetePreOrden() {
                 <Row>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for="tipo_entrega">Tipo de Entrega</Label>
+                      <Label for="id_tipo_entrega">Tipo de Entrega</Label>
                       <Input
-                        type="text"
-                        name="tipo_entrega"
-                        id="tipo_entrega"
-                        value="Normal"
-                        disabled
-                      />
+                        type="select"
+                        name="id_tipo_entrega"
+                        id="id_tipo_entrega"
+                        value={commonData.id_tipo_entrega}
+                        onChange={handleChangeCommonData}
+                        invalid={!!errors.commonData.id_tipo_entrega}
+                      >
+                        <option value="">Seleccione un tipo de entrega</option>
+                        <option value="1">Entrega Normal</option>
+                        <option value="2">Entrega Express</option>
+                      </Input>
+                      {errors.commonData.id_tipo_entrega && (
+                        <FormFeedback>{errors.commonData.id_tipo_entrega}</FormFeedback>
+                      )}
                     </FormGroup>
+
                   </Col>
                   <Col md={4}>
                     <FormGroup>

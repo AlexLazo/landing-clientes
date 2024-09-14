@@ -26,6 +26,7 @@ export default function GenerarPreOrden() {
     concepto: "Envío de paquetes",
     tipo_documento: "consumidor_final",
     detalles: [],
+    costo_adicional: 0,
   });
 
   const token = localStorage.getItem("authToken");
@@ -36,28 +37,28 @@ export default function GenerarPreOrden() {
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem('authToken');
-  
+
       if (!token) {
         navigate('/login');
         return;
       }
-  
+
       try {
         // Obtener datos del cliente
         const { data: clienteData } = await axios.get(`${API_URL}/perfil-cliente`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-  
+
         const clienteId = clienteData.cliente.id;
-  
+
         if (!clienteId) {
           throw new Error("ID del cliente no disponible.");
         }
-  
+
         // Obtener la dirección almacenada
         const storedAddress = JSON.parse(localStorage.getItem("selectedAddress") || "{}");
         setSelectedAddress(storedAddress);
-  
+
         // Configurar el estado de formData
         setFormData(prevState => ({
           ...prevState,
@@ -78,6 +79,9 @@ export default function GenerarPreOrden() {
             precio: Number(detalle.precio),
             fecha_envio: new Date().toISOString().split("T")[0] + "T00:00:00",
             descripcion_contenido: detalle.descripcion || "",
+            fecha_entrega_estimada: new Date().toISOString().split("T")[0],
+            fecha_entrega: new Date().toISOString().split("T")[0],
+
           })),
           ...location.state?.commonData
         }));
@@ -88,7 +92,7 @@ export default function GenerarPreOrden() {
         setLoading(false);
       }
     };
-  
+
     fetchData();
   }, [navigate, location.state]);
 
@@ -159,6 +163,7 @@ export default function GenerarPreOrden() {
             direccion: selectedAddress.direccion,
             referencia: selectedAddress.referencia,
             id_cliente: idCliente,
+            tipo_orden: formData.tipo_orden,
           },
           {
             headers: {
@@ -190,7 +195,7 @@ export default function GenerarPreOrden() {
         console.error("Error al actualizar la dirección:", error);
         toast.error(
           "Error al actualizar la dirección: " +
-            (error.response?.data?.message || error.message)
+          (error.response?.data?.message || error.message)
         );
       }
     }
@@ -205,23 +210,22 @@ export default function GenerarPreOrden() {
         newErrors[key] = error;
       }
     });
-  
+
     setErrors(newErrors);
-  
+
     if (Object.keys(newErrors).length > 0) {
       toast.error("Por favor, corrija los errores en el formulario antes de enviar.");
       return;
     }
-  
+
     try {
-      const token = AuthService.getClienteId();
+      const token = AuthService.getCurrentUser();
       console.log("Token:", token);
 
       await updateAddress();
-  
+
       const orderData = {
         id_cliente: formData.id_cliente,
-        nombre_contacto: formData.nombre_contacto,
         telefono: formData.telefono,
         id_direccion: Number(formData.id_direccion),
         id_tipo_pago: Number(formData.id_tipo_pago),
@@ -229,21 +233,22 @@ export default function GenerarPreOrden() {
         concepto: formData.concepto,
         tipo_documento: formData.tipo_documento,
         detalles: formData.detalles,
-        id_estado_paquete: Number(formData.id_estado_paquete),
-        id_estado_paquetes: Number(formData.id_estado_paquetes),
+        nombre_contacto: formData.nombre_contacto,
+        costo_adicional: 0,
+        tipo_orden: formData.tipo_orden || "Pre Orden",  // Asegúrate de que esto esté presente
       };
-  
+
       console.log("Order Data:", JSON.stringify(orderData, null, 2));
-  
+
       const response = await axios.post(`${API_URL}/ordenes-cliente`, orderData, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
       });
-  
+
       console.log("Response Data:", response.data);
-  
+
       if (response.status === 201) {
         toast.success("Pre-orden creada con éxito");
         navigate(`/preordenes/${response.data.id}`);
@@ -306,24 +311,24 @@ export default function GenerarPreOrden() {
                   <FormFeedback>{errors.telefono}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                          <Label for="id_direccion">Dirección</Label>
-                          <Input
-                            type="select"
-                            name="id_direccion"
-                            id="id_direccion"
-                            value={formData.id_direccion}
-                            onChange={handleInputChange}
-                            invalid={!!errors.id_direccion}
-                          >
-                            <option value="">Seleccione una dirección</option>
-                            {selectedAddress && (
-                              <option value={selectedAddress.id}>
-                                {selectedAddress.direccion}
-                              </option>
-                            )}
-                          </Input>
-                          <FormFeedback>{errors.id_direccion}</FormFeedback>
-                        </FormGroup>
+                  <Label for="id_direccion">Dirección</Label>
+                  <Input
+                    type="select"
+                    name="id_direccion"
+                    id="id_direccion"
+                    value={formData.id_direccion}
+                    onChange={handleInputChange}
+                    invalid={!!errors.id_direccion}
+                  >
+                    <option value="">Seleccione una dirección</option>
+                    {selectedAddress && (
+                      <option value={selectedAddress.id}>
+                        {selectedAddress.direccion}
+                      </option>
+                    )}
+                  </Input>
+                  <FormFeedback>{errors.id_direccion}</FormFeedback>
+                </FormGroup>
                 <FormGroup>
                   <Label for="id_tipo_pago">Tipo de Pago</Label>
                   <Input
@@ -336,8 +341,6 @@ export default function GenerarPreOrden() {
                   >
                     <option value="1">Efectivo</option>
                     <option value="2">Tarjeta</option>
-                    <option value="3">Transferencia</option>
-                    {/* Otros tipos de pago */}
                   </Input>
                   <FormFeedback>{errors.id_tipo_pago}</FormFeedback>
                 </FormGroup>
@@ -381,6 +384,20 @@ export default function GenerarPreOrden() {
                   </Input>
                   <FormFeedback>{errors.tipo_documento}</FormFeedback>
                 </FormGroup>
+
+                <FormGroup>
+                  <Label for="tipo_orden">Tipo de Orden</Label>
+                  <Input
+                    type="text"
+                    name="tipo_orden"
+                    id="tipo_orden"
+                    value="Pre Orden"
+                    readOnly
+                    style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado
+                  />
+                </FormGroup>
+
+
                 <Button type="submit" color="primary">Generar Pre-Orden</Button>
               </Form>
             </CardBody>
