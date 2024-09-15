@@ -19,6 +19,7 @@ export default function GenerarPreOrden() {
     nombre_contacto: "",
     telefono: "",
     id_direccion: "",
+    direccion_recoleccion: "",
     id_tipo_pago: 1,
     id_estado_paquete: 1,
     id_estado_paquetes: 1,
@@ -56,7 +57,7 @@ export default function GenerarPreOrden() {
         }
 
         // Obtener la dirección almacenada
-        const storedAddress = JSON.parse(localStorage.getItem("selectedAddress") || "{}");
+        const storedAddress = JSON.parse(localStorage.getItem("selectedRecol") || "{}");
         setSelectedAddress(storedAddress);
 
         // Configurar el estado de formData
@@ -65,7 +66,8 @@ export default function GenerarPreOrden() {
           id_cliente: clienteId,
           nombre_contacto: storedAddress.nombre_contacto || "",
           telefono: storedAddress.telefono || "",
-          id_direccion: Number(storedAddress.id) || 0,
+          id_direccion: Number(storedAddress.id) || "",
+          direccion_recoleccion: location.state?.direccionRecoleccion?.id || "",
           total_pagar: location.state?.totalPrice || 0,
           detalles: (location.state?.detalles || []).map(detalle => ({
             ...detalle,
@@ -158,7 +160,7 @@ export default function GenerarPreOrden() {
           {
             nombre_contacto: formData.nombre_contacto,
             telefono: formData.telefono,
-            id_departamento: selectedAddress.id_departamento,
+            id_departamento: selectedRecol.id_departamento,
             id_municipio: selectedAddress.id_municipio,
             direccion: selectedAddress.direccion,
             referencia: selectedAddress.referencia,
@@ -228,6 +230,7 @@ export default function GenerarPreOrden() {
         id_cliente: formData.id_cliente,
         telefono: formData.telefono,
         id_direccion: Number(formData.id_direccion),
+        direccion_recoleccion: Number(formData.direccion_recoleccion),
         id_tipo_pago: Number(formData.id_tipo_pago),
         total_pagar: Number(formData.total_pagar),
         concepto: formData.concepto,
@@ -248,6 +251,16 @@ export default function GenerarPreOrden() {
       });
 
       console.log("Response Data:", response.data);
+
+      toast.success("Pre-orden registrada con éxito", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
 
       if (response.status === 201) {
         toast.success("Pre-orden creada con éxito");

@@ -1,21 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
 import PropTypes from 'prop-types';
 import { Pagination } from '@mui/material';
-import { useNavigate } from 'react-router-dom'; // Importa useNavigate
-import styles from '../styles/Direcciones.module.css'; // Asegúrate de que este archivo tenga las clases correctas
+import { useNavigate } from 'react-router-dom';
+import styles from '../styles/Direcciones.module.css';
 
 const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }) => {
     
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
+    const [selectedRecoleccion, setSelectedRecoleccion] = useState(null);
+    const [selectedEntrega, setSelectedEntrega] = useState(null);
     const DIRECTIONS_PER_PAGE = 2;
 
-    const navigate = useNavigate(); // Define navigate
+    const handleSelectRecoleccion = (direccion) => {
+        setSelectedRecoleccion(direccion);
+        localStorage.setItem("selectedRecoleccion", JSON.stringify(direccion));
+    };
 
-    const handleSelect = (direccion) => {
-        localStorage.setItem("selectedAddress", JSON.stringify(direccion));
-        onDireccionSelect(direccion);
+    const handleSelectEntrega = (direccion) => {
+        setSelectedEntrega(direccion);
+        localStorage.setItem("selectedEntrega", JSON.stringify(direccion));
     };
 
     const handleSearch = (event) => {
@@ -26,6 +31,16 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
     const handlePageChange = (event, newPage) => {
         setCurrentPage(newPage);
     };
+
+    // Verificar si ambas direcciones están seleccionadas y llamar a onDireccionSelect
+    useEffect(() => {
+        if (selectedRecoleccion && selectedEntrega) {
+            onDireccionSelect({
+                recoleccion: selectedRecoleccion,
+                entrega: selectedEntrega,
+            });
+        }
+    }, [selectedRecoleccion, selectedEntrega, onDireccionSelect]);
 
     const filteredDirecciones = direcciones.filter(direccion =>
         direccion.nombre_contacto.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -63,28 +78,60 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                 <div className={styles.emptyMessage}>No hay direcciones disponibles.</div>
             ) : (
                 <>
-                    <ListGroup className={styles.listGroup}>
-                        {filteredDirecciones
-                            .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
-                            .map((direccion) => (
-                                <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                    <div className={styles.direccionDetails}>
-                                        <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
-                                        <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
-                                        <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
-                                        <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
-                                    </div>
-                                    <div className={styles.actionButtons}>
-                                        <Button
-                                            color="primary"
-                                            onClick={() => handleSelect(direccion)}
-                                        >
-                                            Seleccionar
-                                        </Button>
-                                    </div>
-                                </ListGroupItem>
-                            ))}
-                    </ListGroup>
+                    {!selectedRecoleccion ? (
+                        <>
+                            <h5>Seleccionar Dirección de Recolección</h5>
+                            <ListGroup className={styles.listGroup}>
+                                {filteredDirecciones
+                                    .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
+                                    .map((direccion) => (
+                                        <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                            <div className={styles.direccionDetails}>
+                                                <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                                <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                                <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
+                                                <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
+                                            </div>
+                                            <div className={styles.actionButtons}>
+                                                <Button
+                                                    color="primary"
+                                                    onClick={() => handleSelectRecoleccion(direccion)}
+                                                >
+                                                    Seleccionar Recolección
+                                                </Button>
+                                            </div>
+                                        </ListGroupItem>
+                                    ))}
+                            </ListGroup>
+                        </>
+                    ) : (
+                        <>
+                            <h5>Seleccionar Dirección de Entrega</h5>
+                            <ListGroup className={styles.listGroup}>
+                                {filteredDirecciones
+                                    .filter((direccion) => direccion.id !== selectedRecoleccion.id)
+                                    .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
+                                    .map((direccion) => (
+                                        <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                            <div className={styles.direccionDetails}>
+                                                <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                                <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                                <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
+                                                <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
+                                            </div>
+                                            <div className={styles.actionButtons}>
+                                                <Button
+                                                    color="primary"
+                                                    onClick={() => handleSelectEntrega(direccion)}
+                                                >
+                                                    Seleccionar Entrega
+                                                </Button>
+                                            </div>
+                                        </ListGroupItem>
+                                    ))}
+                            </ListGroup>
+                        </>
+                    )}
 
                     <div className={styles.paginationContainer}>
                         <Pagination

@@ -12,6 +12,7 @@ export default function DatosPaquetePreOrden() {
   const [empaques, setEmpaques] = useState([]);
   const [tarifas, setTarifas] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddressRecol, setSelectedAddressRecol] = useState(null);
   const [commonData, setCommonData] = useState({
     id_estado_paquete: "3", // Assuming '1' is the ID for "recepción"
     fecha_envio: "",
@@ -76,9 +77,13 @@ export default function DatosPaquetePreOrden() {
         setEmpaques(empaquesRes.data.empaques || []);
         setTarifas(tarifasRes.data || []);
 
-        const storedAddress = JSON.parse(localStorage.getItem("selectedAddress"));
-        setSelectedAddress(storedAddress);
+        const storedAddress = JSON.parse(localStorage.getItem("selectedRecoleccion"));
+        setSelectedAddressRecol(storedAddress);
         console.log("Selected address:", storedAddress);
+
+        const storedAddressEntre = JSON.parse(localStorage.getItem("selectedEntrega"));
+        setSelectedAddress(storedAddressEntre);
+        console.log("Selected address for recollect:", storedAddressEntre);
 
       } catch (error) {
         handleError(error);
@@ -172,21 +177,21 @@ export default function DatosPaquetePreOrden() {
   };
 
   const calculatePrice = (tamanoPaquete) => {
-    if (!selectedAddress || !tamanoPaquete) {
-      console.log("Missing selectedAddress or tamanoPaquete", {
-        selectedAddress,
+    if (!selectedEntrega || !tamanoPaquete) {
+      console.log("Missing selectedEntrega or tamanoPaquete", {
+        selectedEntrega,
         tamanoPaquete,
       });
       return "";
     }
 
     const isSanMiguelUrban =
-      selectedAddress.id_departamento === 12 &&
-      selectedAddress.id_municipio === 215;
+      selectedEntrega.id_departamento === 12 &&
+      selectedEntrega.id_municipio === 215;
 
     console.log("Calculating price for:", {
       tamanoPaquete,
-      selectedAddress,
+      selectedEntrega,
       isSanMiguelUrban,
     });
 
@@ -347,11 +352,19 @@ export default function DatosPaquetePreOrden() {
         <CardHeader className="CardHeaderDatosPAquetes">
           {cliente && (
             <h3>
-              Cliente: {cliente.nombre} {cliente.apellido}
+              Nombre de contacto: {selectedAddress.nombre_contacto}
             </h3>
           )}
           {selectedAddress && (
-            <h6>Dirección seleccionada: {selectedAddress.direccion}</h6>
+            <h6>Dirección seleccionada para entrega: {selectedAddress.direccion}</h6>
+          )}
+          {cliente && (
+            <h3>
+              Nombre de contacto: {selectedAddressRecol.nombre_contacto}
+            </h3>
+          )}
+          {selectedAddressRecol && (
+            <h6>Dirección seleccionada para recoleccion: {selectedAddressRecol.direccion}</h6>
           )}
         </CardHeader>
         <CardBody>

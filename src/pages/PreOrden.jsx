@@ -89,6 +89,7 @@ const PreOrden = () => {
         fetchDirecciones();
     }, [navigate]);
 
+    // Este método maneja la selección de dirección y cambia el paso automáticamente
     const handleDireccionSelect = (direccion) => {
         setSelectedDireccion(direccion);
         setStep(2);  // Pasamos al paso 2: Crear Paquete
@@ -113,7 +114,6 @@ const PreOrden = () => {
     const handleSubmitPaquete = async (event) => {
         event.preventDefault();
         try {
-            // Reemplaza con tu llamada a la API para la presentación del paquete
             console.log('Paquete submitted:', paquete);
             // Ejemplo de envío:
             // await axios.post(`${API_URL}/crear-paquete`, { paquete });
