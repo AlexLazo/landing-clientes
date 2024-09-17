@@ -24,6 +24,7 @@ import PreOrder from './pages/PreOrden';
 import HistorialOrdenesCliente from "./pages/HistorialOrdenes";
 import Faq from './pages/FAQ';
 import GenerarPreOrden from './pages/GenerarPreOrden';
+import CrearPaquete from './pages/CrearPaquete';
 
 // Componente para proteger rutas privadas
 const PrivateRoute = ({ element, ...rest }) => {
@@ -88,6 +89,8 @@ const AppContent = () => {
             <Route path="/pre-orden" element={<PrivateRoute element={<PreOrder />} />} />
             <Route path="/historial-ordenes" element={<PrivateRoute element={<HistorialOrdenesCliente />} />} />
             <Route path="/GenerarPreOrden/:idCliente" element={<PrivateRoute element={<GenerarPreOrden/>} />} />
+            <Route path="/crearPaquete/:idCliente" element={<PrivateRoute element={<CrearPaquete/>} />} />
+
             
           </Routes>
         </main>

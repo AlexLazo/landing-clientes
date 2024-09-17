@@ -21,7 +21,7 @@ export default function GenerarPreOrden() {
     id_direccion: "",
     direccion_recoleccion: "",
     id_tipo_pago: 1,
-    id_estado_paquete: 1,
+    id_estado_paquete: 1,                           
     id_estado_paquetes: 1,
     total_pagar: 0,
     concepto: "Envío de paquetes",
@@ -57,7 +57,7 @@ export default function GenerarPreOrden() {
         }
 
         // Obtener la dirección almacenada
-        const storedAddress = JSON.parse(localStorage.getItem("selectedRecol") || "{}");
+        const storedAddress = JSON.parse(localStorage.getItem("selectedAddress") || "{}");
         setSelectedAddress(storedAddress);
 
         // Configurar el estado de formData
@@ -160,7 +160,7 @@ export default function GenerarPreOrden() {
           {
             nombre_contacto: formData.nombre_contacto,
             telefono: formData.telefono,
-            id_departamento: selectedRecol.id_departamento,
+            id_departamento: selectedAddress.id_departamento,
             id_municipio: selectedAddress.id_municipio,
             direccion: selectedAddress.direccion,
             referencia: selectedAddress.referencia,
@@ -264,7 +264,7 @@ export default function GenerarPreOrden() {
 
       if (response.status === 201) {
         toast.success("Pre-orden creada con éxito");
-        navigate(`/preordenes/${response.data.id}`);
+        navigate(`/historial-ordenes/${response.data.id}`);
       } else {
         throw new Error(`La respuesta del servidor no fue exitosa: ${response.status}`);
       }

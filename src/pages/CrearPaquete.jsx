@@ -177,26 +177,26 @@ export default function DatosPaquetePreOrden() {
   };
 
   const calculatePrice = (tamanoPaquete) => {
-    if (!selectedEntrega || !tamanoPaquete) {
-      console.log("Missing selectedEntrega or tamanoPaquete", {
-        selectedEntrega,
+    if (!selectedAddress || !tamanoPaquete) {
+      console.log("Missing selectedAddress or tamanoPaquete", {
+        selectedAddress,
         tamanoPaquete,
       });
       return "";
     }
-
+  
     const isSanMiguelUrban =
-      selectedEntrega.id_departamento === 12 &&
-      selectedEntrega.id_municipio === 215;
-
+      selectedAddress.id_departamento === 12 &&
+      selectedAddress.id_municipio === 215;
+  
     console.log("Calculating price for:", {
       tamanoPaquete,
-      selectedEntrega,
+      selectedAddress,
       isSanMiguelUrban,
     });
-
+  
     let tarifaType = isSanMiguelUrban ? "tarifa urbana" : "tarifa rural";
-
+  
     const tarifa = tarifas.find(
       (t) =>
         t.tamano_paquete === getTamanoPaqueteString(tamanoPaquete) &&
@@ -204,7 +204,7 @@ export default function DatosPaquetePreOrden() {
         t.municipio === selectedAddress.municipio_nombre &&
         t.tarifa === tarifaType
     );
-
+  
     if (!tarifa) {
       console.log(
         "No exact match found, searching for a general tariff for the department"
@@ -215,19 +215,20 @@ export default function DatosPaquetePreOrden() {
           t.departamento === selectedAddress.departamento_nombre &&
           t.tarifa === tarifaType
       );
-
+  
       if (generalTarifa) {
         console.log("Found general tarifa:", generalTarifa);
         return generalTarifa.monto;
       }
-
+  
       console.log("No matching tarifa found");
       return "";
     }
-
+  
     console.log("Found tarifa:", tarifa);
     return tarifa.monto;
   };
+  
 
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
@@ -350,7 +351,7 @@ export default function DatosPaquetePreOrden() {
       </h1>
       <Card>
         <CardHeader className="CardHeaderDatosPAquetes">
-          {cliente && (
+          {cliente && selectedAddress && (
             <h3>
               Nombre de contacto: {selectedAddress.nombre_contacto}
             </h3>
@@ -358,7 +359,7 @@ export default function DatosPaquetePreOrden() {
           {selectedAddress && (
             <h6>Dirección seleccionada para entrega: {selectedAddress.direccion}</h6>
           )}
-          {cliente && (
+          {cliente && selectedAddress && (
             <h3>
               Nombre de contacto: {selectedAddressRecol.nombre_contacto}
             </h3>
