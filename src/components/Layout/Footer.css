@@ -1,9 +1,15 @@
 /* MODO OSCURO | FOOTER */
 
-.dark-mode .footer-group{
+.dark-mode .footer-group, .dark-mode .footer-group p{
     background-color: #34332f;
+    font-weight: bold;
 }
 
 .footer-group p{
     text-align: center;
+    font-weight: bold;
+    color: #D6D2CE;
+}
+.footer-group{
+    background-color: #34332f;
 }
