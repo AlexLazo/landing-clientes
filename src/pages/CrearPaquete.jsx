@@ -18,7 +18,7 @@ export default function DatosPaquetePreOrden() {
     fecha_envio: "",
     fecha_entrega_estimada: "",
     fecha_entrega: "",
-    id_tipo_entrega: "", // Set to '1' for "normal" delivery
+    id_tipo_entrega: "1",
     instrucciones_entrega: "",
   });
   const [paquetes, setPaquetes] = useState([
@@ -165,35 +165,18 @@ export default function DatosPaquetePreOrden() {
     }
   };
 
-  const getTipoPaquete = (tamanoPaquete) => {
-    switch (tamanoPaquete) {
-      case "1":
-        return "normal";
-      case "2":
-        return "express";
-      default:
-        return "";
-    }
-  };
-
   const calculatePrice = (tamanoPaquete) => {
     if (!selectedAddress || !tamanoPaquete) {
       console.log("Missing selectedAddress or tamanoPaquete", {
         selectedAddress,
         tamanoPaquete,
       });
-      return "";
+      return "Precio no disponible";
     }
   
     const isSanMiguelUrban =
       selectedAddress.id_departamento === 12 &&
       selectedAddress.id_municipio === 215;
-  
-    console.log("Calculating price for:", {
-      tamanoPaquete,
-      selectedAddress,
-      isSanMiguelUrban,
-    });
   
     let tarifaType = isSanMiguelUrban ? "tarifa urbana" : "tarifa rural";
   
@@ -206,9 +189,6 @@ export default function DatosPaquetePreOrden() {
     );
   
     if (!tarifa) {
-      console.log(
-        "No exact match found, searching for a general tariff for the department"
-      );
       const generalTarifa = tarifas.find(
         (t) =>
           t.tamano_paquete === getTamanoPaqueteString(tamanoPaquete) &&
@@ -217,32 +197,23 @@ export default function DatosPaquetePreOrden() {
       );
   
       if (generalTarifa) {
-        console.log("Found general tarifa:", generalTarifa);
         return generalTarifa.monto;
       }
   
-      console.log("No matching tarifa found");
-      return "";
+      return "Tarifa no encontrada";
     }
   
-    console.log("Found tarifa:", tarifa);
     return tarifa.monto;
-  };
-  
+  };  
 
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
     const updatedPaquetes = [...paquetes];
     updatedPaquetes[index] = { ...updatedPaquetes[index], [name]: value };
-
+  
     if (name === "tamano_paquete") {
-      if (selectedAddress) {
-        const calculatedPrice = calculatePrice(value);
-        updatedPaquetes[index].precio = calculatedPrice;
-        console.log(`Updated price for paquete ${index}:`, calculatedPrice);
-      } else {
-        console.log("No selectedAddress available, price calculation skipped");
-      }
+      const calculatedPrice = calculatePrice(value);
+      updatedPaquetes[index].precio = calculatedPrice || "Precio no disponible";
     }
 
     setPaquetes(updatedPaquetes);
@@ -390,24 +361,15 @@ export default function DatosPaquetePreOrden() {
                 <Row>
                   <Col md={4}>
                     <FormGroup>
-                      <Label for="id_tipo_entrega">Tipo de Entrega</Label>
+                      <Label for="tipo_entrega">Tipo de Entrega</Label>
                       <Input
-                        type="select"
-                        name="id_tipo_entrega"
-                        id="id_tipo_entrega"
-                        value={commonData.id_tipo_entrega}
-                        onChange={handleChangeCommonData}
-                        invalid={!!errors.commonData.id_tipo_entrega}
-                      >
-                        <option value="">Seleccione un tipo de entrega</option>
-                        <option value="1">Entrega Normal</option>
-                        <option value="2">Entrega Express</option>
-                      </Input>
-                      {errors.commonData.id_tipo_entrega && (
-                        <FormFeedback>{errors.commonData.id_tipo_entrega}</FormFeedback>
-                      )}
+                        type="text"
+                        name="tipo_entrega"
+                        id="tipo_entrega"
+                        value="Normal"
+                        disabled
+                      />
                     </FormGroup>
-
                   </Col>
                   <Col md={4}>
                     <FormGroup>

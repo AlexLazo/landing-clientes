@@ -12,6 +12,12 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
     const [selectedRecoleccion, setSelectedRecoleccion] = useState(null);
     const [selectedEntrega, setSelectedEntrega] = useState(null);
     const DIRECTIONS_PER_PAGE = 2;
+    const DEPARTAMENTO_RECOLECCION = 12;  // Departamento San Miguel
+    const MUNICIPIO_RECOLECCION = 215;    // Municipio específico
+
+    const DEPARTAMENTOS_PERMITIDOS_ENTREGA = [11, 12, 13, 14];  // IDs de departamentos permitidos
+
+    const navigate = useNavigate();
 
     const handleSelectRecoleccion = (direccion) => {
         setSelectedRecoleccion(direccion);
@@ -42,12 +48,39 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
         }
     }, [selectedRecoleccion, selectedEntrega, onDireccionSelect]);
 
-    const filteredDirecciones = direcciones.filter(direccion =>
+    // **Verifica la estructura de tus datos**
+    useEffect(() => {
+        if (direcciones.length > 0) {
+            console.log('Ejemplo de direccion:', direcciones[0]);
+        }
+    }, [direcciones]);
+
+    // **Ajusta los nombres de las propiedades según tus datos**
+
+    // Filtrar direcciones para la recolección (Departamento 12, Municipio 215)
+    const filteredDireccionesRecoleccion = direcciones.filter(direccion => 
+        direccion.id_departamento === DEPARTAMENTO_RECOLECCION && direccion.id_municipio === MUNICIPIO_RECOLECCION
+    );
+
+    // Filtrar direcciones para la entrega (cualquier de los 4 departamentos permitidos)
+    const filteredDireccionesEntrega = direcciones.filter(direccion =>
+        DEPARTAMENTOS_PERMITIDOS_ENTREGA.includes(direccion.id_departamento)
+    );
+
+    // Aplicar filtro de búsqueda para recolección
+    const searchedDireccionesRecoleccion = filteredDireccionesRecoleccion.filter(direccion =>
         direccion.nombre_contacto.toLowerCase().includes(searchQuery.toLowerCase()) ||
         direccion.direccion.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const totalPages = Math.ceil(filteredDirecciones.length / DIRECTIONS_PER_PAGE);
+    // Aplicar filtro de búsqueda para entrega
+    const searchedDireccionesEntrega = filteredDireccionesEntrega.filter(direccion =>
+        direccion.nombre_contacto.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        direccion.direccion.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    const totalPagesRecoleccion = Math.ceil(searchedDireccionesRecoleccion.length / DIRECTIONS_PER_PAGE);
+    const totalPagesEntrega = Math.ceil(searchedDireccionesEntrega.length / DIRECTIONS_PER_PAGE);
 
     return (
         <div className={styles.direccionesClienteContainer}>
@@ -74,41 +107,55 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                 </div>
             ) : error ? (
                 <Alert color="danger">{error}</Alert>
-            ) : filteredDirecciones.length === 0 ? (
-                <div className={styles.emptyMessage}>No hay direcciones disponibles.</div>
             ) : (
                 <>
                     {!selectedRecoleccion ? (
                         <>
                             <h5>Seleccionar Dirección de Recolección</h5>
-                            <ListGroup className={styles.listGroup}>
-                                {filteredDirecciones
-                                    .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
-                                    .map((direccion) => (
-                                        <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                            <div className={styles.direccionDetails}>
-                                                <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
-                                                <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
-                                                <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
-                                                <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
-                                            </div>
-                                            <div className={styles.actionButtons}>
-                                                <Button
-                                                    color="primary"
-                                                    onClick={() => handleSelectRecoleccion(direccion)}
-                                                >
-                                                    Seleccionar Recolección
-                                                </Button>
-                                            </div>
-                                        </ListGroupItem>
-                                    ))}
-                            </ListGroup>
+                            {searchedDireccionesRecoleccion.length === 0 ? (
+                                <div className={styles.emptyMessage}>
+                                    No hay direcciones disponibles para recolección. Por favor, agregue una nueva dirección en la ciudad de San Miguel.
+                                </div>
+                            ) : (
+                                <ListGroup className={styles.listGroup}>
+                                    {searchedDireccionesRecoleccion
+                                        .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
+                                        .map((direccion) => (
+                                            <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                                <div className={styles.direccionDetails}>
+                                                    <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                                    <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                                    <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
+                                                    <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
+                                                </div>
+                                                <div className={styles.actionButtons}>
+                                                    <Button
+                                                        color="primary"
+                                                        onClick={() => handleSelectRecoleccion(direccion)}
+                                                    >
+                                                        Seleccionar Recolección
+                                                    </Button>
+                                                </div>
+                                            </ListGroupItem>
+                                        ))}
+                                </ListGroup>
+                            )}
+                            <div className={styles.paginationContainer}>
+                                <Pagination
+                                    count={totalPagesRecoleccion}
+                                    page={currentPage}
+                                    onChange={handlePageChange}
+                                    color="primary"
+                                    variant="outlined"
+                                    shape="rounded"
+                                />
+                            </div>
                         </>
                     ) : (
                         <>
                             <h5>Seleccionar Dirección de Entrega</h5>
                             <ListGroup className={styles.listGroup}>
-                                {filteredDirecciones
+                                {searchedDireccionesEntrega
                                     .filter((direccion) => direccion.id !== selectedRecoleccion.id)
                                     .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
                                     .map((direccion) => (
@@ -130,19 +177,18 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                                         </ListGroupItem>
                                     ))}
                             </ListGroup>
+                            <div className={styles.paginationContainer}>
+                                <Pagination
+                                    count={totalPagesEntrega}
+                                    page={currentPage}
+                                    onChange={handlePageChange}
+                                    color="primary"
+                                    variant="outlined"
+                                    shape="rounded"
+                                />
+                            </div>
                         </>
                     )}
-
-                    <div className={styles.paginationContainer}>
-                        <Pagination
-                            count={totalPages}
-                            page={currentPage}
-                            onChange={handlePageChange}
-                            color="primary"
-                            variant="outlined"
-                            shape="rounded"
-                        />
-                    </div>
                 </>
             )}
         </div>
@@ -156,6 +202,8 @@ SeleccionarDireccion.propTypes = {
         direccion: PropTypes.string.isRequired,
         departamento_nombre: PropTypes.string.isRequired,
         municipio_nombre: PropTypes.string.isRequired,
+        id_departamento: PropTypes.number.isRequired,
+        id_municipio: PropTypes.number.isRequired,
     })).isRequired,
     onDireccionSelect: PropTypes.func.isRequired,
     loading: PropTypes.bool,
