@@ -349,14 +349,14 @@ export default function GenerarPreOrden() {
                   <FormFeedback>{errors.id_direccion}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="id_direccion">Dirección de recolección</Label>
+                  <Label for="direccion_recoleccion">Dirección de recolección</Label>
                   <Input
                     type="select"
-                    name="id_direccion"
-                    id="id_direccion"
-                    value={formData.id_direccion}
+                    name="direccion_recoleccion"
+                    id="direccion_recoleccion"
+                    value={formData.direccion_recoleccion}
                     onChange={handleInputChange}
-                    invalid={!!errors.id_direccion}
+                    invalid={!!errors.direccion_recoleccion}
                   >
                     <option value="">Seleccione una dirección</option>
                     {selectedAddressRecol && (
