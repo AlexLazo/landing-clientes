@@ -33,6 +33,7 @@ export default function GenerarPreOrden() {
   const token = localStorage.getItem("authToken");
   const [errors, setErrors] = useState({});
   const [selectedAddress, setSelectedAddress] = useState(null);
+  const [selectedAddressRecol, setSelectedAddressRecol] = useState(null);
   const [addressChanged, setAddressChanged] = useState(false);
 
   useEffect(() => {
@@ -57,8 +58,13 @@ export default function GenerarPreOrden() {
         }
 
         // Obtener la dirección almacenada
-        const storedAddress = JSON.parse(localStorage.getItem("selectedAddress") || "{}");
-        setSelectedAddress(storedAddress);
+        const storedAddress = JSON.parse(localStorage.getItem("selectedRecoleccion"));
+        setSelectedAddressRecol(storedAddress);
+        console.log("Selected address:", storedAddress);
+
+        const storedAddressEntre = JSON.parse(localStorage.getItem("selectedEntrega"));
+        setSelectedAddress(storedAddressEntre);
+        console.log("Selected address for recollect:", storedAddressEntre);
 
         // Configurar el estado de formData
         setFormData(prevState => ({
@@ -324,7 +330,7 @@ export default function GenerarPreOrden() {
                   <FormFeedback>{errors.telefono}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="id_direccion">Dirección</Label>
+                  <Label for="id_direccion">Dirección de Entrega</Label>
                   <Input
                     type="select"
                     name="id_direccion"
@@ -337,6 +343,25 @@ export default function GenerarPreOrden() {
                     {selectedAddress && (
                       <option value={selectedAddress.id}>
                         {selectedAddress.direccion}
+                      </option>
+                    )}
+                  </Input>
+                  <FormFeedback>{errors.id_direccion}</FormFeedback>
+                </FormGroup>
+                <FormGroup>
+                  <Label for="id_direccion">Dirección de recolección</Label>
+                  <Input
+                    type="select"
+                    name="id_direccion"
+                    id="id_direccion"
+                    value={formData.id_direccion}
+                    onChange={handleInputChange}
+                    invalid={!!errors.id_direccion}
+                  >
+                    <option value="">Seleccione una dirección</option>
+                    {selectedAddressRecol && (
+                      <option value={selectedAddressRecol.id}>
+                        {selectedAddressRecol.direccion}
                       </option>
                     )}
                   </Input>
