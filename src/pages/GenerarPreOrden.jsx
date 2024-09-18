@@ -38,6 +38,7 @@ export default function GenerarPreOrden() {
 
   useEffect(() => {
     const fetchData = async () => {
+      
       const token = localStorage.getItem('authToken');
 
       if (!token) {
@@ -270,7 +271,7 @@ export default function GenerarPreOrden() {
 
       if (response.status === 201) {
         toast.success("Pre-orden creada con éxito");
-        navigate(`/historial-ordenes/${response.data.id}`);
+        navigate(`/historial-ordenes/`);
       } else {
         throw new Error(`La respuesta del servidor no fue exitosa: ${response.status}`);
       }
