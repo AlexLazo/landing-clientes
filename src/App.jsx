@@ -25,6 +25,9 @@ import HistorialOrdenesCliente from "./pages/HistorialOrdenes";
 import Faq from './pages/FAQ';
 import GenerarPreOrden from './pages/GenerarPreOrden';
 import CrearPaquete from './pages/CrearPaquete';
+import PreOrdenExpress from './pages/PreOrdenExpress';
+import GenerarPreOrdenExpress from './pages/GenerarPreOrdenExpress';
+import CrearPaqueteExpress from './pages/CrearPaqueteExpress';
 
 // Componente para proteger rutas privadas
 const PrivateRoute = ({ element, ...rest }) => {
@@ -53,7 +56,9 @@ const AppContent = () => {
     '/tracking',
     '/pre-orden',
     '/historial-ordenes',
-    '/GenerarPreOrden'
+    '/GenerarPreOrden',
+    '/pre-ordenexpress',
+    '/GenerarPreOrdenExpress'
   ].some(path => location.pathname.startsWith(path));
 
   console.log('Current Path:', location.pathname);
@@ -90,6 +95,10 @@ const AppContent = () => {
             <Route path="/historial-ordenes" element={<PrivateRoute element={<HistorialOrdenesCliente />} />} />
             <Route path="/GenerarPreOrden/:idCliente" element={<PrivateRoute element={<GenerarPreOrden/>} />} />
             <Route path="/crearPaquete/:idCliente" element={<PrivateRoute element={<CrearPaquete/>} />} />
+            <Route path="/pre-ordenexpress" element={<PrivateRoute element={<PreOrdenExpress />} />} />
+            <Route path="/GenerarPreOrdenExpress/:idCliente" element={<PrivateRoute element={<GenerarPreOrdenExpress/>} />} />
+            <Route path="/crearPaqueteExpress/:idCliente" element={<PrivateRoute element={<CrearPaqueteExpress/>} />} />
+
 
             
           </Routes>

@@ -99,7 +99,7 @@ const Sidebar = () => {
                       <Link to="/historial-ordenes" className="dropdown-item"><FaHistory className="dropdown-icon" />Historial de órdenes</Link>
                       <Link to="/tracking" className="dropdown-item"><FaSearch className="dropdown-icon" />Tracking</Link>
                       <Link to="/pre-orden" className="dropdown-item"><FaListAlt className="dropdown-icon" />Pre-orden</Link>
-                      <Link to="/pre-orden-express" className="dropdown-item"><FaRocket className="dropdown-icon" />Pre-orden Express</Link>
+                      <Link to="/pre-ordenexpress" className="dropdown-item"><FaRocket className="dropdown-icon" />Pre-orden Express</Link>
                     </div>
                   </li>
                 </>

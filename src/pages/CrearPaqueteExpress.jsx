@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import '../styles/DatosPaquetesPreOrden.css';
 
-export default function DatosPaquetePreOrden() {
+export default function CrearPaqueteExpress() {
   const { idCliente } = useParams();
   const [cliente, setCliente] = useState(null);
   const [tiposPaquete, setTiposPaquete] = useState([]);
@@ -18,7 +18,7 @@ export default function DatosPaquetePreOrden() {
     fecha_envio: "",
     fecha_entrega_estimada: "",
     fecha_entrega: "",
-    id_tipo_entrega: "1",
+    id_tipo_entrega: "2",
     instrucciones_entrega: "",
   });
   const [paquetes, setPaquetes] = useState([
@@ -158,8 +158,6 @@ export default function DatosPaquetePreOrden() {
         return "pequeno";
       case "2":
         return "mediano";
-      case "3":
-        return "grande";
       default:
         return "";
     }
@@ -233,6 +231,7 @@ export default function DatosPaquetePreOrden() {
     console.log("Updated paquete:", updatedPaquetes[index]);
   };
   
+
   const agregarPaquete = () => {
     setPaquetes((prev) => [
       ...prev,
@@ -371,7 +370,7 @@ export default function DatosPaquetePreOrden() {
                         type="text"
                         name="tipo_entrega"
                         id="tipo_entrega"
-                        value="Normal"
+                        value="Express"
                         disabled
                       />
                     </FormGroup>
@@ -519,7 +518,6 @@ export default function DatosPaquetePreOrden() {
                           <option value="">Seleccione un tamaño</option>
                           <option value="1">Pequeño</option>
                           <option value="2">Mediano</option>
-                          <option value="3">Grande</option>
                         </Input>
                         {errors.paquetes[index]?.tamano_paquete && (
                           <FormFeedback>
