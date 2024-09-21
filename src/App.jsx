@@ -19,7 +19,6 @@ import EditarCliente from './pages/EditarCliente';
 import AgregarCliente from "./components/Cliente/AgregarCliente";
 import DireccionesCliente from './pages/DireccionesCliente';
 import AgregarDireccion from './pages/AgregarDireccion';
-import TrackingOrden from './pages/TrackingOrden';
 import PreOrder from './pages/PreOrden';
 import HistorialOrdenesCliente from "./pages/HistorialOrdenes";
 import Faq from './pages/FAQ';
@@ -28,6 +27,9 @@ import CrearPaquete from './pages/CrearPaquete';
 import PreOrdenExpress from './pages/PreOrdenExpress';
 import GenerarPreOrdenExpress from './pages/GenerarPreOrdenExpress';
 import CrearPaqueteExpress from './pages/CrearPaqueteExpress';
+import TrackingPage from './components/Tracking/Tracking';
+import PaquetesTrackingScreen from './components/Tracking/PaquetesTrackingScreen';
+
 
 // Componente para proteger rutas privadas
 const PrivateRoute = ({ element, ...rest }) => {
@@ -53,12 +55,14 @@ const AppContent = () => {
     '/agregar-cliente',
     '/direcciones-cliente',
     '/agregar-direccion',
-    '/tracking',
     '/pre-orden',
     '/historial-ordenes',
     '/GenerarPreOrden',
     '/pre-ordenexpress',
-    '/GenerarPreOrdenExpress'
+    '/GenerarPreOrdenExpress',
+    '/PaquetesTrackingScreen',
+    '/TrackingPage'
+
   ].some(path => location.pathname.startsWith(path));
 
   console.log('Current Path:', location.pathname);
@@ -90,7 +94,6 @@ const AppContent = () => {
             <Route path="/agregar-cliente" element={<PrivateRoute element={<AgregarCliente />} />} />
             <Route path="/direcciones-cliente" element={<PrivateRoute element={<DireccionesCliente />} />} />
             <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
-            <Route path="/tracking" element={<PrivateRoute element={<TrackingOrden />} />} />
             <Route path="/pre-orden" element={<PrivateRoute element={<PreOrder />} />} />
             <Route path="/historial-ordenes" element={<PrivateRoute element={<HistorialOrdenesCliente />} />} />
             <Route path="/GenerarPreOrden/:idCliente" element={<PrivateRoute element={<GenerarPreOrden/>} />} />
@@ -99,6 +102,8 @@ const AppContent = () => {
             <Route path="/GenerarPreOrdenExpress/:idCliente" element={<PrivateRoute element={<GenerarPreOrdenExpress/>} />} />
             <Route path="/crearPaqueteExpress/:idCliente" element={<PrivateRoute element={<CrearPaqueteExpress/>} />} />
 
+            <Route path="/PaquetesTrackingScreen/:id" element={<PaquetesTrackingScreen />} />
+            <Route path="/TrackingPage" element={<TrackingPage />} />
 
             
           </Routes>

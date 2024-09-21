@@ -17,9 +17,7 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
-import { FaShareAlt } from "react-icons/fa";
-import jsPDF from "jspdf";
-import autoTable from "jspdf-autotable";
+import { FaClipboard } from "react-icons/fa";
 import styles from "../styles/HistorialOrdenes.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -94,73 +92,15 @@ const HistorialOrdenesCliente = () => {
     );
   };
 
-  const generatePDF = (order) => {
-    const doc = new jsPDF();
-    
-    // Título del documento
-    doc.setFontSize(18);
-    doc.setFont("Helvetica", "bold");
-    doc.text(`Orden #${order.id}`, 10, 20);
-    
-    // Información de la orden
-    doc.setFontSize(12);
-    doc.setFont("Helvetica", "normal");
-    doc.text(`Concepto: ${order.concepto}`, 10, 30);
-    doc.text(`Número de Seguimiento: ${order.numero_seguimiento}`, 10, 40);
-    doc.text(`Total a Pagar: $${order.total_pagar}`, 10, 50);
-    doc.text(`Tipo de Pago: ${order.tipo_pago}`, 10, 60);
-  
-    // Tabla de detalles
-    autoTable(doc, {
-      startY: 70, // Comenzar la tabla a 70 unidades de la parte superior
-      head: [['Descripción', 'Precio', 'Fecha de Entrega']],
-      body: order.detalles.map(paquete => [
-        paquete.descripcion,
-        `$${paquete.precio}`,
-        new Date(paquete.fecha_entrega).toLocaleDateString()
-      ]),
-      margin: { left: 10, right: 10 },
-      styles: {
-        cellPadding: 8,
-        fontSize: 10,
-        halign: 'left',
-        valign: 'middle'
+  const handleCopyToClipboard = (numeroSeguimiento) => {
+    navigator.clipboard.writeText(numeroSeguimiento).then(
+      () => {
+        alert("Número de seguimiento copiado al portapapeles.");
       },
-      headStyles: {
-        fillColor: [0, 123, 255], // Azul
-        textColor: [255, 255, 255], // Blanco
-        fontSize: 12,
-      },
-      bodyStyles: {
-        fillColor: [240, 240, 240], // Gris claro
-      },
-      theme: 'striped'
-    });
-  
-    // Agregar un pie de página
-    doc.setFontSize(10);
-    doc.setFont("Helvetica", "italic");
-    doc.text("Generado por Sistema de Gestión de Órdenes", 10, doc.internal.pageSize.height - 10);
-  
-    return doc.output('blob');
-  };
-  
-  const handleShare = async (order) => {
-    try {
-      const pdfBlob = generatePDF(order);
-
-      if (navigator.share) {
-        navigator.share({
-          title: `Orden #${order.id}`,
-          text: `Orden #${order.id} - ${order.concepto}\nTotal a Pagar: $${order.total_pagar}`,
-          files: [new File([pdfBlob], `orden-${order.id}.pdf`, { type: 'application/pdf' })],
-        });
-      } else {
-        alert("Compartir no es compatible con este navegador.");
+      (err) => {
+        console.error("Error al copiar el texto: ", err);
       }
-    } catch (error) {
-      console.error("Error sharing:", error);
-    }
+    );
   };
 
   return (
@@ -205,10 +145,12 @@ const HistorialOrdenesCliente = () => {
                           </Badge>
                           <Button
                             color="link"
-                            onClick={() => handleShare(orden)}
+                            onClick={() =>
+                              handleCopyToClipboard(orden.numero_tracking)
+                            }
                             className={styles.shareButton}
                           >
-                            <FaShareAlt size={20} />
+                            <FaClipboard size={20} />
                           </Button>
                         </Col>
                       </Row>
@@ -218,7 +160,7 @@ const HistorialOrdenesCliente = () => {
                         <Col md={6}>
                           <p>
                             <strong>Número de Seguimiento:</strong>{" "}
-                            {orden.numero_seguimiento}
+                            {orden.numero_tracking}
                           </p>
                           <p>
                             <strong>Total a Pagar:</strong> ${orden.total_pagar}
