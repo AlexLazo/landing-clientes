@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Spinner, Alert, Container, Row, Col, Card, CardBody, CardTitle, ListGroup, ListGroupItem, Button } from 'reactstrap';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import '../styles/PaqueteScreen.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,6 +14,17 @@ const PaquetesTrackingScreen = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Función para validar el token
+    const isTokenValid = () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return false;
+        }
+        // Aquí puedes agregar lógica adicional para verificar la expiración del token
+        return true;
+    };
+
     const fetchData = async (url, options) => {
         const response = await fetch(url, options);
         if (!response.ok) {
@@ -22,6 +34,10 @@ const PaquetesTrackingScreen = () => {
     };
 
     const mapPaquetesToTimeline = (paquetes) => {
+        if (!Array.isArray(paquetes)) {
+            return [];
+        }
+
         const groupedPaquetes = paquetes.reduce((acc, paquete) => {
             const date = new Date(paquete.fecha_movimiento).setHours(0, 0, 0, 0);
             if (!acc[date]) {
@@ -43,13 +59,23 @@ const PaquetesTrackingScreen = () => {
 
     useEffect(() => {
         const getPaquetes = async () => {
+            if (!isTokenValid()) return;
+
+
             try {
                 const response = await fetchData(
                     `${API_URL}/paquete/tracking-paquete/${id}`,
-                    { headers: { Authorization: `Bearer ${localStorage.getItem('token')}` } }
+                    { headers: { Authorization: `Bearer ${localStorage.getItem('authToken')}` } }
                 );
-                const timelineData = mapPaquetesToTimeline(response);
-                setPaquetes(timelineData);
+
+                console.log("Datos recibidos de la API:", response); // Verificar qué está devolviendo la API
+
+                if (Array.isArray(response)) {
+                    const timelineData = mapPaquetesToTimeline(response);
+                    setPaquetes(timelineData);
+                } else {
+                    throw new Error("Formato de datos inválido recibido");
+                }
             } catch (error) {
                 setError("No tienes órdenes disponibles!");
                 toast.error(error.message);
@@ -78,7 +104,7 @@ const PaquetesTrackingScreen = () => {
                                         <CardTitle tag="h5">Fecha: {new Date(item.date).toLocaleDateString()}</CardTitle>
                                         <ListGroup>
                                             {item.data.map((paquete, idx) => (
-                                                <ListGroupItem key={idx} style={{  marginBottom: '0.5rem', borderRadius: '5px' }}>
+                                                <ListGroupItem key={idx} style={{ marginBottom: '0.5rem', borderRadius: '5px' }}>
                                                     <strong>{paquete.title}</strong> - {paquete.subtitle}
                                                 </ListGroupItem>
                                             ))}

@@ -27,8 +27,8 @@ import CrearPaquete from './pages/CrearPaquete';
 import PreOrdenExpress from './pages/PreOrdenExpress';
 import GenerarPreOrdenExpress from './pages/GenerarPreOrdenExpress';
 import CrearPaqueteExpress from './pages/CrearPaqueteExpress';
-import TrackingPage from './components/Tracking/Tracking';
-import PaquetesTrackingScreen from './components/Tracking/PaquetesTrackingScreen';
+import TrackingPage from './pages/Tracking';
+import PaquetesTrackingScreen from './pages/PaquetesTrackingScreen';
 
 
 // Componente para proteger rutas privadas

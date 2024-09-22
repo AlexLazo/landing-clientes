@@ -10,11 +10,13 @@ import {
   Button,
 } from 'reactstrap';
 import axios from 'axios';
-import AuthService from '../../services/authService';
+import AuthService from '../services/authService';
 import DetailsCard from './DetailsCard';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { NavLink } from 'react-router-dom';
+import '../styles/trackingPaq.css';
+
 
 
 const API_URL = import.meta.env.VITE_API_URL;
