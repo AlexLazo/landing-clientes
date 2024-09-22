@@ -5,17 +5,14 @@ import { Pagination } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/Direcciones.module.css';
 
-const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }) => {
-    
+const SeleccionarDireccionExpress = ({ direcciones, onDireccionSelect, loading, error }) => {
     const [searchQuery, setSearchQuery] = useState('');
     const [currentPage, setCurrentPage] = useState(1);
     const [selectedRecoleccion, setSelectedRecoleccion] = useState(null);
     const [selectedEntrega, setSelectedEntrega] = useState(null);
     const DIRECTIONS_PER_PAGE = 2;
-    const DEPARTAMENTO_RECOLECCION = 12;  // Departamento San Miguel
-    const MUNICIPIO_RECOLECCION = 215;    // Municipio específico
-
-    const DEPARTAMENTOS_PERMITIDOS_ENTREGA = [11, 12, 13, 14];  // IDs de departamentos permitidos
+    const DEPARTAMENTO_RECOLECCION = 12;  // San Miguel
+    const MUNICIPIO_RECOLECCION = 215;    // San Miguel
 
     const navigate = useNavigate();
 
@@ -38,7 +35,6 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
         setCurrentPage(newPage);
     };
 
-    // Verificar si ambas direcciones están seleccionadas y llamar a onDireccionSelect
     useEffect(() => {
         if (selectedRecoleccion && selectedEntrega) {
             onDireccionSelect({
@@ -48,32 +44,25 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
         }
     }, [selectedRecoleccion, selectedEntrega, onDireccionSelect]);
 
-    // **Verifica la estructura de tus datos**
-    useEffect(() => {
-        if (direcciones.length > 0) {
-            console.log('Ejemplo de direccion:', direcciones[0]);
-        }
-    }, [direcciones]);
-
-    // **Ajusta los nombres de las propiedades según tus datos**
-
-    // Filtrar direcciones para la recolección (Departamento 12, Municipio 215)
+    // Filtrar direcciones para recolección
     const filteredDireccionesRecoleccion = direcciones.filter(direccion => 
-        direccion.id_departamento === DEPARTAMENTO_RECOLECCION && direccion.id_municipio === MUNICIPIO_RECOLECCION
+        direccion.id_departamento === DEPARTAMENTO_RECOLECCION && 
+        direccion.id_municipio === MUNICIPIO_RECOLECCION
     );
 
-    // Filtrar direcciones para la entrega (cualquier de los 4 departamentos permitidos)
-    const filteredDireccionesEntrega = direcciones.filter(direccion =>
-        DEPARTAMENTOS_PERMITIDOS_ENTREGA.includes(direccion.id_departamento)
+    // Filtrar direcciones para entrega
+    const filteredDireccionesEntrega = direcciones.filter(direccion => 
+        direccion.id_departamento === DEPARTAMENTO_RECOLECCION && 
+        direccion.id_municipio === MUNICIPIO_RECOLECCION &&
+        direccion.id !== (selectedRecoleccion ? selectedRecoleccion.id : null) // Excluir dirección de recolección seleccionada
     );
 
-    // Aplicar filtro de búsqueda para recolección
+    // Aplicar filtro de búsqueda
     const searchedDireccionesRecoleccion = filteredDireccionesRecoleccion.filter(direccion =>
         direccion.nombre_contacto.toLowerCase().includes(searchQuery.toLowerCase()) ||
         direccion.direccion.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    // Aplicar filtro de búsqueda para entrega
     const searchedDireccionesEntrega = filteredDireccionesEntrega.filter(direccion =>
         direccion.nombre_contacto.toLowerCase().includes(searchQuery.toLowerCase()) ||
         direccion.direccion.toLowerCase().includes(searchQuery.toLowerCase())
@@ -154,29 +143,34 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                     ) : (
                         <>
                             <h5>Seleccionar Dirección de Entrega</h5>
-                            <ListGroup className={styles.listGroup}>
-                                {searchedDireccionesEntrega
-                                    .filter((direccion) => direccion.id !== selectedRecoleccion.id)
-                                    .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
-                                    .map((direccion) => (
-                                        <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                            <div className={styles.direccionDetails}>
-                                                <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
-                                                <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
-                                                <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
-                                                <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
-                                            </div>
-                                            <div className={styles.actionButtons}>
-                                                <Button
-                                                    color="primary"
-                                                    onClick={() => handleSelectEntrega(direccion)}
-                                                >
-                                                    Seleccionar Entrega
-                                                </Button>
-                                            </div>
-                                        </ListGroupItem>
-                                    ))}
-                            </ListGroup>
+                            {searchedDireccionesEntrega.length === 0 ? (
+                                <div className={styles.emptyMessage}>
+                                    No hay direcciones disponibles para entrega en la ciudad de San Miguel. Por favor, agregue una nueva dirección en la ciudad de San Miguel.
+                                </div>
+                            ) : (
+                                <ListGroup className={styles.listGroup}>
+                                    {searchedDireccionesEntrega
+                                        .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
+                                        .map((direccion) => (
+                                            <ListGroupItem key={direccion.id} className={styles.listItem}>
+                                                <div className={styles.direccionDetails}>
+                                                    <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                                    <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
+                                                    <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
+                                                    <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
+                                                </div>
+                                                <div className={styles.actionButtons}>
+                                                    <Button
+                                                        color="primary"
+                                                        onClick={() => handleSelectEntrega(direccion)}
+                                                    >
+                                                        Seleccionar Entrega
+                                                    </Button>
+                                                </div>
+                                            </ListGroupItem>
+                                        ))}
+                                </ListGroup>
+                            )}
                             <div className={styles.paginationContainer}>
                                 <Pagination
                                     count={totalPagesEntrega}
@@ -195,7 +189,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
     );
 };
 
-SeleccionarDireccion.propTypes = {
+SeleccionarDireccionExpress.propTypes = {
     direcciones: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
         nombre_contacto: PropTypes.string.isRequired,
@@ -210,4 +204,4 @@ SeleccionarDireccion.propTypes = {
     error: PropTypes.string,
 };
 
-export default SeleccionarDireccion;
+export default SeleccionarDireccionExpress;

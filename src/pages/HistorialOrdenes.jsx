@@ -5,7 +5,6 @@ import {
   ListGroupItem,
   Spinner,
   Alert,
-  Input,
   Button,
   Badge,
   Card,
@@ -18,10 +17,11 @@ import {
 } from "reactstrap";
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
+import { FaClipboard } from "react-icons/fa";
 import styles from "../styles/HistorialOrdenes.module.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
-const ORDENES_PER_PAGE = 10;
+const ORDENES_PER_PAGE = 2;
 
 const HistorialOrdenesCliente = () => {
   const [ordenes, setOrdenes] = useState([]);
@@ -92,20 +92,23 @@ const HistorialOrdenesCliente = () => {
     );
   };
 
+  const handleCopyToClipboard = (numeroSeguimiento) => {
+    navigator.clipboard.writeText(numeroSeguimiento).then(
+      () => {
+        alert("Número de seguimiento copiado al portapapeles.");
+      },
+      (err) => {
+        console.error("Error al copiar el texto: ", err);
+      }
+    );
+  };
+
   return (
     <Container className={styles.historialOrdenesContainer}>
       <Card className={styles.headerCard}>
-        <CardHeader>
+        <CardHeader className={styles.headerContent}>
           <h1 className={styles.title}>Historial de Órdenes</h1>
         </CardHeader>
-        {/* <CardBody>
-                    <Input
-                        type="text"
-                        placeholder="Buscar por concepto o ID de orden"
-                        className={styles.searchInput}
-                        onChange={handleSearch}
-                    />
-                </CardBody> */}
       </Card>
 
       {loading ? (
@@ -113,9 +116,11 @@ const HistorialOrdenesCliente = () => {
           <Spinner color="primary" />
         </div>
       ) : error ? (
-        <Alert color="danger">{error}</Alert>
+        <Alert color="danger" className={styles.alert}>
+          {error}
+        </Alert>
       ) : ordenes.length === 0 ? (
-        <Alert color="info" className={styles.emptyMessage}>
+        <Alert color="info" className={styles.alert}>
           No tienes órdenes registradas.
         </Alert>
       ) : (
@@ -128,19 +133,34 @@ const HistorialOrdenesCliente = () => {
                 <ListGroupItem key={orden.id} className={styles.listItem}>
                   <Card className={styles.ordenCard}>
                     <CardHeader className={styles.ordenHeader}>
-                      <h4 className={styles.ordenTitle}>
-                        Orden #{orden.id} - {orden.concepto}
-                      </h4>
-                      <Badge color="primary" pill>
-                        {orden.estado || "En proceso"}
-                      </Badge>
+                      <Row className={styles.headerRow}>
+                        <Col>
+                          <h4 className={styles.ordenTitle}>
+                            Orden #{orden.id} - {orden.concepto}
+                          </h4>
+                        </Col>
+                        <Col className={styles.headerActions}>
+                          <Badge color="primary" pill>
+                            {orden.estado || "En proceso"}
+                          </Badge>
+                          <Button
+                            color="link"
+                            onClick={() =>
+                              handleCopyToClipboard(orden.numero_tracking)
+                            }
+                            className={styles.shareButton}
+                          >
+                            <FaClipboard size={20} />
+                          </Button>
+                        </Col>
+                      </Row>
                     </CardHeader>
                     <CardBody>
                       <Row>
                         <Col md={6}>
                           <p>
                             <strong>Número de Seguimiento:</strong>{" "}
-                            {orden.numero_seguimiento}
+                            {orden.numero_tracking}
                           </p>
                           <p>
                             <strong>Total a Pagar:</strong> ${orden.total_pagar}

@@ -8,7 +8,7 @@ import AuthService from "../services/authService";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-export default function GenerarPreOrden() {
+export default function GenerarPreOrdenExpress() {
   const location = useLocation();
   const navigate = useNavigate();
   const { idCliente } = useParams();

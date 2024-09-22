@@ -71,7 +71,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 100%) {
     .area {
         height: auto; /* Adjust height for smaller screens */
         padding: 20px; /* Add padding */

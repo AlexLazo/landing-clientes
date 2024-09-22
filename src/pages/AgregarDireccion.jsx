@@ -30,6 +30,8 @@ const AgregarDireccion = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('authToken');
 
+    const departamentosPermitidos = [11, 12, 13, 14];  // Los ID de los departamentos permitidos
+
     useEffect(() => {
         if (!token) {
             navigate('/login');
@@ -41,7 +43,13 @@ const AgregarDireccion = () => {
                 const response = await axios.get(`${API_URL}/dropdown/get_departamentos`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
-                setDepartamentos(response.data || []);
+
+                // Filtrar departamentos permitidos
+                const departamentosFiltrados = (response.data || []).filter(dep => 
+                    departamentosPermitidos.includes(dep.id)
+                );
+
+                setDepartamentos(departamentosFiltrados);
             } catch (error) {
                 console.error("Error al obtener los departamentos:", error);
                 setError("Error al cargar los departamentos.");
@@ -120,13 +128,11 @@ const AgregarDireccion = () => {
         if (telefonoValue.length > 0 && !["6", "7", "2"].includes(telefonoValue[0])) {
             setTelefonoError("El número de teléfono debe comenzar con 6, 7 o 2");
             setIsTelefonoValid(false);
-            // Prevent further input by not updating state by default
             return;
         } else {
             setTelefonoError("");
         }
 
-        // Limit to 8 digits
         if (telefonoValue.length > 8) {
             telefonoValue = telefonoValue.slice(0, 8);
         }
@@ -140,15 +146,6 @@ const AgregarDireccion = () => {
         const isValid = telefonoValue.length === 9;
         setIsTelefonoValid(isValid);
     };
-
-    const handleNombreContactoChange = (e) => setNombreContacto(e.target.value);
-    const handleReferenciaChange = (e) => setReferencia(e.target.value);
-    const handleDepartamentoChange = (e) => {
-        const selectedDepartamento = e.target.value;
-        setDepartamento(selectedDepartamento);
-        setMunicipio(""); // Reset municipio when departamento changes
-    };
-    const handleMunicipioChange = (e) => setMunicipio(e.target.value);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -228,7 +225,7 @@ const AgregarDireccion = () => {
                                                             id="nombre_contacto"
                                                             className={styles.input}
                                                             value={nombreContacto}
-                                                            onChange={handleNombreContactoChange}
+                                                            onChange={(e) => setNombreContacto(e.target.value)}
                                                             required
                                                         />
                                                     </FormGroup>
@@ -258,12 +255,14 @@ const AgregarDireccion = () => {
                                                             id="departamento"
                                                             className={styles.input}
                                                             value={departamento}
-                                                            onChange={handleDepartamentoChange}
+                                                            onChange={(e) => setDepartamento(e.target.value)}
                                                             required
                                                         >
-                                                            <option value="">Seleccionar Departamento</option>
-                                                            {departamentos.map(dep => (
-                                                                <option key={dep.id} value={dep.id}>{dep.nombre}</option>
+                                                            <option value="">Selecciona un departamento</option>
+                                                            {departamentos.map((dep) => (
+                                                                <option key={dep.id} value={dep.id}>
+                                                                    {dep.nombre}
+                                                                </option>
                                                             ))}
                                                         </Input>
                                                     </FormGroup>
@@ -276,12 +275,14 @@ const AgregarDireccion = () => {
                                                             id="municipio"
                                                             className={styles.input}
                                                             value={municipio}
-                                                            onChange={handleMunicipioChange}
+                                                            onChange={(e) => setMunicipio(e.target.value)}
                                                             required
                                                         >
-                                                            <option value="">Seleccionar Municipio</option>
-                                                            {(municipiosPorDepartamento[departamento] || []).map(mun => (
-                                                                <option key={mun.id} value={mun.id}>{mun.nombre}</option>
+                                                            <option value="">Selecciona un municipio</option>
+                                                            {municipiosPorDepartamento[departamento]?.map((mun) => (
+                                                                <option key={mun.id} value={mun.id}>
+                                                                    {mun.nombre}
+                                                                </option>
                                                             ))}
                                                         </Input>
                                                     </FormGroup>
@@ -313,12 +314,16 @@ const AgregarDireccion = () => {
                                                             id="referencia"
                                                             className={styles.input}
                                                             value={referencia}
-                                                            onChange={handleReferenciaChange}
+                                                            onChange={(e) => setReferencia(e.target.value)}
                                                         />
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
-                                            <Button color="primary" type="submit" className={styles.submitButton}>Guardar</Button>
+                                            <div className="text-center">
+                                                <Button className={styles.submitButton} type="submit">
+                                                    Guardar Dirección
+                                                </Button>
+                                            </div>
                                         </Form>
                                     )}
                                 </CardBody>
