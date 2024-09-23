@@ -16,12 +16,12 @@ const PaquetesTrackingScreen = () => {
 
     // Función para validar el token
     const isTokenValid = () => {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('authToken');
         if (!token) {
             navigate('/login');
             return false;
         }
-        // Aquí puedes agregar lógica adicional para verificar la expiración del token
+        // Aquí puedes agregar lógica adicional para verificar la expiración del toke
         return true;
     };
 
