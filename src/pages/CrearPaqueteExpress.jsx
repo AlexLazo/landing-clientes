@@ -310,7 +310,7 @@ export default function CrearPaqueteExpress() {
 
     console.log("Submitting form:", { detalles, totalPrice, commonData });
 
-    navigate(`/GenerarPreOrden/${idCliente}`, {
+    navigate(`/GenerarPreOrdenExpress/${idCliente}`, {
       state: {
         detalles: detalles,
         totalPrice: totalPrice,
@@ -356,7 +356,7 @@ export default function CrearPaqueteExpress() {
                         type="text"
                         name="estado_paquete"
                         id="estado_paquete"
-                        value="En Recepción"
+                        value="En Espera de Recolección"
                         disabled
                       />
                     </FormGroup>
@@ -370,7 +370,7 @@ export default function CrearPaqueteExpress() {
                         type="text"
                         name="tipo_entrega"
                         id="tipo_entrega"
-                        value="Express"
+                        value="Entrega Express"
                         disabled
                       />
                     </FormGroup>

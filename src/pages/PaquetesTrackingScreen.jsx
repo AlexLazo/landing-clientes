@@ -21,7 +21,7 @@ const PaquetesTrackingScreen = () => {
             navigate('/login');
             return false;
         }
-        // Aquí puedes agregar lógica adicional para verificar la expiración del toke
+        // Aquí puedes agregar lógica adicional para verificar la expiración del tok
         return true;
     };
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SeleccionarDireccion from './SeleccionarDireccion';
-import CrearPaquete from './CrearPaquete';
-import GenerarPreOrden from './GenerarPreOrden';
+import SeleccionarDireccionExpress from './SeleccionarDireccionExpress';
+import CrearPaqueteExpress from './CrearPaqueteExpress';
+import GenerarPreOrdenExpress from './GenerarPreOrdenExpress';
 import { Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/PreOrden.module.css'; // Asegúrate de que el archivo CSS tenga las clases correctas
@@ -142,14 +142,14 @@ const PreOrdenExpress = () => {
                     {step === 1 && (
                         <div>
                             <h2 className={styles.subtitle}>Selecciona una Dirección</h2>
-                            <SeleccionarDireccion
+                            <SeleccionarDireccionExpress
                                 direcciones={direcciones}
                                 onDireccionSelect={handleDireccionSelect}
                             />
                         </div>
                     )}
                     {step === 2 && selectedDireccion && (
-                        <CrearPaquete
+                        <CrearPaqueteExpress
                             detalles={paquete}
                             handlePaqueteChange={handlePaqueteChange}
                             addDetalle={addDetalle}
@@ -158,7 +158,7 @@ const PreOrdenExpress = () => {
                         />
                     )}
                     {step === 3 && paquete && (
-                        <GenerarPreOrden
+                        <GenerarPreOrdenExpress
                             paquete={paquete}
                             direccion={selectedDireccion}
                             onSuccess={handlePreOrdenSuccess}
