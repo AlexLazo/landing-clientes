@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaTruck, FaBoxOpen, FaHistory, FaSignOutAlt, FaCaretDown, FaBox, FaSearch, FaListAlt, FaRocket } from 'react-icons/fa';
 import './Sidebar.css';
 import { useAuth } from '/src/services/AuthContext';
+import DarkModeSwitch from './DarkModeSwitch';
+
 
 const Sidebar = () => {
   const { logout } = useAuth();
@@ -11,6 +13,16 @@ const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(true); // Sidebar abierto por defecto
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isOrdersOpen, setIsOrdersOpen] = useState(false); // Nuevo estado para manejar el submenú
+  const [darkMode, setDarkMode] = useState(() => JSON.parse(localStorage.getItem("darkMode")) || false);
+
+  useEffect(() => {
+    localStorage.setItem("darkMode", JSON.stringify(darkMode));
+    document.body.classList.toggle('dark-mode', darkMode); // Aplica la clase al body
+  }, [darkMode]);
+
+  const toggleDarkMode = () => {
+    setDarkMode(prev => !prev);
+  };
 
   const toggleSidebar = useCallback(() => {
     setIsOpen(prev => {
@@ -69,6 +81,7 @@ const Sidebar = () => {
           </div>
           <nav className="sidebar-menu">
             <ul>
+            <DarkModeSwitch darkMode={darkMode} toggleDarkMode={toggleDarkMode} />
               {!isAgregarClientePage && (
                 <>
                   <li>

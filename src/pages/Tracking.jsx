@@ -59,7 +59,8 @@ const TrackingPaquetes = () => {
     }));
   };
   return (
-    <div className="page-content">      
+    <Container fluid className="mt-4">
+    <div>      
       <Container fluid className="mt-4">
         <Row>
           <Col md="12" class="center-block">
@@ -121,6 +122,7 @@ const TrackingPaquetes = () => {
       </Container>
       <ToastContainer />
     </div>
+    </Container>
   );
 };
 
