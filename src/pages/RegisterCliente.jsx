@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 import styles from '../styles/RegisterClientes.module.css';
 import logo from '../assets/logo.png';
+import '../styles/RegisterClientes.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -108,21 +109,21 @@ const RegisterCliente = () => {
     
 
     return (
-        <div className={styles.registerContainer}>
-            <div className={styles.registerCard}>
-                <img src={logo} alt="Logo" className={styles.logo} />
-                <h2 className={styles.registerTitle}>
+        <div className="registerContainer">
+            <div className="registerCard">
+                <img src={logo} alt="Logo" className="logo" />
+                <h2 className="registerTitle">
                     {isRegistered ? 'Verifica tu correo electrónico' : 'Registro de Cliente'}
                 </h2>
                 {message && (
-                    <p className={`${styles.message} ${message.includes('exitoso') ? styles.success : styles.error}`}>
+                    <p className={`$"message" ${message.includes('exitoso') ? "success" : "error"}`}>
                         {message}
                     </p>
                 )}
                 {!isRegistered && (
                     <Form onSubmit={handleSubmit}>
-                        <FormGroup className={styles.formGroup}>
-                            <Label for="email" className={styles.formLabel}>Correo Electrónico</Label>
+                        <FormGroup className="formGroup">
+                            <Label for="email" className="formLabel">Correo Electrónico</Label>
                             <Input
                                 type="email"
                                 name="email"
@@ -135,8 +136,8 @@ const RegisterCliente = () => {
                             />
                             {emailError && <FormFeedback>{emailError}</FormFeedback>}
                         </FormGroup>
-                        <FormGroup className={styles.formGroup}>
-                            <Label for="password" className={styles.formLabel}>Contraseña</Label>
+                        <FormGroup className="formGroup">
+                            <Label for="password" className="formLabel">Contraseña</Label>
                             <Input
                                 type="password"
                                 name="password"
@@ -149,8 +150,8 @@ const RegisterCliente = () => {
                             />
                             {passwordError && <FormFeedback>{passwordError}</FormFeedback>}
                         </FormGroup>
-                        <FormGroup className={styles.formGroup}>
-                            <Label for="confirmPassword" className={styles.formLabel}>Confirmar Contraseña</Label>
+                        <FormGroup className="formGroup">
+                            <Label for="confirmPassword" className="formLabel">Confirmar Contraseña</Label>
                             <Input
                                 type="password"
                                 name="confirmPassword"
@@ -165,7 +166,7 @@ const RegisterCliente = () => {
                         </FormGroup>
                         <Button
                             type="submit"
-                            className={styles.submitButton}
+                            className="submitButton"
                             disabled={!!emailError || !!passwordError || !!confirmPasswordError}
                         >
                             Registrar

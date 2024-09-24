@@ -4,6 +4,7 @@ import { Button, ListGroup, ListGroupItem, Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import { Pagination } from '@mui/material';
 import styles from '../styles/Direcciones.module.css';
+import "../styles/Direcciones.css";
 import ModalEditarDireccion from './ModalEditarDireccion';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -128,48 +129,48 @@ const DireccionesCliente = () => {
     const totalPages = Math.ceil(direcciones.length / DIRECTIONS_PER_PAGE);
 
     return (
-        <div className={styles.direccionesClienteContainer}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>Direcciones del Cliente</h1>
+        <div className="direccionesClienteContainer">
+            <div className="header-Direcciones">
+                <h1 className="title-Direcciones">Direcciones del Cliente</h1>
                 <Button
                     color="primary"
-                    className={styles.buttonAgregar}
+                    className="buttonAgregar"
                     onClick={() => navigate('/agregar-direccion')}
                 >
                     Agregar Dirección
                 </Button>
             </div>
             {loading ? (
-                <div className={styles.loading}>
+                <div className="loading">
                     <Spinner color="primary" />
                 </div>
             ) : error ? (
                 <Alert color="danger">{error}</Alert>
             ) : direcciones.length === 0 ? (
-                <div className={styles.emptyMessage}>No tienes direcciones registradas.</div>
+                <div className="emptyMessage">No tienes direcciones registradas.</div>
             ) : (
                 <>
-                    <h2 className={styles.subtitle}>Direcciones Registradas</h2>
-                    <ListGroup className={styles.listGroup}>
+                    <h2 className="subtitle">Direcciones Registradas</h2>
+                    <ListGroup className="listGroup">
                         {direcciones.slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE).map(direccion => (
-                            <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                <div className={styles.direccionDetails}>
-                                    <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                            <ListGroupItem key={direccion.id} className="listItem">
+                                <div className="direccionDetails">
+                                    <h4 className="direccionTitle">{direccion.direccion}</h4>
                                     <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
                                     <p><strong>Teléfono:</strong> {direccion.telefono}</p>
                                     <p><strong>Referencia:</strong> {direccion.referencia}</p>
                                 </div>
-                                <div className={styles.actionButtons}>
+                                <div className="actionButtons">
                                     <Button
                                         color="warning"
-                                        className={styles.buttonEditar}
+                                        className="buttonEditar"
                                         onClick={() => handleEdit(direccion)}
                                     >
                                         Editar
                                     </Button>
                                     <Button
                                         color="danger"
-                                        className={styles.buttonEliminar}
+                                        className="buttonEliminar"
                                         onClick={() => handleDelete(direccion.id)}
                                     >
                                         Eliminar
@@ -179,7 +180,7 @@ const DireccionesCliente = () => {
                         ))}
                     </ListGroup>
 
-                    <div className={styles.paginationContainer}>
+                    <div className="paginationContainer">
                         <Pagination
                             count={totalPages}
                             page={currentPage}
@@ -202,8 +203,8 @@ const DireccionesCliente = () => {
             )}
 
             {modalDeleteOpen && (
-                <div className={styles.modalDeleteOverlay}>
-                    <div className={styles.modalDelete}>
+                <div className="modalDeleteOverlay">
+                    <div className="modalDelete">
                         <p>¿Estás seguro que deseas eliminar esta dirección?</p>
                         <Button color="danger" onClick={confirmDelete}>
                             Confirmar

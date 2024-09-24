@@ -62,7 +62,7 @@ input:checked + .slider:before {
 
 /* Añadir estilos adicionales si estás en modo oscuro */
 .theme-switch-wrapper.dark-mode {
-  background-color: #212636; 
+  background-color: #1b1b1b; 
 }
 
 /* Estilo del slider en modo oscuro */
@@ -72,7 +72,7 @@ input:checked + .slider:before {
 
 /* Estilo del slider cuando está activado en modo oscuro */
 .theme-switch-wrapper.dark-mode input:checked + .slider {
-  background-color: #2a2a2a; 
+  background-color: #1b1b1b; 
 }
 
 /* Estilo del círculo del slider cuando el switch está activado en modo oscuro */

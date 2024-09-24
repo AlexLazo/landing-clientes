@@ -3,6 +3,7 @@ import { Card, CardBody, Col, Row, Container, Form, FormGroup, Label, Input, But
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from '/src/styles/AgregarDireccion.module.css';
+import '../styles/AgregarDireccion.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -190,40 +191,40 @@ const AgregarDireccion = () => {
 
     return (
         <React.Fragment>
-            <div className={styles.direccionesClienteContainer}>
+            <div className="direccionesClienteContainer">
                 <Container fluid>
                     <Row>
                         <Col lg="12">
-                            <Card className={styles.card}>
-                                <CardBody>
-                                    <h3 className={styles.direccionesClienteTitle}>Agregar Dirección del Cliente</h3>
+                            <Card className="card-agregarDireccion">
+                                <CardBody className="card-body-agregarDireccion">
+                                    <h3 className="direccionesClienteTitle">Agregar Dirección del Cliente</h3>
 
                                     {alertaExito && (
-                                        <Alert className={styles.alertSuccessCustom}>
+                                        <Alert className="alertSuccessCustom">
                                             ¡Dirección registrada exitosamente!
                                         </Alert>
                                     )}
                                     {alertaError && (
-                                        <Alert className={styles.alertDangerCustom}>
+                                        <Alert className="alertDangerCustom">
                                             {errorMensaje}
                                         </Alert>
                                     )}
                                     {loading ? (
-                                        <div className={styles.loading}>
+                                        <div className="loading">
                                             <Spinner color="primary" />
                                         </div>
                                     ) : error ? (
-                                        <Alert className={styles.alertDangerCustom}>{error}</Alert>
+                                        <Alert className="alertDangerCustom">{error}</Alert>
                                     ) : (
                                         <Form onSubmit={handleSubmit}>
                                             <Row form>
                                                 <Col md={6}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="nombre_contacto">Nombre de Contacto</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label" for="nombre_contacto">Nombre de Contacto</Label>
                                                         <Input
                                                             type="text"
                                                             id="nombre_contacto"
-                                                            className={styles.input}
+                                                            className="styles.input"
                                                             value={nombreContacto}
                                                             onChange={(e) => setNombreContacto(e.target.value)}
                                                             required
@@ -231,12 +232,12 @@ const AgregarDireccion = () => {
                                                     </FormGroup>
                                                 </Col>
                                                 <Col md={6}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="telefono">Teléfono</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label"for="telefono">Teléfono</Label>
                                                         <Input
                                                             type="text"
                                                             id="telefono"
-                                                            className={styles.input}
+                                                            className="input"
                                                             value={telefono}
                                                             onChange={handleTelefonoChange}
                                                             invalid={!isTelefonoValid}
@@ -248,12 +249,12 @@ const AgregarDireccion = () => {
                                             </Row>
                                             <Row form>
                                                 <Col md={6}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="departamento">Departamento</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label" for="departamento">Departamento</Label>
                                                         <Input
                                                             type="select"
                                                             id="departamento"
-                                                            className={styles.input}
+                                                            className="input"
                                                             value={departamento}
                                                             onChange={(e) => setDepartamento(e.target.value)}
                                                             required
@@ -268,12 +269,12 @@ const AgregarDireccion = () => {
                                                     </FormGroup>
                                                 </Col>
                                                 <Col md={6}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="municipio">Municipio</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label" for="municipio">Municipio</Label>
                                                         <Input
                                                             type="select"
                                                             id="municipio"
-                                                            className={styles.input}
+                                                            className="input"
                                                             value={municipio}
                                                             onChange={(e) => setMunicipio(e.target.value)}
                                                             required
@@ -290,12 +291,12 @@ const AgregarDireccion = () => {
                                             </Row>
                                             <Row form>
                                                 <Col md={12}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="direccion">Dirección</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label" for="direccion">Dirección</Label>
                                                         <Input
                                                             type="text"
                                                             id="direccion"
-                                                            className={styles.input}
+                                                            className="input"
                                                             value={direccion}
                                                             onChange={handleDireccionChange}
                                                             invalid={!isDireccionValid}
@@ -307,12 +308,12 @@ const AgregarDireccion = () => {
                                             </Row>
                                             <Row form>
                                                 <Col md={12}>
-                                                    <FormGroup className={styles.formGroup}>
-                                                        <Label className={styles.label} for="referencia">Referencia</Label>
+                                                    <FormGroup className="formGroup">
+                                                        <Label className="label" for="referencia">Referencia</Label>
                                                         <Input
                                                             type="text"
                                                             id="referencia"
-                                                            className={styles.input}
+                                                            className="input"
                                                             value={referencia}
                                                             onChange={(e) => setReferencia(e.target.value)}
                                                         />
@@ -320,7 +321,7 @@ const AgregarDireccion = () => {
                                                 </Col>
                                             </Row>
                                             <div className="text-center">
-                                                <Button className={styles.submitButton} type="submit">
+                                                <Button className="submitButton" type="submit">
                                                     Guardar Dirección
                                                 </Button>
                                             </div>
