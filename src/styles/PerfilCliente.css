@@ -1,0 +1,451 @@
+/* General Styles */
+.profileContainer {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  .dark-mode .profileContainer {
+    background-color: #2b2b2b;
+  }
+
+  /* Header Section */
+  .header {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f9fc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Arial, sans-serif;
+  }
+  
+  .headerLeft {
+    display: flex;           /* Usar flexbox */
+    flex-direction: column; /* Colocar elementos en columna */
+    align-items: center;    /* Centrar horizontalmente */
+    justify-content: center; /* Centrar verticalmente si es necesario */
+  }
+  
+  .avatar {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    margin-right: 20px;
+  }
+  
+  .headerText h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+  }
+  .dark-mode .headerText h2 {
+    color: #ffffff;
+  }
+  
+  .headerText p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  }
+  .dark-mode .headerText p {
+    color: #ffffff;
+  }
+  
+  .headerRight {
+    text-align: right;
+  }
+  
+  .clientCode {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 5px;
+  }
+  .dark-mode .clientCode {
+    color: #ffffff;
+  }
+  
+  /* Navigation Menu */
+  .navMenu {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .dark-mode .navMenu {
+    background-color: #2b2b2b;
+  }
+  
+  .navLink {
+    margin: 0 15px;
+    font-size: 16px;
+    color: #071e2a;
+    text-decoration: none;
+    position: relative;
+    padding: 10px;
+  }
+  .dark-mode .navLink {
+    color: #ffffff;
+  }
+  
+  .navLink:hover,
+  .navLink:focus {
+    color: #4e54c8;
+  }
+  
+  .navLink::after {
+    content: "";
+    display: block;
+    height: 3px;
+    background: #4e54c8;
+    width: 0;
+    transition: width 0.3s;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  .navLink:hover::after,
+  .navLink:focus::after {
+    width: 100%;
+  }
+  
+  /* Profile Content Section */
+  .profileContent {
+    margin-bottom: 20px;
+  }
+  
+  .profileDetails {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  }
+  .dark-mode .profileDetails {
+    background: #2b2b2b;
+  }
+  
+  .detailsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  
+  .detailsLabel {
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 5px;
+  }
+  .dark-mode .detailsLabel {
+    color: #ffffff;
+  }
+  
+  .detailsGrid p {
+    margin: 0;
+    font-size: 16px;
+    color: #555;
+  }
+  .dark-mode .detailsGrid p {
+    color: #ffffff;
+  }
+  
+  /* Action Buttons */
+  .actions {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .editButton {
+    background-color: #53645e;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .editButton:hover {
+    background-color: #6a6eff;
+  }
+  
+  .deleteButton {
+    background-color: #ff4d4f;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
+  
+  .deleteButton:hover {
+    background-color: #ff7875;
+  }
+  
+  /* Loading and Error Messages */
+  .loading,
+  .error {
+    text-align: center;
+    font-size: 18px;
+    color: #555;
+  }
+  
+  /* Modal Styles */
+  .modal {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    max-width: 500px;
+    margin: 0 auto;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  .overlay {
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1000;
+  }
+  
+  .addDataButton,
+  .closeModalButton {
+    background-color: #071e2a;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 20px;
+    margin-right: 10px;
+    transition: background-color 0.3s;
+  }
+  
+  .addDataButton:hover,
+  .closeModalButton:hover {
+    background-color: #4e54c8;
+  }
+  
+  .confirmDeleteButton {
+    background-color: #d9534f;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .closeModalButton {
+    background-color: #ccc;
+    color: black;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+  
+  /* List Group */
+  .listGroup {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  
+  /* Element List */
+  .listItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    background-color: #fff;
+  }
+  
+  /* Pagination */
+  .paginationContainer {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
+  .direccionDetails p {
+    text-align: left;
+    margin: 5px 0;
+    line-height: 1.5;
+    color: #666;
+  }
+  
+  .direccionDetails strong {
+    color: #333;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .headerLeft {
+      margin-bottom: 10px;
+    }
+  
+    .avatar {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+    }
+  
+    .headerText h2 {
+      font-size: 20px;
+    }
+  
+    .headerText p {
+      font-size: 14px;
+    }
+  
+    .navLink {
+      font-size: 14px;
+      margin: 0 10px;
+    }
+  
+    .detailsGrid {
+      grid-template-columns: 1fr;
+    }
+  
+    .actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .editButton,
+    .deleteButton {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  
+    .modal {
+      padding: 20px;
+      max-width: 90%;
+    }
+  
+    .addDataButton,
+    .closeModalButton {
+      font-size: 14px;
+      padding: 8px 16px;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .header {
+      padding-bottom: 10px;
+    }
+  
+    .headerText h2 {
+      font-size: 18px;
+    }
+  
+    .headerText p {
+      font-size: 12px;
+    }
+  
+    .navLink {
+      font-size: 12px;
+      margin: 0 8px;
+    }
+  
+    .detailsGrid {
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+  
+    .actions {
+      margin-top: 15px;
+    }
+  
+    .editButton,
+    .deleteButton {
+      font-size: 14px;
+      padding: 8px 14px;
+    }
+  
+    .modal {
+      padding: 15px;
+      max-width: 90%;
+    }
+  
+    .addDataButton,
+    .closeModalButton {
+      font-size: 14px;
+      padding: 8px 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profileContainer {
+      padding: 10px;
+    }
+  
+    .avatar {
+      width: 40px;
+      height: 40px;
+      margin-right: 10px;
+    }
+  
+    .headerText h2 {
+      font-size: 16px;
+    }
+  
+    .headerText p {
+      font-size: 10px;
+    }
+  
+    .navLink {
+      font-size: 10px;
+      margin: 0 5px;
+    }
+  
+    .detailsGrid {
+      grid-template-columns: 1fr;
+      gap: 5px;
+    }
+  
+    .actions {
+      margin-top: 10px;
+    }
+  
+    .editButton,
+    .deleteButton {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  
+    .modal {
+      padding: 10px;
+      max-width: 95%;
+    }
+  
+    .addDataButton,
+    .closeModalButton {
+      font-size: 12px;
+      padding: 6px 12px;
+    }
+  }

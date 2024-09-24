@@ -1,84 +1,145 @@
-/* Encabezado styles */
-.encabezado {
-  background-color: #333;
-  color: white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 60px;
-  z-index: 1000;
-  transition: height 0.3s ease;
+/* Estilos generales */
+* {
+  box-sizing: border-box;
 }
 
-.encabezado-spacer {
-  height: 60px;
-}
-
-.encabezado.open {
-  height: auto;
-}
-
-.encabezado-content {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 20px;
-  height: 60px;
-}
-
-.encabezado-logo img {
-  height: 40px;
-}
-
-.encabezado-toggle {
-  display: none;
-  cursor: pointer;
-  font-size: 1.5rem;
-}
-
-.encabezado-menu {
-  display: flex;
-}
-
-.encabezado-menu ul {
-  display: flex;
-  list-style-type: none;
+body {
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
+  background-color: #f8f9fa;
+  overflow-y: auto !important;
 }
 
-.encabezado-menu li {
-  margin-left: 20px;
-  position: relative;
+/* Contenido Principal */
+.main-content {
+  margin-left: 80px;
+  transition: margin-left 0.3s ease;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.encabezado-menu a,
-.menu-link,
-.logout-button {
+.sidebar-open .main-content {
+  margin-left: 200px;
+}
+
+/* Sidebar */
+.sidebar {
+  position:fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 80px;
+  background-color: #333;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  transition: width 0.3s ease;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar.open {
+  width: 200px;
+}
+
+/* Sidebar toggle button */
+.sidebar-toggle {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  background-color: #444;
   color: white;
-  text-decoration: none;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
   display: flex;
   align-items: center;
-  padding: 10px;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 1000;
   transition: background-color 0.3s ease;
-  border-radius: 4px;
-  font-weight: 500;
-  background-color: transparent;
 }
 
-.encabezado-menu a:hover,
+.sidebar-toggle:hover {
+  background-color: #555;
+}
+
+/* Sidebar logo */
+.sidebar-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  margin-top: 70px;
+}
+
+.sidebar-logo img {
+  width: 50px;
+  height: auto;
+  transition: width 0.3s ease;
+}
+
+.sidebar.open .sidebar-logo img {
+  width: 90px;
+}
+
+/* Sidebar menu */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px); /* Ajuste para evitar la cobertura del botón de logout */
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: 80px; /* Espacio para el botón de logout */
+}
+
+.sidebar-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin: 10px 0;
+}
+
+/* Sidebar menu links and button */
+.sidebar-menu a,
+.menu-link,
+.logout-button {
+  text-decoration: none;
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+  font-size: 1rem;
+  position: relative; /* Para manejar el movimiento del botón del submenú */
+}
+
+.sidebar-menu a:hover,
 .menu-link:hover,
 .logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #0056b3;
 }
 
 .menu-icon {
-  font-size: 1.2rem;
-  margin-right: 10px;
+  font-size: 1.5rem;
+  margin-right: 15px;
 }
 
-/* Dropdown styles */
+.sidebar .sidebar-menu a span {
+  display: none;
+}
+
+.sidebar.open .sidebar-menu a span {
+  display: inline;
+}
+
+/* Submenu */
 .dropdown {
   position: relative;
 }
@@ -89,10 +150,10 @@
   top: 100%;
   left: 0;
   background-color: #444;
-  border-radius: 4px;
-  padding: 10px 0;
-  min-width: 200px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  z-index: 999; /* Menú desplegable detrás del botón de logout */
 }
 
 .dropdown.open .dropdown-menu {
@@ -102,31 +163,55 @@
 .dropdown-item {
   display: flex;
   align-items: center;
-  padding: 10px 15px;
+  padding: 12px 15px;
   color: white;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: #0056b3;
 }
 
 .dropdown-icon {
-  font-size: 1rem;
-  margin-right: 10px;
+  font-size: 1.2rem;
+  margin-right: 15px;
 }
 
 .caret-icon {
-  margin-left: 5px;
+  margin-left: auto;
   transition: transform 0.3s ease;
 }
 
-.caret-icon.open {
+.open .caret-icon {
   transform: rotate(180deg);
 }
 
-/* Modal styles */
+/* Ajuste para asegurar que el botón de logout no se cubra */
+.sidebar.open .sidebar-menu {
+  padding-bottom: calc(80px + 40px); /* Ajuste para el espacio del botón de logout y del submenú */
+}
+
+/* Logout button */
+.logout-button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  position: absolute;
+  bottom: 0;
+  width: 100%; /* Asegura que el botón esté al ancho completo */
+  z-index: 1000; /* Asegura que el botón esté encima del menú desplegable */
+  transition: margin-top 0.3s ease;
+}
+
+/* Ajuste para el botón de logout */
+.dropdown.open ~ .logout-button {
+  margin-top: calc(40px + 10px); /* Espacio adicional cuando el submenú está abierto */
+}
+
+/* Modal overlay */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -137,9 +222,10 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1001;
+  z-index: 1000;
 }
 
+/* Modal content */
 .modal-content {
   background: white;
   padding: 25px;
@@ -149,6 +235,7 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Modal buttons */
 .confirm-button,
 .cancel-button {
   background-color: #007bff;
@@ -170,47 +257,77 @@
   background-color: #0056b3;
 }
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  .encabezado-toggle {
-    display: block;
-  }
-
-  .encabezado-menu {
-    display: none;
-    position: absolute;
-    top: 60px;
-    left: 0;
-    right: 0;
-    background-color: #333;
-    flex-direction: column;
-    padding: 20px;
-  }
-
-  .encabezado.open .encabezado-menu {
-    display: block;
-  }
-
-  .encabezado-menu ul {
-    flex-direction: column;
-  }
-
-  .encabezado-menu li {
-    margin: 10px 0;
-  }
-
-  .dropdown-menu {
-    position: static;
-    box-shadow: none;
-    padding-left: 20px;
-  }
+/*AQUI INICIA EL MODO OSCURO*/
+.dark-mode {
+  background-color: #2b2b2b;
+  color: #ffffff;
 }
 
-/* Logout button style */
-.logout-button {
-  background-color: #28a745;
+/*Modo oscuro para siderbar*/
+
+.dark-mode .sidebar {
+  background-color: #212636; 
 }
 
-.logout-button:hover {
-  background-color: #218838;
+/*Modo oscuro para las card*/
+
+.dark-mode .card {
+  background-color: #2b2b2b;
+  color: #ffffff;
+  /*border: 1px solid #444;*/
+}
+
+.dark-mode .card-header {
+  background-color: #333;
+  border-bottom: 1px solid #444;
+}
+
+.dark-mode .card-body {
+  background-color: #2b2b2b;
+}
+
+.dark-mode .card-footer {
+  background-color: #333;
+  border-top: 1px solid #444;
+}
+
+.dark-mode .card-body input {
+  background-color: #444;
+  color: white;
+}
+
+.dark-mode .card-body select {
+  background-color: #444;
+  color: white;
+  border-color: white;
+}
+
+.dark-mode .card-body select option {
+  background-color: #444;
+  color: white;
+}
+
+.dark-mode .card-body span {
+  background-color: #444;
+  color: white;
+}
+
+/* Estilos opcionales para mejorar la apariencia de las tarjetas en modo oscuro */
+.dark-mode .card-title {
+  color: #ffffff;
+}
+
+.dark-mode .card-text {
+  color: #b3b9c6;
+}
+
+/*Modo oscuro fondo trackin*/
+.contenedorTraking .dark-mode{
+  background-color: #2b2b2b;
+}
+
+/*Modo oscuro direcciones*/
+/*titulo*/
+.dark-mode .customClass{
+  color: red;
 }
