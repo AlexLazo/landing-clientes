@@ -1,44 +1,44 @@
 /* Encabezado styles */
 .encabezado {
-  background-color: #333;
-  color: white;
+  background-color: #222; /* Color más oscuro y elegante */
+  color: #f1f1f1;
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: 60px;
+  height: 70px; /* Mayor altura para mejor visibilidad */
   z-index: 1000;
-  transition: height 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  transition: height 0.3s ease, background-color 0.3s ease;
 }
 
 .encabezado-spacer {
-  height: 60px;
-}
-
-.encabezado.open {
-  height: auto;
+  height: 70px; /* Altura ajustada del espaciador */
 }
 
 .encabezado-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 20px;
-  height: 60px;
+  padding: 0 30px; /* Espaciado más balanceado */
+  height: 70px;
 }
 
 .encabezado-logo img {
-  height: 40px;
+  height: 45px; /* Tamaño ajustado del logo */
 }
 
 .encabezado-toggle {
   display: none;
   cursor: pointer;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  color: #f1f1f1;
 }
 
 .encabezado-menu {
   display: flex;
+  justify-content: center; /* Centrar elementos del menú */
+  flex-grow: 1; /* Permitir que el menú ocupe el espacio disponible */
 }
 
 .encabezado-menu ul {
@@ -49,32 +49,33 @@
 }
 
 .encabezado-menu li {
-  margin-left: 20px;
+  margin-left: 30px; /* Separación mayor entre items */
   position: relative;
 }
 
 .encabezado-menu a,
 .menu-link,
 .logout-button {
-  color: white;
+  color: #f1f1f1;
   text-decoration: none;
   display: flex;
   align-items: center;
-  padding: 10px;
-  transition: background-color 0.3s ease;
-  border-radius: 4px;
-  font-weight: 500;
-  background-color: transparent;
+  padding: 12px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  border-radius: 6px; /* Bordes más suaves */
+  font-weight: 600;
+  font-family: 'Segoe UI', Tahoma, sans-serif; /* Fuente moderna */
 }
 
 .encabezado-menu a:hover,
 .menu-link:hover,
 .logout-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2); /* Hover más visible */
+  color: #fff;
 }
 
 .menu-icon {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   margin-right: 10px;
 }
 
@@ -88,11 +89,11 @@
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #444;
-  border-radius: 4px;
-  padding: 10px 0;
-  min-width: 200px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  background-color: #333; /* Fondo más oscuro */
+  border-radius: 6px;
+  padding: 15px 0;
+  min-width: 220px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada */
 }
 
 .dropdown.open .dropdown-menu {
@@ -102,23 +103,23 @@
 .dropdown-item {
   display: flex;
   align-items: center;
-  padding: 10px 15px;
-  color: white;
+  padding: 12px 20px;
+  color: #f1f1f1;
   text-decoration: none;
   transition: background-color 0.3s ease;
 }
 
 .dropdown-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
 }
 
 .dropdown-icon {
-  font-size: 1rem;
+  font-size: 1.1rem;
   margin-right: 10px;
 }
 
 .caret-icon {
-  margin-left: 5px;
+  margin-left: 8px;
   transition: transform 0.3s ease;
 }
 
@@ -133,7 +134,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -141,24 +142,25 @@
 }
 
 .modal-content {
-  background: white;
-  padding: 25px;
-  border-radius: 8px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
   text-align: center;
-  width: 320px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
 .confirm-button,
 .cancel-button {
   background-color: #007bff;
-  color: white;
+  color: #fff;
   border: none;
-  padding: 12px 24px;
-  margin: 5px;
+  padding: 12px 28px;
+  margin: 10px;
   cursor: pointer;
-  border-radius: 5px;
+  border-radius: 6px;
   transition: background-color 0.3s ease;
+  font-weight: 600;
 }
 
 .cancel-button {
@@ -179,12 +181,12 @@
   .encabezado-menu {
     display: none;
     position: absolute;
-    top: 60px;
+    top: 70px;
     left: 0;
     right: 0;
-    background-color: #333;
+    background-color: #222;
     flex-direction: column;
-    padding: 20px;
+    padding: 30px 20px;
   }
 
   .encabezado.open .encabezado-menu {
@@ -196,13 +198,13 @@
   }
 
   .encabezado-menu li {
-    margin: 10px 0;
+    margin: 15px 0;
   }
 
   .dropdown-menu {
     position: static;
     box-shadow: none;
-    padding-left: 20px;
+    padding-left: 30px;
   }
 }
 
@@ -213,4 +215,28 @@
 
 .logout-button:hover {
   background-color: #218838;
+}
+
+/* Dark Mode Styles */
+.dark-mode .encabezado {
+  background-color: #1b1b1b;
+  color: #e0e0e0;
+}
+
+.dark-mode .encabezado-menu a,
+.dark-mode .menu-link,
+.dark-mode .logout-button {
+  color: #e0e0e0;
+}
+
+.dark-mode .dropdown-menu {
+  background-color: #2a2a2a;
+}
+
+.dark-mode .dropdown-item {
+  color: #e0e0e0;
+}
+
+.dark-mode .dropdown-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
 }
