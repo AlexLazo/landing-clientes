@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from 'react-modal';
 import styles from "/src/styles/PerfilCliente.module.css";
-import '../styles/PerfilCliente.css'
+import '../styles/perfilCliente.css'
 import { Container, 
     Row, 
     Col, 
