@@ -38,6 +38,15 @@
     color: #ffffff;
 }
 
+.dark-mode .text-danger{
+    color: #bd2130;
+}
+
+.dark-mode .css-579l9g-MuiButtonBase-root-MuiPaginationItem-root.Mui-disabled{
+    color: #1976d2;
+    border-color: #1976d2;
+}
+
 /* Margin for rows */
 .row {
     margin-bottom: 10px; /* Reduce margin for smaller screens */
