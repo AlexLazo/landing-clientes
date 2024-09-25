@@ -1,0 +1,158 @@
+/* Contenedor principal */
+.historialOrdenesContainer {
+    padding: 30px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.dark-mode .historialOrdenesContainer{
+    background-color: #333;
+}
+
+/* Encabezado de tarjeta */
+.headerCard {
+    margin-bottom: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.dark-mode .headerContent{
+    background-color: #333;
+}
+
+/* Contenido del encabezado */
+.headerContent {
+    padding: 20px;
+    background-color: #f0f4f8;
+    border-bottom: 2px solid #e0e4e8;
+    border-radius: 12px 12px 0 0;
+}
+  
+
+/* Título de la sección */
+.title {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+/* Mensaje de carga */
+.loading {
+    text-align: center;
+    padding: 30px;
+}
+
+/* Mensaje de alerta */
+.alert {
+    text-align: center;
+    font-size: 16px;
+    margin-top: 20px;
+}
+
+/* Lista de elementos */
+.listGroup {
+    margin-top: 20px;
+    padding: 0; /* Asegura que no haya padding extra */
+}
+
+/* Elemento de la lista */
+.listItem {
+    margin-bottom: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Tarjeta de orden */
+.ordenCard {
+    border-radius: 12px;
+    border: 1px solid #ddd; /* Añadido para mejorar la definición */
+}
+
+/* Encabezado de tarjeta de orden */
+.ordenHeader {
+    background-color: #e0f7fa;
+    border-bottom: 2px solid #b2ebf2;
+    border-radius: 12px 12px 0 0;
+    padding: 15px; /* Añadido para mayor espacio interno */
+}
+
+/* Título dentro de la tarjeta de orden */
+.ordenTitle {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00796b;
+    margin: 0; /* Eliminar márgenes innecesarios */
+}
+
+/* Fila del encabezado */
+.headerRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Acciones del encabezado */
+.headerActions {
+    display: flex;
+    align-items: center;
+}
+
+/* Botón de compartir */
+.shareButton {
+    background-color: #007bff; /* Fondo azul */
+    color: white; /* Texto blanco */
+    border: none; /* Sin borde */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 6px 12px; /* Espaciado interno */
+    cursor: pointer; /* Manito al pasar el cursor */
+    transition: background-color 0.3s; /* Transición suave para el cambio de color */
+    margin-left: 10px; /* Separación del botón de compartir */
+}
+
+.shareButton:hover {
+    background-color: #0056b3; /* Color más oscuro al pasar el cursor */
+}
+
+/* Botón de detalles */
+.detailsButton {
+    margin-top: 10px;
+}
+
+/* Detalles del paquete */
+.paqueteDetails {
+    margin-top: 20px;
+}
+
+/* Tarjeta de paquete */
+.paqueteCard {
+    margin-bottom: 10px;
+    border-radius: 12px;
+    border: 1px solid #ddd; /* Añadido para mejorar la definición */
+}
+
+/* Contenedor de paginación */
+.paginationContainer {
+    margin-top: 20px;
+    text-align: center;
+}
+.marker {
+    display: none; /* Oculta los markers */
+  }
+  
+
+/* Estilos responsivos para pantallas pequeñas */
+@media (max-width: 768px) {
+    .historialOrdenesContainer {
+        padding: 10px;
+    }
+
+    .ordenHeader {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .ordenTitle {
+        margin-bottom: 10px;
+    }
+}

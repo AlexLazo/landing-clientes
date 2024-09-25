@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import { FaClipboard } from "react-icons/fa";
 import styles from "../styles/HistorialOrdenes.module.css";
+import '../styles/HistorialOrdenes.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 const ORDENES_PER_PAGE = 2;
@@ -104,42 +105,42 @@ const HistorialOrdenesCliente = () => {
   };
 
   return (
-    <Container className={styles.historialOrdenesContainer}>
-      <Card className={styles.headerCard}>
-        <CardHeader className={styles.headerContent}>
-          <h1 className={styles.title}>Historial de Órdenes</h1>
+    <Container className="historialOrdenesContainer">
+      <Card className="headerCard">
+        <CardHeader className="headerContent">
+          <h1 className="title">Historial de Órdenes</h1>
         </CardHeader>
       </Card>
 
       {loading ? (
-        <div className={styles.loading}>
+        <div className="loading">
           <Spinner color="primary" />
         </div>
       ) : error ? (
-        <Alert color="danger" className={styles.alert}>
+        <Alert color="danger" className="alert">
           {error}
         </Alert>
       ) : ordenes.length === 0 ? (
-        <Alert color="info" className={styles.alert}>
+        <Alert color="info" className="alert">
           No tienes órdenes registradas.
         </Alert>
       ) : (
         <>
-          <ListGroup className={styles.listGroup}>
+          <ListGroup className="listGroup">
             {ordenes
               .slice()
               .reverse()
               .map((orden) => (
-                <ListGroupItem key={orden.id} className={styles.listItem}>
-                  <Card className={styles.ordenCard}>
-                    <CardHeader className={styles.ordenHeader}>
-                      <Row className={styles.headerRow}>
+                <ListGroupItem key={orden.id} className="listItem">
+                  <Card className="ordenCard">
+                    <CardHeader className="ordenHeader">
+                      <Row className="headerRow">
                         <Col>
-                          <h4 className={styles.ordenTitle}>
+                          <h4 className="ordenTitle">
                             Orden #{orden.id} - {orden.concepto}
                           </h4>
                         </Col>
-                        <Col className={styles.headerActions}>
+                        <Col className="headerActions">
                           <Badge color="primary" pill>
                             {orden.estado || "En proceso"}
                           </Badge>
@@ -148,7 +149,7 @@ const HistorialOrdenesCliente = () => {
                             onClick={() =>
                               handleCopyToClipboard(orden.numero_tracking)
                             }
-                            className={styles.shareButton}
+                            className="shareButton"
                           >
                             <FaClipboard size={20} />
                           </Button>
@@ -173,7 +174,7 @@ const HistorialOrdenesCliente = () => {
                       <Button
                         color="info"
                         onClick={() => toggleOrderDetails(orden.id)}
-                        className={styles.detailsButton}
+                        className="detailsButton"
                       >
                         {expandedOrders.includes(orden.id)
                           ? "Ocultar detalles"
@@ -181,12 +182,12 @@ const HistorialOrdenesCliente = () => {
                       </Button>
                     </CardBody>
                     {expandedOrders.includes(orden.id) && (
-                      <CardFooter className={styles.paqueteDetails}>
+                      <CardFooter className="paqueteDetails">
                         <h4>Detalles de los Paquetes</h4>
                         {orden.detalles.map((paquete) => (
                           <Card
                             key={paquete.id_paquete}
-                            className={styles.paqueteCard}
+                            className="paqueteCard"
                           >
                             <CardBody>
                               <p>
@@ -212,7 +213,7 @@ const HistorialOrdenesCliente = () => {
               ))}
           </ListGroup>
 
-          <div className={styles.paginationContainer}>
+          <div className="paginationContainer">
             <Pagination
               count={totalPages}
               page={currentPage}
