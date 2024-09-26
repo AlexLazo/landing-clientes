@@ -207,9 +207,13 @@ export default function DatosPaquetePreOrden() {
       price = tarifa.monto;
     }
   
-    // Añadir $1 al precio por el costo de recolección
-    return price + 1;
+    // Asegurarse de que price es un número antes de sumarle 1
+    const finalPrice = parseFloat(price) + 1;
+  
+    // Añadir $1 al precio por el costo de recolección y redondear a 2 decimales
+    return finalPrice.toFixed(2);  // Redondea a 2 decimales
   };
+  
   
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
