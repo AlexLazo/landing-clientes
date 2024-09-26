@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styles from '../styles/Direcciones.module.css';
+import "../styles/Direcciones.css";
 
 const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
     const [formData, setFormData] = useState({
@@ -57,13 +58,14 @@ const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
     if (!isOpen) return null;
 
     return (
-        <div className={styles.modalOverlayEdit}>
-            <div className={styles.modalContentEdit}>
+        <div className="modalOverlayEdit">
+            <div className="modalContentEdit">
                 <h2>Editar Dirección</h2>
-                {error && <div className={styles.errorMessage}>{error}</div>}
-                <div className={styles.modalFormGroup}>
+                {error && <div className="errorMessage">{error}</div>}
+                <div className="modalFormGroup">
                     <label htmlFor="direccion">Dirección</label>
                     <input
+                        className='input-Editar-Direccion'
                         type="text"
                         id="direccion"
                         name="direccion"
@@ -71,9 +73,10 @@ const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className={styles.modalFormGroup}>
+                <div className="modalFormGroup">
                     <label htmlFor="nombre_contacto">Nombre de Contacto</label>
                     <input
+                        className='input-Editar-Direccion'                    
                         type="text"
                         id="nombre_contacto"
                         name="nombre_contacto"
@@ -81,9 +84,10 @@ const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className={styles.modalFormGroup}>
+                <div className="modalFormGroup">
                     <label htmlFor="telefono">Teléfono</label>
                     <input
+                        className='input-Editar-Direccion'                    
                         type="text"
                         id="telefono"
                         name="telefono"
@@ -91,9 +95,10 @@ const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className={styles.modalFormGroup}>
+                <div className="modalFormGroup">
                     <label htmlFor="referencia">Referencia</label>
                     <input
+                        className='input-Editar-Direccion'
                         type="text"
                         id="referencia"
                         name="referencia"
@@ -101,9 +106,9 @@ const ModalEditarDireccion = ({ isOpen, onClose, direccion, onSave }) => {
                         onChange={handleChange}
                     />
                 </div>
-                <div className={styles.modalButtonGroup}>
-                    <button className={styles.saveButton} onClick={handleSave}>Guardar</button>
-                    <button className={styles.cancelButtonEdit} onClick={onClose}>Cancelar</button>
+                <div className="modalButtonGroup">
+                    <button className="saveButton" onClick={handleSave}>Guardar</button>
+                    <button className="cancelButtonEdit" onClick={onClose}>Cancelar</button>
                 </div>
             </div>
         </div>

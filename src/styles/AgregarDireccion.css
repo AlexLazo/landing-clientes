@@ -39,6 +39,14 @@
     margin-bottom: 1rem;
 }
 
+.dark-mode .alertSuccessCustom{
+    background-color: #155724;
+    color: #ffffff;
+    font-weight: bold;
+    border-color: #c3e6cb;
+    margin-bottom: 1rem;
+}
+
 .alertDangerCustom {
     background-color: #f8d7da;
     color: #721c24;

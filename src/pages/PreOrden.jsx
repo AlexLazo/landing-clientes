@@ -6,6 +6,7 @@ import GenerarPreOrden from './GenerarPreOrden';
 import { Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/PreOrden.module.css'; // Asegúrate de que el archivo CSS tenga las clases correctas
+import '../styles/PreOrden.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
