@@ -14,6 +14,11 @@
     background-color: #555;
 }
 
+.dark-mode .CardHeaderDatosPAquetes{
+    background-color: #555;
+    color: #fff;
+}
+
 /* Sección del header */
 .header-PreOrder {
     display: flex;
@@ -386,4 +391,13 @@
         width: 90%;
         max-width: 350px;
     }
+}
+
+.input_tipo-Orden{
+    background-color: #f0f0f0; 
+    cursor: 'not-allowed';
+}
+
+.dark-mode .input_tipo-Orden{
+    background-color: #555;
 }
