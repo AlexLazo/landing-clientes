@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SeleccionarDireccion from './SeleccionarDireccion';
+import '../styles/Direcciones.css';
 import CrearPaquete from './CrearPaquete';
 import GenerarPreOrden from './GenerarPreOrden';
 import { Spinner, Alert } from 'reactstrap';
@@ -130,19 +131,19 @@ const PreOrden = () => {
     };
 
     return (
-        <div className={styles.preOrdenContainer}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>Crear PreOrden</h1>
+        <div className="preOrdenContainer">
+            <div className="header-PreOrder">
+                <h1 className="title-PreOrder">Crear PreOrden</h1>
             </div>
             {loading ? (
-                <div className={styles.loading}><Spinner color="primary" /></div>
+                <div className="loading"><Spinner color="primary" /></div>
             ) : error ? (
-                <div className={styles.error}><Alert color="danger">{error}</Alert></div>
+                <div className="error"><Alert color="danger">{error}</Alert></div>
             ) : (
                 <>
                     {step === 1 && (
                         <div>
-                            <h2 className={styles.subtitle}>Selecciona una Dirección</h2>
+                            <h2 className="subtitle">Selecciona una Dirección</h2>
                             <SeleccionarDireccion
                                 direcciones={direcciones}
                                 onDireccionSelect={handleDireccionSelect}

@@ -99,7 +99,7 @@ const PaquetesTrackingScreen = () => {
                         <div style={{ position: 'absolute', left: '50%', top: '0', transform: 'translateX(-50%)', height: '100%', borderLeft: '2px dashed #007bff' }}></div>
                         {paquetes.map((item, index) => (
                             <div key={index} style={{ position: 'relative', marginBottom: '2rem', paddingLeft: '2rem' }}>
-                                <Card style={{ border: '1px solid #007bff', borderRadius: '5px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', backgroundColor: 'white' }}>
+                                <Card className='card-Tracking'>
                                     <CardBody>
                                         <CardTitle tag="h5">Fecha: {new Date(item.date).toLocaleDateString()}</CardTitle>
                                         <ListGroup>

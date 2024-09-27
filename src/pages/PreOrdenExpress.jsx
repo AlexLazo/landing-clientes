@@ -6,6 +6,8 @@ import GenerarPreOrdenExpress from './GenerarPreOrdenExpress';
 import { Spinner, Alert } from 'reactstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../styles/PreOrden.module.css'; // Asegúrate de que el archivo CSS tenga las clases correctas
+import '../styles/Direcciones.css';
+import '../styles/PreOrden.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -129,19 +131,19 @@ const PreOrdenExpress = () => {
     };
 
     return (
-        <div className={styles.preOrdenContainer}>
-            <div className={styles.header}>
-                <h1 className={styles.title}>Crear PreOrden Express</h1>
+        <div className="preOrdenContainer">
+            <div className="header-PreOrder">
+                <h1 className="title-PreOrder">Crear PreOrden Express</h1>
             </div>
             {loading ? (
-                <div className={styles.loading}><Spinner color="primary" /></div>
+                <div className="loading"><Spinner color="primary" /></div>
             ) : error ? (
-                <div className={styles.error}><Alert color="danger">{error}</Alert></div>
+                <div className="error"><Alert color="danger">{error}</Alert></div>
             ) : (
                 <>
                     {step === 1 && (
                         <div>
-                            <h2 className={styles.subtitle}>Selecciona una Dirección</h2>
+                            <h2 className="subtitle">Selecciona una Dirección</h2>
                             <SeleccionarDireccionExpress
                                 direcciones={direcciones}
                                 onDireccionSelect={handleDireccionSelect}

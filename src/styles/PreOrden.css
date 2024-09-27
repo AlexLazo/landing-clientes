@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .preOrdenContainer {
-    max-width: 900px;
+    max-width: 100vh;
     margin: 50px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -10,8 +10,12 @@
     color: #333;
 }
 
+.dark-mode .preOrdenContainer{
+    background-color: #555;
+}
+
 /* Sección del header */
-.header {
+.header-PreOrder {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +24,7 @@
     margin-bottom: 20px;
 }
 
-.title {
+.title-PreOrder {
     font-size: 26px;
     font-weight: bold;
     color: #2c3e50;

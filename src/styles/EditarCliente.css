@@ -2,7 +2,7 @@
 .editar-cliente-container {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    max-height: 100vh;
     padding: 2%;
     background-color: #f4f4f4;
     box-sizing: border-box;
@@ -207,4 +207,9 @@
         width: 30px;
         height: 30px;
     }
+}
+
+.dark-mode .editar-cliente-button-outline{
+    background-color:#ff073d;
+    color: #e5e5e5;
 }

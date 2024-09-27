@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .direccionesClienteContainer {
-    max-width: 900px;
+    max-width: 100vh;
     margin: 50px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -358,6 +358,16 @@
 .cancelButtonEdit {
     background-color: #6c757d;
     color: white;
+}
+
+.dark-mode .btn-secondary{
+    background-color: #ff073d;
+    color: #fff;
+}
+
+.btn-secondary{
+    background-color: #ff073d;
+    color: #fff;
 }
 
 .cancelButtonEdit:hover {

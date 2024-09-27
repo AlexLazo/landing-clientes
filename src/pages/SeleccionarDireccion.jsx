@@ -83,18 +83,18 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
     const totalPagesEntrega = Math.ceil(searchedDireccionesEntrega.length / DIRECTIONS_PER_PAGE);
 
     return (
-        <div className={styles.direccionesClienteContainer}>
-            <div className={styles.header}>
+        <div className="direccionesClienteContainer">
+            <div className="header-Direcciones">
                 <input
                     type="text"
                     placeholder="Buscar dirección..."
                     value={searchQuery}
                     onChange={handleSearch}
-                    className={styles.searchInput}
+                    className="searchInput"
                 />
                 <Button
                     color="primary"
-                    className={styles.buttonAgregar}
+                    className="buttonAgregar"
                     onClick={() => navigate('/agregar-direccion')}
                 >
                     Agregar Dirección
@@ -102,7 +102,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
             </div>
 
             {loading ? (
-                <div className={styles.loading}>
+                <div className="loading">
                     <Spinner color="primary" />
                 </div>
             ) : error ? (
@@ -113,22 +113,22 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                         <>
                             <h5>Seleccionar Dirección de Recolección</h5>
                             {searchedDireccionesRecoleccion.length === 0 ? (
-                                <div className={styles.emptyMessage}>
+                                <div className="emptyMessage">
                                     No hay direcciones disponibles para recolección. Por favor, agregue una nueva dirección en la ciudad de San Miguel.
                                 </div>
                             ) : (
-                                <ListGroup className={styles.listGroup}>
+                                <ListGroup className="listGroup">
                                     {searchedDireccionesRecoleccion
                                         .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
                                         .map((direccion) => (
-                                            <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                                <div className={styles.direccionDetails}>
-                                                    <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                            <ListGroupItem key={direccion.id} className="listItem">
+                                                <div className="direccionDetails">
+                                                    <h4 className="direccionTitle">{direccion.direccion}</h4>
                                                     <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
                                                     <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
                                                     <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
                                                 </div>
-                                                <div className={styles.actionButtons}>
+                                                <div className="actionButtons">
                                                     <Button
                                                         color="primary"
                                                         onClick={() => handleSelectRecoleccion(direccion)}
@@ -140,7 +140,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                                         ))}
                                 </ListGroup>
                             )}
-                            <div className={styles.paginationContainer}>
+                            <div className="paginationContainer">
                                 <Pagination
                                     count={totalPagesRecoleccion}
                                     page={currentPage}
@@ -154,19 +154,19 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                     ) : (
                         <>
                             <h5>Seleccionar Dirección de Entrega</h5>
-                            <ListGroup className={styles.listGroup}>
+                            <ListGroup className="listGroup">
                                 {searchedDireccionesEntrega
                                     .filter((direccion) => direccion.id !== selectedRecoleccion.id)
                                     .slice((currentPage - 1) * DIRECTIONS_PER_PAGE, currentPage * DIRECTIONS_PER_PAGE)
                                     .map((direccion) => (
-                                        <ListGroupItem key={direccion.id} className={styles.listItem}>
-                                            <div className={styles.direccionDetails}>
-                                                <h4 className={styles.direccionTitle}>{direccion.direccion}</h4>
+                                        <ListGroupItem key={direccion.id} className="listItem">
+                                            <div className="direccionDetails">
+                                                <h4 className="direccionTitle">{direccion.direccion}</h4>
                                                 <p><strong>Nombre de Contacto:</strong> {direccion.nombre_contacto}</p>
                                                 <p><strong>Departamento:</strong> {direccion.departamento_nombre}</p>
                                                 <p><strong>Municipio:</strong> {direccion.municipio_nombre}</p>
                                             </div>
-                                            <div className={styles.actionButtons}>
+                                            <div className="actionButtons">
                                                 <Button
                                                     color="primary"
                                                     onClick={() => handleSelectEntrega(direccion)}
@@ -177,7 +177,7 @@ const SeleccionarDireccion = ({ direcciones, onDireccionSelect, loading, error }
                                         </ListGroupItem>
                                     ))}
                             </ListGroup>
-                            <div className={styles.paginationContainer}>
+                            <div className="paginationContainer">
                                 <Pagination
                                     count={totalPagesEntrega}
                                     page={currentPage}
