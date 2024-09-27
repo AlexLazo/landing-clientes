@@ -18,7 +18,6 @@ import {
 import { useNavigate } from "react-router-dom";
 import { Pagination } from "@mui/material";
 import { FaClipboard } from "react-icons/fa";
-import styles from "../styles/HistorialOrdenes.module.css";
 import '../styles/HistorialOrdenes.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -45,8 +44,7 @@ const HistorialOrdenesCliente = () => {
 
       try {
         setLoading(true);
-
-        const fetchUrl = `${API_URL}/ordenes-cliente/ver-ordenes?page=${currentPage}`;
+       const fetchUrl = `${API_URL}/ordenes-cliente/ver-ordenes?page=${currentPage}&limit=${ORDENES_PER_PAGE}`;
 
         const { data } = await axios.get(fetchUrl, {
           headers: { Authorization: `Bearer ${token}` },

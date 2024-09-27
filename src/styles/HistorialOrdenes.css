@@ -27,6 +27,7 @@
 .dark-mode .ordenHeader{
     background-color: #555;
 }
+
 /* Contenido del encabezado */
 .headerContent {
     padding: 20px;
@@ -35,7 +36,6 @@
     border-radius: 12px 12px 0 0;
 }
   
-
 /* Título de la sección */
 .title {
     font-size: 28px;
@@ -68,12 +68,14 @@
     margin-bottom: 15px;
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
 }
 
 /* Tarjeta de orden */
 .ordenCard {
     border-radius: 12px;
     border: 1px solid #ddd; /* Añadido para mejorar la definición */
+    width: 100%;
 }
 
 /* Encabezado de tarjeta de orden */
@@ -143,10 +145,11 @@
     margin-top: 20px;
     text-align: center;
 }
+
+/* Ocultar los markers */
 .marker {
-    display: none; /* Oculta los markers */
-  }
-  
+    display: none;
+}
 
 /* Estilos responsivos para pantallas pequeñas */
 @media (max-width: 768px) {

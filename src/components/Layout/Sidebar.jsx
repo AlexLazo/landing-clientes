@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaBoxOpen, FaHistory, FaSignOutAlt, FaCaretDown, FaSearch, FaListAlt, FaRocket } from 'react-icons/fa';
+import { FaBars, FaTimes, FaUser, FaEdit, FaLocationArrow, FaBoxOpen, FaHistory, FaSignOutAlt, FaCaretDown, FaSearch, FaListAlt, FaRocket, FaMoneyBillWave } from 'react-icons/fa'; // Agrega FaMoneyBillWave
 import './Sidebar.css';
 import { useAuth } from '/src/services/AuthContext';
 import DarkModeSwitch from './DarkModeSwitch';
@@ -123,6 +123,9 @@ const Encabezado = () => {
                       </Link>
                       <Link to="/pre-ordenexpress" className="dropdown-item" onClick={handleMenuItemClick}>
                         <FaRocket className="dropdown-icon" />Pre-orden Express
+                      </Link>
+                      <Link to="/pagos" className="dropdown-item" onClick={handleMenuItemClick}>
+                        <FaMoneyBillWave className="dropdown-icon" />Pagos {/* Cambiado a FaMoneyBillWave */}
                       </Link>
                     </div>
                   </li>

@@ -29,7 +29,7 @@ import GenerarPreOrdenExpress from './pages/GenerarPreOrdenExpress';
 import CrearPaqueteExpress from './pages/CrearPaqueteExpress';
 import TrackingPage from './pages/Tracking';
 import PaquetesTrackingScreen from './pages/PaquetesTrackingScreen';
-
+import Pagos from './pages/Pagos';
 
 // Componente para proteger rutas privadas
 const PrivateRoute = ({ element, ...rest }) => {
@@ -61,7 +61,8 @@ const AppContent = () => {
     '/pre-ordenexpress',
     '/GenerarPreOrdenExpress',
     '/PaquetesTrackingScreen',
-    '/TrackingPage'
+    '/TrackingPage',
+    '/pagos'
 
   ].some(path => location.pathname.startsWith(path));
 
@@ -104,6 +105,7 @@ const AppContent = () => {
 
             <Route path="/PaquetesTrackingScreen/:id" element={<PaquetesTrackingScreen />} />
             <Route path="/TrackingPage" element={<TrackingPage />} />
+            <Route path="/pagos" element={<PrivateRoute element={<Pagos />} />} />
 
             
           </Routes>
