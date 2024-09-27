@@ -360,16 +360,6 @@
     color: white;
 }
 
-.dark-mode .btn-secondary{
-    background-color: #ff073d;
-    color: #fff;
-}
-
-.btn-secondary{
-    background-color: #ff073d;
-    color: #fff;
-}
-
 .cancelButtonEdit:hover {
     background-color: #5a6268;
     transform: scale(1.05);
