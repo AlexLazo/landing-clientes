@@ -435,12 +435,13 @@ export default function GenerarPreOrden() {
                 <FormGroup>
                   <Label for="tipo_orden">Tipo de Orden</Label>
                   <Input
+                  className="input_tipo-Orden"
                     type="text"
                     name="tipo_orden"
                     id="tipo_orden"
                     value="Pre Orden"
                     readOnly
-                    style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado
+                    /*style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado*/
                   />
                 </FormGroup>
 

@@ -3,12 +3,16 @@
     padding: 2rem;
     background-color: #f8f9fa;
   }
+
+.dark-mode .container{
+  background-color: #555;
+}
   
   .timeline {
     position: relative;
     padding: 2rem 0;
   }
-  
+
   .timeline::before {
     content: '';
     position: absolute;
@@ -43,7 +47,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     background-color: white;
   }
-  
+
   .card-title {
     font-size: 1.25rem;
     font-weight: bold;
@@ -60,7 +64,7 @@
   .return-button {
     margin-top: 1rem;
     padding: 0.5rem 1rem;
-    background-color: #007bff;
+    background-color: #0068d7;
     border: none;
     color: white;
     font-size: 1rem;
@@ -72,3 +76,22 @@
     background-color: #0056b3;
   }
   
+
+.dark-mode .list-group-item{
+  background-color: #3b3b3b;
+}
+
+.card .dark-mode{
+  background-color: #007bff;
+}
+
+.dark-mode .element.style{
+  background-color: #007bff;
+}
+
+.card-Tracking{ 
+  border: 1px solid #007bff; 
+  border-radius: 5px; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  background-color: white;
+}

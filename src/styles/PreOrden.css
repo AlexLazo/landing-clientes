@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .preOrdenContainer {
-    max-width: 900px;
+    max-width: 100vh;
     margin: 50px auto;
     padding: 20px;
     background-color: #ffffff;
@@ -10,8 +10,17 @@
     color: #333;
 }
 
+.dark-mode .preOrdenContainer{
+    background-color: #555;
+}
+
+.dark-mode .CardHeaderDatosPAquetes{
+    background-color: #555;
+    color: #fff;
+}
+
 /* Sección del header */
-.header {
+.header-PreOrder {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -20,7 +29,7 @@
     margin-bottom: 20px;
 }
 
-.title {
+.title-PreOrder {
     font-size: 26px;
     font-weight: bold;
     color: #2c3e50;
@@ -72,33 +81,44 @@
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px; /* Espaciado superior */
-  }
-  
-  .table th, .table td {
+}
+
+.dark-mode .table th{
+    background-color: #555;
+    color: #fff;
+}
+.dark-mode .table td{
+    background-color: #666;
+    color: #fff;
+}
+
+.dark-mode .modal{
+    background-color: #333;
+}
+
+.table th, .table td {
     padding: 12px 15px; /* Espaciado en celdas */
     text-align: left;
     border-bottom: 1px solid #dee2e6; /* Línea separadora entre filas */
-  }
-  
-  .table th {
+}
+
+.table th {
     background-color: #f8f9fa; /* Color de fondo de los encabezados */
     color: #495057; /* Color del texto de los encabezados */
     font-weight: bold; /* Negrita en encabezados */
-  }
-  
-  .table tr:hover {
+}
+
+.table tr:hover {
     background-color: #f1f1f1; /* Color de fondo al pasar el ratón sobre la fila */
-  }
-  
-  .table td {
+}
+
+.table td {
     background-color: #ffffff; /* Color de fondo de las celdas */
-  }
-  
-  .table td:last-child {
+}
+
+.table td:last-child {
     text-align: center; /* Centrar contenido de la última columna (acciones) */
-  }
-
-
+}
 
 
 /* Elemento de la lista */
@@ -382,4 +402,13 @@
         width: 90%;
         max-width: 350px;
     }
+}
+
+.input_tipo-Orden{
+    background-color: #f0f0f0; 
+    cursor: 'not-allowed';
+}
+
+.dark-mode .input_tipo-Orden{
+    background-color: #555;
 }

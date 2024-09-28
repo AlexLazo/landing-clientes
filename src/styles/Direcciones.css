@@ -1,6 +1,6 @@
 /* Contenedor principal */
 .direccionesClienteContainer {
-    max-width: 900px;
+    max-width: 100vh;
     margin: 50px auto;
     padding: 20px;
     background-color: #ffffff;

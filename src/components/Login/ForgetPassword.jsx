@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './ForgetResetPassword.module.css';
+import '../Login/ForgetResetPassword.css';
+
 
 const ForgetPassword = () => {
   const [email, setEmail] = useState('');
@@ -54,9 +56,9 @@ const ForgetPassword = () => {
   };
 
   return (
-    <div className={styles.formContainer}>
-      <div className={styles.formCard}>
-        <h1 className={styles.formTitle}>Olvidé mi Contraseña</h1>
+    <div className="formContainer">
+      <div className="formCard">
+        <h1 className="formTitle">Olvidé mi Contraseña</h1>
         {message && (
           <div className={`${styles.message} ${message.includes('enviado') ? styles.success : styles.error}`}>
             {message}
@@ -73,7 +75,7 @@ const ForgetPassword = () => {
               className={`${styles.formInput} ${emailError ? styles.invalidInput : ''}`}
               required
             />
-            {emailError && <div className={styles.formFeedback}>{emailError}</div>}
+            {emailError && <div className="formFeedback">{emailError}</div>}
           </div>
           <button type="submit" className={styles.submitButton} disabled={isSending || emailError}>
             {isSending ? 'Enviando...' : 'Enviar Enlace de Restablecimiento'}

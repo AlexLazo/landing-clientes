@@ -9,6 +9,30 @@
     position: relative;
 }
 
+.dark-mode .client-login-form{
+    background-color: #555;
+}
+
+.dark-mode .home-icon{
+    color: #7bad65;
+}
+
+.dark-mode label{
+    color: #fff;
+}
+
+.dark-mode input{
+    background-color: #2b2b2b;
+}
+
+.dark-mode input[type="email"]{
+    color: #fff;
+}
+
+.dark-mode input[type="password"]{
+    color: #fff;
+}
+
 .logo-container {
     display: flex;
     align-items: center;
@@ -111,6 +135,12 @@ button:hover {
 }
 
 .error-message {
+    color: red;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.dark-mode .error-message{
     color: red;
     text-align: center;
     margin-bottom: 20px;
