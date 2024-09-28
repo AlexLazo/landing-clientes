@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Form, FormGroup, Label, Input, Button, FormFeedback } from 'reactstrap';
 import styles from '../styles/RegisterClientes.module.css';
 import logo from '../assets/logo.png';
+import '../styles/RegisterClientes.css';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -108,8 +109,8 @@ const RegisterCliente = () => {
     
 
     return (
-        <div className={styles.registerContainer}>
-            <div className={styles.registerCard}>
+        <div className="registerContainer">
+            <div className="registerCard">
                 <img src={logo} alt="Logo" className={styles.logo} />
                 <h2 className={styles.registerTitle}>
                     {isRegistered ? 'Verifica tu correo electrónico' : 'Registro de Cliente'}
