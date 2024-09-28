@@ -21,7 +21,7 @@ export default function GenerarPreOrdenExpress() {
     id_direccion: "",
     direccion_recoleccion: "",
     id_tipo_pago: 1,
-    id_estado_paquete: 1,                           
+    id_estado_paquete: 1,
     id_estado_paquetes: 1,
     total_pagar: 0,
     concepto: "Envío de paquetes",
@@ -38,7 +38,7 @@ export default function GenerarPreOrdenExpress() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
+
       const token = localStorage.getItem('authToken');
 
       if (!token) {
@@ -74,6 +74,7 @@ export default function GenerarPreOrdenExpress() {
           nombre_contacto: storedAddress.nombre_contacto || "",
           telefono: storedAddress.telefono || "",
           id_direccion: Number(storedAddress.id) || "",
+          tipo_documento: formData.tipo_documento,
           direccion_recoleccion: location.state?.direccionRecoleccion?.id || "",
           total_pagar: location.state?.totalPrice || 0,
           detalles: (location.state?.detalles || []).map(detalle => ({
@@ -83,7 +84,7 @@ export default function GenerarPreOrdenExpress() {
             peso: Number(detalle.peso),
             id_estado_paquete: 1,
             id_tamano_paquete: Number(detalle.tamano_paquete),
-            id_tipo_entrega: 1,
+            id_tipo_entrega: 2,
             id_direccion: Number(storedAddress.id),
             precio: Number(detalle.precio),
             fecha_envio: new Date().toISOString().split("T")[0] + "T00:00:00",
@@ -409,31 +410,37 @@ export default function GenerarPreOrdenExpress() {
                   <FormFeedback>{errors.concepto}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="tipo_documento">Tipo de Documento</Label>
-                  <Input
-                    type="select"
-                    name="tipo_documento"
-                    id="tipo_documento"
-                    value={formData.tipo_documento}
-                    onChange={handleInputChange}
-                    invalid={!!errors.tipo_documento}
-                  >
-                    <option value="consumidor_final">Consumidor Final</option>
-                    <option value="empresa">Empresa</option>
-                  </Input>
-                  <FormFeedback>{errors.tipo_documento}</FormFeedback>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="tipo_documento">Tipo de Documento</Label>
+                      <Input
+                        type="select"
+                        name="tipo_documento"
+                        id="tipo_documento"
+                        value={formData.tipo_documento}
+                        onChange={handleInputChange}
+                        invalid={!!errors.tipo_documento}
+                      >
+                        <option value="consumidor_final">
+                          Consumidor Final
+                        </option>
+                        <option value="credito_fiscal">Crédito Fiscal</option>
+                      </Input>
+                      <FormFeedback>{errors.tipo_documento}</FormFeedback>
+                    </FormGroup>
+                  </Col>
                 </FormGroup>
 
                 <FormGroup>
                   <Label for="tipo_orden">Tipo de Orden</Label>
                   <Input
-                  className="input_tipo-Orden"
+                    className="input_tipo-Orden"
                     type="text"
                     name="tipo_orden"
                     id="tipo_orden"
                     value="Pre Orden"
                     readOnly
-                    /*style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado*/
+                  /*style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado*/
                   />
                 </FormGroup>
 

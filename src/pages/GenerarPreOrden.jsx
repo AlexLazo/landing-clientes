@@ -76,6 +76,7 @@ export default function GenerarPreOrden() {
           id_direccion: Number(storedAddress.id) || "",
           direccion_recoleccion: location.state?.direccionRecoleccion?.id || "",
           total_pagar: location.state?.totalPrice || 0,
+          tipo_documento: formData.tipo_documento,
           detalles: (location.state?.detalles || []).map(detalle => ({
             ...detalle,
             id_tipo_paquete: Number(detalle.id_tipo_paquete),
@@ -416,21 +417,25 @@ export default function GenerarPreOrden() {
                   />
                   <FormFeedback>{errors.concepto}</FormFeedback>
                 </FormGroup>
-                <FormGroup>
-                  <Label for="tipo_documento">Tipo de Documento</Label>
-                  <Input
-                    type="select"
-                    name="tipo_documento"
-                    id="tipo_documento"
-                    value={formData.tipo_documento}
-                    onChange={handleInputChange}
-                    invalid={!!errors.tipo_documento}
-                  >
-                    <option value="consumidor_final">Consumidor Final</option>
-                    <option value="empresa">Empresa</option>
-                  </Input>
-                  <FormFeedback>{errors.tipo_documento}</FormFeedback>
-                </FormGroup>
+                <Col md={6}>
+                      <FormGroup>
+                        <Label for="tipo_documento">Tipo de Documento</Label>
+                        <Input
+                          type="select"
+                          name="tipo_documento"
+                          id="tipo_documento"
+                          value={formData.tipo_documento}
+                          onChange={handleInputChange}
+                          invalid={!!errors.tipo_documento}
+                        >
+                          <option value="consumidor_final">
+                            Consumidor Final
+                          </option>
+                          <option value="credito_fiscal">Crédito Fiscal</option>
+                        </Input>
+                        <FormFeedback>{errors.tipo_documento}</FormFeedback>
+                      </FormGroup>
+                    </Col>
 
                 <FormGroup>
                   <Label for="tipo_orden">Tipo de Orden</Label>
