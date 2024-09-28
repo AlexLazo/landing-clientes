@@ -30,6 +30,7 @@ import CrearPaqueteExpress from './pages/CrearPaqueteExpress';
 import TrackingPage from './pages/Tracking';
 import PaquetesTrackingScreen from './pages/PaquetesTrackingScreen';
 import Pagos from './pages/Pagos';
+import NotFound from './pages/NotFound';
 
 // Componente para proteger rutas privadas
 const PrivateRoute = ({ element, ...rest }) => {
@@ -63,7 +64,6 @@ const AppContent = () => {
     '/PaquetesTrackingScreen',
     '/TrackingPage',
     '/pagos'
-
   ].some(path => location.pathname.startsWith(path));
 
   console.log('Current Path:', location.pathname);
@@ -97,17 +97,17 @@ const AppContent = () => {
             <Route path="/agregar-direccion" element={<PrivateRoute element={<AgregarDireccion />} />} />
             <Route path="/pre-orden" element={<PrivateRoute element={<PreOrder />} />} />
             <Route path="/historial-ordenes" element={<PrivateRoute element={<HistorialOrdenesCliente />} />} />
-            <Route path="/GenerarPreOrden/:idCliente" element={<PrivateRoute element={<GenerarPreOrden/>} />} />
-            <Route path="/crearPaquete/:idCliente" element={<PrivateRoute element={<CrearPaquete/>} />} />
+            <Route path="/GenerarPreOrden/:idCliente" element={<PrivateRoute element={<GenerarPreOrden />} />} />
+            <Route path="/crearPaquete/:idCliente" element={<PrivateRoute element={<CrearPaquete />} />} />
             <Route path="/pre-ordenexpress" element={<PrivateRoute element={<PreOrdenExpress />} />} />
-            <Route path="/GenerarPreOrdenExpress/:idCliente" element={<PrivateRoute element={<GenerarPreOrdenExpress/>} />} />
-            <Route path="/crearPaqueteExpress/:idCliente" element={<PrivateRoute element={<CrearPaqueteExpress/>} />} />
-
-            <Route path="/PaquetesTrackingScreen/:id" element={<PaquetesTrackingScreen />} />
-            <Route path="/TrackingPage" element={<TrackingPage />} />
+            <Route path="/GenerarPreOrdenExpress/:idCliente" element={<PrivateRoute element={<GenerarPreOrdenExpress />} />} />
+            <Route path="/crearPaqueteExpress/:idCliente" element={<PrivateRoute element={<CrearPaqueteExpress />} />} />
+            <Route path="/PaquetesTrackingScreen/:id" element={<PrivateRoute element={<PaquetesTrackingScreen />} />} />
+            <Route path="/TrackingPage" element={<PrivateRoute element={<TrackingPage />} />} />
             <Route path="/pagos" element={<PrivateRoute element={<Pagos />} />} />
 
-            
+            {/* Ruta 404 */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </main>
       </div>
@@ -122,7 +122,6 @@ const App = () => (
       <AppContent />
     </AuthProvider>
   </Router>
-
 );
 
 export default App;

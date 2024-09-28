@@ -1,0 +1,17 @@
+.notFoundContainer {
+    text-align: center;
+    padding: 90px;
+}
+
+.notFoundContainer h1 {
+    font-size: 3rem;
+    color: #d9534f;
+}
+
+.notFoundContainer p {
+    font-size: 1.5rem;
+}
+
+.notFoundContainer button {
+    margin-top: 20px;
+}
