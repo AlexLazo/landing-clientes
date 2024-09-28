@@ -9,6 +9,8 @@ export default function DatosPaquetePreOrden() {
   const { idCliente } = useParams();
   const [cliente, setCliente] = useState(null);
   const [tiposPaquete, setTiposPaquete] = useState([]);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [empaques, setEmpaques] = useState([]);
   const [tarifas, setTarifas] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -165,6 +167,22 @@ export default function DatosPaquetePreOrden() {
     }
   };
 
+  // Datos para los tamaños de paquete
+  const tamanoPaqueteData = {
+    "1": {
+      descripcion: "Ideal para documentos y objetos pequeños.",
+      imagen: "./src/assets/Paquete1.png", // Reemplaza con la ruta real
+    },
+    "2": {
+      descripcion: "Para objetos de tamaño mediano, como ropa o regalos.",
+      imagen: "./src/assets/Paquete2.png",
+    },
+    "3": {
+      descripcion: "Perfecto para artículos grandes o múltiples elementos.",
+      imagen: "./src/assets/Paquete3.png", // Reemplaza con la ruta real
+    },
+  };
+
   const calculatePrice = (tamanoPaquete) => {
     if (!selectedAddress || !tamanoPaquete) {
       console.log("Missing selectedAddress or tamanoPaquete", {
@@ -173,13 +191,13 @@ export default function DatosPaquetePreOrden() {
       });
       return "Precio no disponible";
     }
-  
+
     const isSanMiguelUrban =
       selectedAddress.id_departamento === 12 &&
       selectedAddress.id_municipio === 215;
-  
+
     let tarifaType = isSanMiguelUrban ? "tarifa urbana" : "tarifa rural";
-  
+
     const tarifa = tarifas.find(
       (t) =>
         t.tamano_paquete === getTamanoPaqueteString(tamanoPaquete) &&
@@ -187,9 +205,9 @@ export default function DatosPaquetePreOrden() {
         t.municipio === selectedAddress.municipio_nombre &&
         t.tarifa === tarifaType
     );
-  
+
     let price = 0;
-  
+
     if (!tarifa) {
       const generalTarifa = tarifas.find(
         (t) =>
@@ -197,7 +215,7 @@ export default function DatosPaquetePreOrden() {
           t.departamento === selectedAddress.departamento_nombre &&
           t.tarifa === tarifaType
       );
-  
+
       if (generalTarifa) {
         price = generalTarifa.monto;
       } else {
@@ -206,37 +224,37 @@ export default function DatosPaquetePreOrden() {
     } else {
       price = tarifa.monto;
     }
-  
+
     // Asegurarse de que price es un número antes de sumarle 1
     const finalPrice = parseFloat(price) + 1;
-  
+
     // Añadir $1 al precio por el costo de recolección y redondear a 2 decimales
     return finalPrice.toFixed(2);  // Redondea a 2 decimales
   };
-  
-  
+
+
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
     const updatedPaquetes = [...paquetes];
     updatedPaquetes[index] = { ...updatedPaquetes[index], [name]: value };
-  
+
     if (name === "tamano_paquete") {
       const calculatedPrice = calculatePrice(value);
       updatedPaquetes[index].precio = calculatedPrice || "Precio no disponible";
     }
-  
+
     setPaquetes(updatedPaquetes);
-  
+
     const error = validateField(name, value);
     setErrors((prev) => {
       const newPaquetesErrors = [...(prev.paquetes || [])];
       newPaquetesErrors[index] = { ...newPaquetesErrors[index], [name]: error };
       return { ...prev, paquetes: newPaquetesErrors };
     });
-  
+
     console.log("Updated paquete:", updatedPaquetes[index]);
   };
-  
+
   const agregarPaquete = () => {
     setPaquetes((prev) => [
       ...prev,
@@ -253,6 +271,17 @@ export default function DatosPaquetePreOrden() {
       ...prev,
       paquetes: [...prev.paquetes, {}],
     }));
+  };
+
+  // Función para manejar el clic en la imagen
+  const handleImageClick = (imagen) => {
+    setSelectedImage(imagen);
+    setModalOpen(true);
+  };
+
+  // Función para cerrar el modal al hacer clic en la imagen ampliada
+  const handleModalImageClick = () => {
+    setModalOpen(false);
   };
 
   const removerPaquete = (index) => {
@@ -531,7 +560,35 @@ export default function DatosPaquetePreOrden() {
                           </FormFeedback>
                         )}
                       </FormGroup>
+                      {/* Mostrar la descripción y la imagen si hay un tamaño seleccionado */}
+                      {paquete.tamano_paquete && (
+                        <div className="tamano-paquete-info">
+                          <p>{tamanoPaqueteData[paquete.tamano_paquete].descripcion}</p>
+                          <img
+                            src={tamanoPaqueteData[paquete.tamano_paquete].imagen}
+                            alt={getTamanoPaqueteString(paquete.tamano_paquete)}
+                            style={{ width: "150px", height: "auto", cursor: "pointer" }} // Ajusta el tamaño
+                            onClick={() => handleImageClick(tamanoPaqueteData[paquete.tamano_paquete].imagen)} // Maneja el clic en la imagen
+                          />
+                        </div>
+                      )}
+
+                      {/* Modal para mostrar imagen grande */}
+                      {modalOpen && (
+                        <div className="modal" onClick={handleModalImageClick}>
+                          <div className="modal-content">
+                            <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                            <img
+                              src={selectedImage}
+                              alt="Imagen ampliada"
+                              style={{ width: "100%", height: "auto", cursor: "pointer" }}
+                              onClick={handleModalImageClick} // Cierra el modal al hacer clic en la imagen
+                            />
+                          </div>
+                        </div>
+                      )}
                     </Col>
+
                     <Col md={4}>
                       <FormGroup>
                         <Label for={`precio_${index}`}>Precio</Label>
@@ -592,7 +649,7 @@ export default function DatosPaquetePreOrden() {
           </Form>
         </CardBody>
       </Card>
-    </Container>
+    </Container >
   );
 
 }
