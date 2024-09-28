@@ -241,6 +241,15 @@
     transform: scale(1.05);
 }
 
+.modal {
+    position: fixed; /* Asegura que el modal esté fijo en la pantalla */
+    top: 50%; /* Centrado verticalmente */
+    left: 50%; /* Centrado horizontalmente */
+    transform: translate(-50%, -50%); /* Ajuste para centrar completamente */
+    z-index: 1050; /* Asegúrate de que tenga un índice z mayor al contenido */
+}
+
+
 /* Modal overlay para editar */
 .modalOverlayEdit {
     position: fixed;
