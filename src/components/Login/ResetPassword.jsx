@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import styles from './ForgetResetPassword.module.css';
+import '../Login/ForgetResetPassword.css'
 
 const ResetPassword = ({ token }) => {
   const [email, setEmail] = useState('');
@@ -101,7 +102,7 @@ const ResetPassword = ({ token }) => {
 
   return (
     <div className={styles.formContainer}>
-      <div className={styles.formCard}>
+      <div className="formCard">
         <h1 className={styles.formTitle}>Restablecer Contraseña</h1>
         {message && (
           <div className={`${styles.message} ${message.includes('restablecida') ? styles.success : styles.error}`}>
@@ -128,7 +129,7 @@ const ResetPassword = ({ token }) => {
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Ingresa el código de verificación"
-              className={styles.formInput}
+              className="formInput-RP"
               required
             />
           </div>
