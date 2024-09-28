@@ -30,6 +30,7 @@
     "react-modal": "^3.16.1",
     "react-pro-sidebar": "^1.1.0",
     "react-router-dom": "^6.26.1",
+    "react-select": "^5.8.1",
     "react-toastify": "^10.0.5",
     "reactstrap": "^9.2.2"
   },

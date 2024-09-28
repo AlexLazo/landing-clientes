@@ -21,7 +21,7 @@ export default function GenerarPreOrden() {
     id_direccion: "",
     direccion_recoleccion: "",
     id_tipo_pago: 1,
-    id_estado_paquete: 1,                           
+    id_estado_paquete: 1,
     id_estado_paquetes: 1,
     total_pagar: 0,
     concepto: "Envío de paquetes",
@@ -38,7 +38,7 @@ export default function GenerarPreOrden() {
 
   useEffect(() => {
     const fetchData = async () => {
-      
+
       const token = localStorage.getItem('authToken');
 
       if (!token) {
@@ -270,11 +270,19 @@ export default function GenerarPreOrden() {
       });
 
       if (response.status === 201) {
-        toast.success("Pre-orden creada con éxito");
+        toast.success("Pre-orden registrada con éxito", {
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+        });
         navigate(`/historial-ordenes/`);
       } else {
-        throw new Error(`La respuesta del servidor no fue exitosa: ${response.status}`);
+        toast.error(`La respuesta del servidor no fue exitosa: ${response.status}`);
       }
+
     } catch (error) {
       console.error("Error al crear la pre-orden:", error);
       if (error.response) {

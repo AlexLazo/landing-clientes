@@ -4,6 +4,7 @@ import AuthService from "/src/services/authService";
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import "/src/styles/AgregarCliente.css";
+import Select from 'react-select';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -31,7 +32,10 @@ const AgregarCliente = () => {
     const [nombreComercial, setNombreComercial] = useState("");
     const [nit, setNit] = useState("");
     const [nrc, setNrc] = useState("");
-    const [giro, setGiro] = useState("");
+    const [giro, setGiro] = useState(""); // Guardar la descripción seleccionada
+    const [giros, setGiros] = useState([]); // Lista de giros desde la API
+    const [filteredGiros, setFilteredGiros] = useState([]); // Lista filtrada
+    const [searchGiro, setSearchGiro] = useState(""); // Término de búsqueda para giro
     const [nombreEmpresa, setNombreEmpresa] = useState("");
     const [alertaExito, setAlertaExito] = useState(false);
     const [alertaError, setAlertaError] = useState(false);
@@ -107,6 +111,54 @@ const AgregarCliente = () => {
 
         fetchMunicipios();
     }, [departamento, token]);
+
+    useEffect(() => {
+        const fetchGiros = async () => {
+            try {
+                const response = await axios.get(`${API_URL}/dropdown/giros`, {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+
+                if (response.data.actividadEconomica) {
+                    setGiros(response.data.actividadEconomica); // Guardamos los giros correctamente
+                    setFilteredGiros(response.data.actividadEconomica); // Iniciamos con todos los giros
+                } else {
+                    console.error("Error en la respuesta de giros", response.data);
+                }
+            } catch (error) {
+                console.error("Error al obtener los giros:", error);
+            }
+        };
+        fetchGiros();
+    }, [token]);
+
+    const handleSearchGiro = (inputValue) => {
+        const searchTerm = inputValue.toLowerCase();
+        setSearchGiro(searchTerm);
+    
+        if (searchTerm.length > 0) {
+            const filtered = giros.filter((g) => {
+                const codigo = g.st_codigo ? String(g.st_codigo).toLowerCase() : "";
+                const descripcion = g.st_descripcion ? g.st_descripcion.toLowerCase() : "";
+                return codigo.includes(searchTerm) || descripcion.includes(searchTerm);
+            });
+            setFilteredGiros(filtered);
+        } else {
+            setFilteredGiros(giros); // Mostrar todos los giros si no hay búsqueda
+        }
+    };
+    
+    const handleGiroSelect = (selectedOption) => {
+        if (selectedOption) {
+            setGiro(selectedOption.label); // Guardar la descripción del giro seleccionada
+            setSearchGiro(selectedOption.label); // Mostrar la descripción en el campo de búsqueda
+            setFilteredGiros(giros); // Restablecer la lista completa
+        } else {
+            setGiro(""); // Limpiar si se selecciona "clear"
+            setSearchGiro("");
+            setFilteredGiros(giros); // Mostrar todos los giros si se limpia
+        }
+    };
     const handleDuiChange = (e) => {
         let value = e.target.value.replace(/[^\d]/g, ""); // Eliminar caracteres no numéricos
 
@@ -226,17 +278,18 @@ const AgregarCliente = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-    
+
         // Validaciones de campos
         if (!isTelefonoValid || tipoPersona === "") {
             setAlertaError(true);
             setErrorMensaje("Por favor, revisa los campos requeridos.");
             return;
         }
-    
+
         // Obtener la fecha actual en formato YYYY/MM/DD
         const fechaActual = new Date().toISOString().split('T')[0].replace(/-/g, "/");
-    
+        const giroValue = tipoPersona === "2" ? giro : null;
+
         // Datos del cliente
         const clienteData = {
             nombre: nombres,
@@ -252,13 +305,13 @@ const AgregarCliente = () => {
             nombre_empresa: tipoPersona === "1" ? null : nombreEmpresa,
             nit: tipoPersona === "1" ? null : nit,
             nrc: tipoPersona === "1" ? null : nrc,
-            giro: tipoPersona === "1" ? null : giro,
+            giro: giroValue, // Usamos la descripción del giro como valor
             fecha_registro: fechaActual, // Utiliza la fecha actual
             id_estado: 1
         };
-    
+
         console.log("Datos a enviar:", clienteData);
-    
+
         try {
             const response = await axios.post(`${API_URL}/crear-perfil-cliente`, clienteData, {
                 headers: {
@@ -266,7 +319,7 @@ const AgregarCliente = () => {
                     Authorization: `Bearer ${token}`,
                 }
             });
-    
+
             console.log("Cliente registrado:", response.data);
             setAlertaExito(true);
             setTimeout(() => navigate('/perfil-cliente'), 2000);
@@ -277,7 +330,7 @@ const AgregarCliente = () => {
             handleError(error);
         }
     };
-    
+
 
     const resetForm = () => {
         setNombres("");
@@ -608,13 +661,20 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                     <Col md={6}>
-                                                        <FormGroup className="form-group-custom">
+                                                        <FormGroup>
                                                             <Label htmlFor="giro">Giro</Label>
-                                                            <Input
-                                                                type="text"
-                                                                id="giro"
-                                                                value={giro}
-                                                                onChange={(e) => setGiro(e.target.value)}
+                                                            <Select
+                                                                id="searchGiro"
+                                                                value={filteredGiros.find(g => g.st_descripcion === searchGiro)} // Para mostrar el valor seleccionado
+                                                                onChange={handleGiroSelect} // Manejador para la selección
+                                                                onInputChange={handleSearchGiro} // Manejador para la búsqueda
+                                                                options={giros.map(g => ({
+                                                                    value: g.sk_actividadeco,
+                                                                    label: `${g.st_codigo} - ${g.st_descripcion}`
+                                                                }))}
+                                                                placeholder="Buscar giro por código o descripción"
+                                                                isClearable
+                                                                isSearchable
                                                             />
                                                         </FormGroup>
                                                     </Col>

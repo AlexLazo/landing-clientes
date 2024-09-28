@@ -142,7 +142,7 @@ export default function ProcesarPago() {
         cvv: "",
       });
 
-      toast.success("Pago procesado con éxito. Se ha enviado un comprobante al correo del cliente.");
+      toast.success("Pago procesado con éxito. Se ha enviado un comprobante a tu correo.");
       setPendingOrders(prevOrders => prevOrders.filter(order => order.id !== selectedOrder));
       toggleModal(); // Close the modal
     } catch (err) {
