@@ -13,6 +13,8 @@ export default function CrearPaqueteExpress() {
   const [tarifas, setTarifas] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState(null);
   const [selectedAddressRecol, setSelectedAddressRecol] = useState(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedImage, setSelectedImage] = useState(null);
   const [commonData, setCommonData] = useState({
     id_estado_paquete: "3", // Assuming '1' is the ID for "recepción"
     fecha_envio: "",
@@ -163,6 +165,18 @@ export default function CrearPaqueteExpress() {
     }
   };
 
+  // Datos para los tamaños de paquete
+  const tamanoPaqueteData = {
+    "1": {
+      descripcion: "Ideal para documentos y objetos pequeños.",
+      imagen: "./src/assets/Paquete1.png", // Reemplaza con la ruta real
+    },
+    "2": {
+      descripcion: "Para objetos de tamaño mediano, como ropa o regalos.",
+      imagen: "./src/assets/Paquete2.png",
+    },
+  };
+
   const calculatePrice = (tamanoPaquete) => {
     if (!selectedAddress || !tamanoPaquete) {
       console.log("Missing selectedAddress or tamanoPaquete", {
@@ -259,6 +273,17 @@ export default function CrearPaqueteExpress() {
       ...prev,
       paquetes: prev.paquetes.filter((_, idx) => idx !== index),
     }));
+  };
+
+  // Función para manejar el clic en la imagen
+  const handleImageClick = (imagen) => {
+    setSelectedImage(imagen);
+    setModalOpen(true);
+  };
+
+  // Función para cerrar el modal al hacer clic en la imagen ampliada
+  const handleModalImageClick = () => {
+    setModalOpen(false);
   };
 
   const handleSubmit = async (e) => {
@@ -528,6 +553,33 @@ export default function CrearPaqueteExpress() {
                           </FormFeedback>
                         )}
                       </FormGroup>
+                      {/* Mostrar la descripción y la imagen si hay un tamaño seleccionado */}
+                      {paquete.tamano_paquete && (
+                        <div className="tamano-paquete-info">
+                          <p>{tamanoPaqueteData[paquete.tamano_paquete].descripcion}</p>
+                          <img
+                            src={tamanoPaqueteData[paquete.tamano_paquete].imagen}
+                            alt={getTamanoPaqueteString(paquete.tamano_paquete)}
+                            style={{ width: "150px", height: "auto", cursor: "pointer" }} // Ajusta el tamaño
+                            onClick={() => handleImageClick(tamanoPaqueteData[paquete.tamano_paquete].imagen)} // Maneja el clic en la imagen
+                          />
+                        </div>
+                      )}
+
+                      {/* Modal para mostrar imagen grande */}
+                      {modalOpen && (
+                        <div className="modal" onClick={handleModalImageClick}>
+                          <div className="modal-content">
+                            <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                            <img
+                              src={selectedImage}
+                              alt="Imagen ampliada"
+                              style={{ width: "100%", height: "auto", cursor: "pointer" }}
+                              onClick={handleModalImageClick} // Cierra el modal al hacer clic en la imagen
+                            />
+                          </div>
+                        </div>
+                      )}
                     </Col>
                     <Col md={4}>
                       <FormGroup>
