@@ -157,7 +157,6 @@ export default function PerfilCliente() {
     return (
         <Container className="profileContainer">
             <div className="profileContent" >
-                <img src="/src/assets/logo.png" alt="Avatar" className="avatar" />
                 <div className="headerLeft">
                     <div className="headerText">
                         <h2>{cliente.nombre || '-'} {cliente.apellido || '-'}</h2>
@@ -242,7 +241,7 @@ export default function PerfilCliente() {
                     </div>
                 )}
                 {activeTab === 'direcciones' && (
-                    <div className="direccionesClienteContainer">
+                    <div className="direccionesContent">
                         {loading ? (
                             <div className="loading">
                                 <Spinner color="primary" />
