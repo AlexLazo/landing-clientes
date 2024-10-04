@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import {
   ListGroup,
   ListGroupItem,
@@ -44,7 +45,7 @@ const HistorialOrdenesCliente = () => {
 
       try {
         setLoading(true);
-       const fetchUrl = `${API_URL}/ordenes-cliente/ver-ordenes?page=${currentPage}&limit=${ORDENES_PER_PAGE}`;
+        const fetchUrl = `${API_URL}/ordenes-cliente/ver-ordenes?page=${currentPage}&limit=${ORDENES_PER_PAGE}`;
 
         const { data } = await axios.get(fetchUrl, {
           headers: { Authorization: `Bearer ${token}` },
@@ -100,6 +101,22 @@ const HistorialOrdenesCliente = () => {
         console.error("Error al copiar el texto: ", err);
       }
     );
+  };
+
+
+  const shouldShowPaymentButton = (orden) => {
+    // Mostrar el botón si el estado es 'En_proceso' o si el estado_pago es 'pendiente'
+    return orden.estado === 'En_proceso' || orden.estado_pago === 'pendiente';
+  };
+
+  const getEstadoPago = (orden) => {
+    if (orden.estado_pago === 'pagado' || orden.estado === 'Completada') {
+      return 'Pagado';
+    } else if (orden.estado_pago === 'pendiente' || orden.estado === 'En_proceso') {
+      return 'Pendiente';
+    } else {
+      return orden.estado_pago || orden.estado || 'No especificado';
+    }
   };
 
   return (
@@ -167,6 +184,18 @@ const HistorialOrdenesCliente = () => {
                           <p>
                             <strong>Tipo de Pago:</strong> {orden.tipo_pago}
                           </p>
+                          <p>
+                            <strong>Estado de Pago:</strong> {getEstadoPago(orden)}
+                          </p>
+                        </Col>
+                        <Col md={6} className="d-flex justify-content-end align-items-center">
+                          {shouldShowPaymentButton(orden) && (
+                             <Link to={`/pagos`}>
+                             <Button color="success" className="realizarPagoButton">
+                               Realizar Pago
+                             </Button>
+                           </Link>
+                          )}
                         </Col>
                       </Row>
                       <Button
