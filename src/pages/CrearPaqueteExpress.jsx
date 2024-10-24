@@ -406,7 +406,7 @@ export default function CrearPaqueteExpress() {
                   <Col md={4}>
                     <FormGroup>
                       <Label for="instrucciones_entrega">
-                        Instrucciones de Entrega
+                        Instrucciones de entrega <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Input
                         type="text"
@@ -434,7 +434,7 @@ export default function CrearPaqueteExpress() {
                   <Row>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete</Label>
+                        <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="select"
                           name="id_tipo_paquete"
@@ -456,7 +456,7 @@ export default function CrearPaqueteExpress() {
                       </FormGroup>
 
                       <FormGroup>
-                        <Label for={`id_empaque_${index}`}>Tipo de Empaque</Label>
+                        <Label for={`id_empaque_${index}`}>Tipo de Empaque <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="select"
                           name="id_empaque"
@@ -465,7 +465,7 @@ export default function CrearPaqueteExpress() {
                           onChange={(e) => handleChangePaquete(index, e)}
                           invalid={!!errors.paquetes[index]?.id_empaque}
                         >
-                          <option value="">Selecciona un tipo de empaque</option>
+                          <option value="">Selecciona un tipo de empaque </option>
                           {empaques.map((empaque) => (
                             <option key={empaque.id} value={empaque.id}>
                               {empaque.empaquetado}
@@ -480,7 +480,7 @@ export default function CrearPaqueteExpress() {
                     </Col>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`peso_${index}`}>Peso</Label>
+                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="number"
                           name="peso"
@@ -503,7 +503,7 @@ export default function CrearPaqueteExpress() {
                     </Col>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`descripcion_${index}`}>Descripción</Label>
+                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="text"
                           name="descripcion"
@@ -528,7 +528,7 @@ export default function CrearPaqueteExpress() {
                     <Col md={4}>
                       <FormGroup>
                         <Label for={`tamano_paquete_${index}`}>
-                          Tamaño del Paquete
+                          Tamaño del Paquete <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Input
                           type="select"

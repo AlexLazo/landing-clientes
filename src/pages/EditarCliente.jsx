@@ -129,7 +129,7 @@ const EditarCliente = () => {
                 <h1 className="editar-cliente-title">Editar Perfil</h1>
                 <form className="editar-cliente-form">
                     {[
-                        { name: "nombre", type: "text", label: "Nombres" },
+                        { name: "nombre", type: "text", label: "Nombres"},
                         { name: "apellido", type: "text", label: "Apellidos" },
                         { name: "direccion", type: "text", label: "Dirección" },
                         { name: "telefono", type: "tel", label: "Teléfono" },

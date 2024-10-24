@@ -419,9 +419,9 @@ const AgregarCliente = () => {
     return (
         <React.Fragment>
             <div className="page-content">
-                <Container fluid>
+                <Container fluid className="container-custom">
                     <Row>
-                        <Col lg="6">
+                        <Col lg="12">
                             <Card>
                                 <CardBody>
                                     {/* Título del formulario */}
@@ -458,7 +458,7 @@ const AgregarCliente = () => {
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="nombres">Nombres</Label>
+                                                    <Label for="nombres">Nombres <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="text"
                                                         id="nombres"
@@ -470,7 +470,7 @@ const AgregarCliente = () => {
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="apellidos">Apellidos</Label>
+                                                    <Label for="apellidos">Apellidos <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="text"
                                                         id="apellidos"
@@ -484,7 +484,7 @@ const AgregarCliente = () => {
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="tipoPersona">Tipo de Persona</Label>
+                                                    <Label for="tipoPersona">Tipo de Persona <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="select"
                                                         id="tipoPersona"
@@ -504,7 +504,7 @@ const AgregarCliente = () => {
                                             <Col md={6}>
                                                 {tipoPersona !== "2" && ( // Condición para mostrar el campo DUI solo si tipoPersona no es jurídica
                                                     <FormGroup className="form-group-custom">
-                                                        <Label for="dui">DUI</Label>
+                                                        <Label for="dui">DUI <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="dui"
@@ -527,7 +527,7 @@ const AgregarCliente = () => {
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="telefono">Teléfono</Label>
+                                                    <Label for="telefono">Teléfono <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="text"
                                                         id="telefono"
@@ -546,7 +546,7 @@ const AgregarCliente = () => {
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="direccion">Dirección</Label>
+                                                    <Label for="direccion">Dirección <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="text"
                                                         id="direccion"
@@ -558,7 +558,7 @@ const AgregarCliente = () => {
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="departamento">Departamento</Label>
+                                                    <Label for="departamento">Departamento <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="select"
                                                         id="departamento"
@@ -579,7 +579,7 @@ const AgregarCliente = () => {
                                         <Row form>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label for="municipio">Municipio</Label>
+                                                    <Label for="municipio">Municipio <span style={{ color: 'red' }}>*</span></Label>
                                                     <Input
                                                         type="select"
                                                         id="municipio"
@@ -597,12 +597,10 @@ const AgregarCliente = () => {
                                                 </FormGroup>
                                             </Col>
                                         </Row>
-                                        {tipoPersona === "2" && ( // Si es persona jurídica
-                                            <>
-                                                <Row form>
+                                        <Row form>
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="esContribuyente">¿Es Contribuyente?</Label>
+                                                            <Label htmlFor="esContribuyente">¿Es Contribuyente? <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input
                                                                 type="checkbox"
                                                                 id="esContribuyente"
@@ -615,7 +613,7 @@ const AgregarCliente = () => {
                                                 <Row form>
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nombreComercial">Nombre Comercial</Label>
+                                                            <Label htmlFor="nombreComercial">Nombre Comercial <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input
                                                                 type="text"
                                                                 id="nombreComercial"
@@ -624,9 +622,15 @@ const AgregarCliente = () => {
                                                             />
                                                         </FormGroup>
                                                     </Col>
+                                                    </Row>
+                                        {tipoPersona === "2" && ( // Si es persona jurídica
+                                            <>
+                                        
+                                                <Row form>
+                                                   
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nit">NIT</Label>
+                                                            <Label htmlFor="nit">NIT <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input
                                                                 type="text"
                                                                 id="nit"
@@ -645,7 +649,7 @@ const AgregarCliente = () => {
                                                 <Row form>
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nrc">NRC</Label>
+                                                            <Label htmlFor="nrc">NRC <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input
                                                                 type="text"
                                                                 id="nrc"
@@ -660,9 +664,11 @@ const AgregarCliente = () => {
                                                             )}
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col md={6}>
+                                                </Row>
+                                                <Row form>
+                                                <Col md={6}>
                                                         <FormGroup>
-                                                            <Label htmlFor="giro">Giro</Label>
+                                                            <Label htmlFor="giro">Giro <span style={{ color: 'red' }}>*</span></Label>
                                                             <Select
                                                                 id="searchGiro"
                                                                 value={filteredGiros.find(g => g.st_descripcion === searchGiro)} // Para mostrar el valor seleccionado
@@ -678,11 +684,9 @@ const AgregarCliente = () => {
                                                             />
                                                         </FormGroup>
                                                     </Col>
-                                                </Row>
-                                                <Row form>
                                                     <Col md={12}>
                                                         <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nombreEmpresa">Nombre de la Empresa</Label>
+                                                            <Label htmlFor="nombreEmpresa">Nombre de la Empresa <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input
                                                                 type="text"
                                                                 id="nombreEmpresa"

@@ -220,7 +220,7 @@ const AgregarDireccion = () => {
                                             <Row form>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="nombre_contacto">Nombre de Contacto</Label>
+                                                        <Label className="label" for="nombre_contacto">Nombre de Contacto <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="nombre_contacto"
@@ -233,7 +233,7 @@ const AgregarDireccion = () => {
                                                 </Col>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label"for="telefono">Teléfono</Label>
+                                                        <Label className="label"for="telefono">Teléfono <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="telefono"
@@ -250,7 +250,7 @@ const AgregarDireccion = () => {
                                             <Row form>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="departamento">Departamento</Label>
+                                                        <Label className="label" for="departamento">Departamento <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="select"
                                                             id="departamento"
@@ -270,7 +270,7 @@ const AgregarDireccion = () => {
                                                 </Col>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="municipio">Municipio</Label>
+                                                        <Label className="label" for="municipio">Municipio <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="select"
                                                             id="municipio"
@@ -292,7 +292,7 @@ const AgregarDireccion = () => {
                                             <Row form>
                                                 <Col md={12}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="direccion">Dirección</Label>
+                                                        <Label className="label" for="direccion">Dirección <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="direccion"
@@ -309,7 +309,7 @@ const AgregarDireccion = () => {
                                             <Row form>
                                                 <Col md={12}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="referencia">Referencia</Label>
+                                                        <Label className="label" for="referencia">Referencia <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="referencia"

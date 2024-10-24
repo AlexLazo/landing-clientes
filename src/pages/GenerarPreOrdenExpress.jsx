@@ -332,7 +332,7 @@ export default function GenerarPreOrdenExpress() {
                   <FormFeedback>{errors.telefono}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="id_direccion">Dirección de Entrega</Label>
+                  <Label for="id_direccion">Dirección de Entrega <span style={{ color: 'red' }}>*</span></Label>
                   <Input
                     type="select"
                     name="id_direccion"
@@ -351,7 +351,7 @@ export default function GenerarPreOrdenExpress() {
                   <FormFeedback>{errors.id_direccion}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="direccion_recoleccion">Dirección de recolección</Label>
+                  <Label for="direccion_recoleccion">Dirección de recolección<span style={{ color: 'red' }}>*</span> </Label>
                   <Input
                     type="select"
                     name="direccion_recoleccion"
@@ -370,7 +370,7 @@ export default function GenerarPreOrdenExpress() {
                   <FormFeedback>{errors.id_direccion}</FormFeedback>
                 </FormGroup>
                 <FormGroup>
-                  <Label for="id_tipo_pago">Tipo de Pago</Label>
+                  <Label for="id_tipo_pago">Tipo de Pago <span style={{ color: 'red' }}>*</span></Label>
                   <Input
                     type="select"
                     name="id_tipo_pago"
@@ -412,7 +412,7 @@ export default function GenerarPreOrdenExpress() {
                 <FormGroup>
                   <Col md={6}>
                     <FormGroup>
-                      <Label for="tipo_documento">Tipo de Documento</Label>
+                      <Label for="tipo_documento">Tipo de Documento <span style={{ color: 'red' }}>*</span></Label>
                       <Input
                         type="select"
                         name="tipo_documento"

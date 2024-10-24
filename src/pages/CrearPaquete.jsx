@@ -412,7 +412,7 @@ export default function DatosPaquetePreOrden() {
                   <Col md={4}>
                     <FormGroup>
                       <Label for="instrucciones_entrega">
-                        Instrucciones de Entrega
+                        Instrucciones de Entrega <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Input
                         type="text"
@@ -440,7 +440,7 @@ export default function DatosPaquetePreOrden() {
                   <Row>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete</Label>
+                        <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="select"
                           name="id_tipo_paquete"
@@ -449,7 +449,7 @@ export default function DatosPaquetePreOrden() {
                           onChange={(e) => handleChangePaquete(index, e)}
                           invalid={!!errors.paquetes[index]?.id_tipo_paquete}
                         >
-                          <option value="">Selecciona un tipo de paquete</option>
+                          <option value="">Selecciona un tipo de paquete </option>
                           {tiposPaquete.map((tipo) => (
                             <option key={tipo.id} value={tipo.id}>
                               {tipo.nombre}
@@ -462,7 +462,7 @@ export default function DatosPaquetePreOrden() {
                       </FormGroup>
 
                       <FormGroup>
-                        <Label for={`id_empaque_${index}`}>Tipo de Empaque</Label>
+                        <Label for={`id_empaque_${index}`}>Tipo de Empaque <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="select"
                           name="id_empaque"
@@ -486,7 +486,7 @@ export default function DatosPaquetePreOrden() {
                     </Col>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`peso_${index}`}>Peso</Label>
+                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="number"
                           name="peso"
@@ -509,7 +509,7 @@ export default function DatosPaquetePreOrden() {
                     </Col>
                     <Col md={4}>
                       <FormGroup>
-                        <Label for={`descripcion_${index}`}>Descripción</Label>
+                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
                         <Input
                           type="text"
                           name="descripcion"
@@ -534,7 +534,7 @@ export default function DatosPaquetePreOrden() {
                     <Col md={4}>
                       <FormGroup>
                         <Label for={`tamano_paquete_${index}`}>
-                          Tamaño del Paquete
+                          Tamaño del Paquete <span style={{ color: 'red' }}>*</span>
                         </Label>
                         <Input
                           type="select"
