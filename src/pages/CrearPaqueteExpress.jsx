@@ -185,13 +185,13 @@ export default function CrearPaqueteExpress() {
       });
       return "Precio no disponible";
     }
-  
+
     const isSanMiguelUrban =
       selectedAddress.id_departamento === 12 &&
       selectedAddress.id_municipio === 215;
-  
+
     let tarifaType = isSanMiguelUrban ? "tarifa urbana" : "tarifa rural";
-  
+
     const tarifa = tarifas.find(
       (t) =>
         t.tamano_paquete === getTamanoPaqueteString(tamanoPaquete) &&
@@ -199,9 +199,9 @@ export default function CrearPaqueteExpress() {
         t.municipio === selectedAddress.municipio_nombre &&
         t.tarifa === tarifaType
     );
-  
+
     let price = 0;
-  
+
     if (!tarifa) {
       const generalTarifa = tarifas.find(
         (t) =>
@@ -209,7 +209,7 @@ export default function CrearPaqueteExpress() {
           t.departamento === selectedAddress.departamento_nombre &&
           t.tarifa === tarifaType
       );
-  
+
       if (generalTarifa) {
         price = generalTarifa.monto;
       } else {
@@ -218,36 +218,36 @@ export default function CrearPaqueteExpress() {
     } else {
       price = tarifa.monto;
     }
-  
+
     // Asegurarse de que price es un número antes de sumarle 1
     const finalPrice = parseFloat(price) + 1;
-  
+
     // Añadir $1 al precio por el costo de recolección y redondear a 2 decimales
     return finalPrice.toFixed(2);  // Redondea a 2 decimales
-  };1
-  
+  }; 1
+
   const handleChangePaquete = (index, e) => {
     const { name, value } = e.target;
     const updatedPaquetes = [...paquetes];
     updatedPaquetes[index] = { ...updatedPaquetes[index], [name]: value };
-  
+
     if (name === "tamano_paquete") {
       const calculatedPrice = calculatePrice(value);
       updatedPaquetes[index].precio = calculatedPrice || "Precio no disponible";
     }
-  
+
     setPaquetes(updatedPaquetes);
-  
+
     const error = validateField(name, value);
     setErrors((prev) => {
       const newPaquetesErrors = [...(prev.paquetes || [])];
       newPaquetesErrors[index] = { ...newPaquetesErrors[index], [name]: error };
       return { ...prev, paquetes: newPaquetesErrors };
     });
-  
+
     console.log("Updated paquete:", updatedPaquetes[index]);
   };
-  
+
 
   const agregarPaquete = () => {
     setPaquetes((prev) => [
@@ -355,20 +355,16 @@ export default function CrearPaqueteExpress() {
       <Card>
         <CardHeader className="CardHeaderDatosPAquetes">
           {cliente && selectedAddress && (
-            <h3>
-              Nombre de contacto: {selectedAddress.nombre_contacto}
-            </h3>
+            <h3>Nombre de contacto: {selectedAddress.nombre_contacto}</h3>
           )}
           {selectedAddress && (
             <h6>Dirección seleccionada para entrega: {selectedAddress.direccion}</h6>
           )}
-          {cliente && selectedAddress && (
-            <h3>
-              Nombre de contacto: {selectedAddressRecol.nombre_contacto}
-            </h3>
+          {cliente && selectedAddressRecol && (
+            <h3>Nombre de contacto: {selectedAddressRecol.nombre_contacto}</h3>
           )}
           {selectedAddressRecol && (
-            <h6>Dirección seleccionada para recoleccion: {selectedAddressRecol.direccion}</h6>
+            <h6>Dirección seleccionada para recolección: {selectedAddressRecol.direccion}</h6>
           )}
         </CardHeader>
         <CardBody>
@@ -377,7 +373,7 @@ export default function CrearPaqueteExpress() {
               <CardBody>
                 <h5>Datos Comunes para todos los Paquetes</h5>
                 <Row>
-                  <Col md={4}>
+                  <Col md={6}>
                     <FormGroup>
                       <Label for="estado_paquete">Estado del Paquete</Label>
                       <Input
@@ -389,24 +385,24 @@ export default function CrearPaqueteExpress() {
                       />
                     </FormGroup>
                   </Col>
-                </Row>
-                <Row>
-                  <Col md={4}>
+                  <Col md={6}>
                     <FormGroup>
                       <Label for="tipo_entrega">Tipo de Entrega</Label>
                       <Input
                         type="text"
                         name="tipo_entrega"
                         id="tipo_entrega"
-                        value="Entrega Express"
+                        value="Entrega Normal"
                         disabled
                       />
                     </FormGroup>
                   </Col>
-                  <Col md={4}>
+                </Row>
+                <Row>
+                  <Col md={12}>
                     <FormGroup>
                       <Label for="instrucciones_entrega">
-                        Instrucciones de entrega <span style={{ color: 'red' }}>*</span>
+                        Instrucciones de Entrega <span style={{ color: 'red' }}>*</span>
                       </Label>
                       <Input
                         type="text"
@@ -432,7 +428,7 @@ export default function CrearPaqueteExpress() {
                 <CardBody>
                   <h5>Paquete {index + 1}</h5>
                   <Row>
-                    <Col md={4}>
+                    <Col md={6}>
                       <FormGroup>
                         <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete <span style={{ color: 'red' }}>*</span></Label>
                         <Input
@@ -455,6 +451,8 @@ export default function CrearPaqueteExpress() {
                         )}
                       </FormGroup>
 
+                    </Col>
+                    <Col md={6}>
                       <FormGroup>
                         <Label for={`id_empaque_${index}`}>Tipo de Empaque <span style={{ color: 'red' }}>*</span></Label>
                         <Input
@@ -465,7 +463,7 @@ export default function CrearPaqueteExpress() {
                           onChange={(e) => handleChangePaquete(index, e)}
                           invalid={!!errors.paquetes[index]?.id_empaque}
                         >
-                          <option value="">Selecciona un tipo de empaque </option>
+                          <option value="">Selecciona un tipo de empaque</option>
                           {empaques.map((empaque) => (
                             <option key={empaque.id} value={empaque.id}>
                               {empaque.empaquetado}
@@ -476,56 +474,12 @@ export default function CrearPaqueteExpress() {
                           <FormFeedback>{errors.paquetes[index].id_empaque}</FormFeedback>
                         )}
                       </FormGroup>
-
-                    </Col>
-                    <Col md={4}>
-                      <FormGroup>
-                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
-                        <Input
-                          type="number"
-                          name="peso"
-                          id={`peso_${index}`}
-                          value={paquete.peso}
-                          onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].peso
-                            )
-                          }
-                        />
-                        {errors.paquetes[index]?.peso && (
-                          <FormFeedback>
-                            {errors.paquetes[index].peso}
-                          </FormFeedback>
-                        )}
-                      </FormGroup>
-                    </Col>
-                    <Col md={4}>
-                      <FormGroup>
-                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
-                        <Input
-                          type="text"
-                          name="descripcion"
-                          id={`descripcion_${index}`}
-                          value={paquete.descripcion}
-                          onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].descripcion
-                            )
-                          }
-                        />
-                        {errors.paquetes[index]?.descripcion && (
-                          <FormFeedback>
-                            {errors.paquetes[index].descripcion}
-                          </FormFeedback>
-                        )}
-                      </FormGroup>
                     </Col>
 
-                    <Col md={4}>
+                  </Row>
+
+                  <Row>
+                    <Col md={12}>
                       <FormGroup>
                         <Label for={`tamano_paquete_${index}`}>
                           Tamaño del Paquete <span style={{ color: 'red' }}>*</span>
@@ -536,12 +490,7 @@ export default function CrearPaqueteExpress() {
                           id={`tamano_paquete_${index}`}
                           value={paquete.tamano_paquete}
                           onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].tamano_paquete
-                            )
-                          }
+                          invalid={!!(errors.paquetes[index]?.tamano_paquete)}
                         >
                           <option value="">Seleccione un tamaño</option>
                           <option value="1">Pequeño</option>
@@ -553,35 +502,57 @@ export default function CrearPaqueteExpress() {
                           </FormFeedback>
                         )}
                       </FormGroup>
+
                       {/* Mostrar la descripción y la imagen si hay un tamaño seleccionado */}
                       {paquete.tamano_paquete && (
                         <div className="tamano-paquete-info">
-                          <p>{tamanoPaqueteData[paquete.tamano_paquete].descripcion}</p>
-                          <img
-                            src={tamanoPaqueteData[paquete.tamano_paquete].imagen}
-                            alt={getTamanoPaqueteString(paquete.tamano_paquete)}
-                            style={{ width: "150px", height: "auto", cursor: "pointer" }} // Ajusta el tamaño
-                            onClick={() => handleImageClick(tamanoPaqueteData[paquete.tamano_paquete].imagen)} // Maneja el clic en la imagen
-                          />
+                          <div className="info-container"> {/* Nuevo div para centrar contenido */}
+                            <p>{tamanoPaqueteData[paquete.tamano_paquete].descripcion}</p>
+                            <img
+                              src={tamanoPaqueteData[paquete.tamano_paquete].imagen}
+                              alt={getTamanoPaqueteString(paquete.tamano_paquete)}
+                              style={{ width: "150px", height: "auto", cursor: "pointer" }}
+                              onClick={() => handleImageClick(tamanoPaqueteData[paquete.tamano_paquete].imagen)}
+                            />
+                          </div>
                         </div>
                       )}
 
                       {/* Modal para mostrar imagen grande */}
                       {modalOpen && (
                         <div className="modal" onClick={handleModalImageClick}>
-                          <div className="modal-content">
+                          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                             <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
                             <img
                               src={selectedImage}
                               alt="Imagen ampliada"
-                              style={{ width: "100%", height: "auto", cursor: "pointer" }}
-                              onClick={handleModalImageClick} // Cierra el modal al hacer clic en la imagen
+                              style={{ width: "100%", height: "auto" }}
                             />
                           </div>
                         </div>
                       )}
                     </Col>
-                    <Col md={4}>
+                  </Row>
+
+                  <Row>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
+                        <Input
+                          type="number"
+                          name="peso"
+                          id={`peso_${index}`}
+                          value={paquete.peso}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!(errors.paquetes[index]?.peso)}
+                        />
+                        {errors.paquetes[index]?.peso && (
+                          <FormFeedback>{errors.paquetes[index].peso}</FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                    <Col md={6}>
+
                       <FormGroup>
                         <Label for={`precio_${index}`}>Precio</Label>
                         <Input
@@ -590,21 +561,47 @@ export default function CrearPaqueteExpress() {
                           id={`precio_${index}`}
                           value={paquete.precio}
                           readOnly
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].precio
-                            )
-                          }
+                          invalid={!!(errors.paquetes[index]?.precio)}
                         />
                         {errors.paquetes[index]?.precio && (
-                          <FormFeedback>
-                            {errors.paquetes[index].precio}
-                          </FormFeedback>
+                          <FormFeedback>{errors.paquetes[index].precio}</FormFeedback>
                         )}
                       </FormGroup>
                     </Col>
                   </Row>
+                  <Row>
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
+                        <Input
+                          type="text"
+                          name="descripcion"
+                          id={`descripcion_${index}`}
+                          value={paquete.descripcion}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!(errors.paquetes[index]?.descripcion)}
+                        />
+                        {errors.paquetes[index]?.descripcion && (
+                          <FormFeedback>{errors.paquetes[index].descripcion}</FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  {modalOpen && (
+                    <div className="modal" onClick={handleModalImageClick}>
+                      <div className="modal-content">
+                        <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                        <img
+                          src={selectedImage}
+                          alt="Imagen ampliada"
+                          style={{ width: "100%", height: "auto", cursor: "pointer" }}
+                          onClick={handleModalImageClick} // Cierra el modal al hacer clic en la imagen
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   {index > 0 && (
                     <Row className="mt-3">
                       <Col>
@@ -622,26 +619,19 @@ export default function CrearPaqueteExpress() {
             ))}
             <Row className="mb-3">
               <Col className="d-flex justify-content-start">
-                <Button color="primary" onClick={agregarPaquete}>
+                <Button
+                  color="primary"
+                  onClick={agregarPaquete}
+                  disabled={paquetes.length >= 3} // Limita a un máximo de 3 paquetes
+                >
                   Agregar Paquete
                 </Button>
               </Col>
             </Row>
-            <Row className="mb-3">
-              <Col className="d-flex justify-content-start">
-                <Button
-                  className="btnGuardarDatosPaquete"
-                  color="success"
-                  type="submit"
-                >
-                  Guardar Paquetes
-                </Button>
-              </Col>
-            </Row>
+            <Button type="submit" color="success">Enviar</Button>
           </Form>
         </CardBody>
       </Card>
     </Container>
   );
-
-}
+}  

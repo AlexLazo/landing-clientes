@@ -285,7 +285,11 @@ const ProcesarPago = () => {
         </Row>
       </Container>
 
-      <Modal isOpen={modalOpen} toggle={toggleModal}>
+      <Modal
+        isOpen={modalOpen}
+        toggle={toggleModal}
+        className="custom-modal" // Añade la clase CSS personalizada
+      >
         <ModalHeader toggle={toggleModal}>Pago con Tarjeta</ModalHeader>
         <ModalBody>
           {selectedOrder && (
@@ -299,6 +303,7 @@ const ProcesarPago = () => {
           )}
         </ModalBody>
       </Modal>
+
     </div>
   );
 };

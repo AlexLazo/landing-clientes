@@ -315,143 +315,191 @@ export default function GenerarPreOrden() {
             <CardBody>
               <h3 className="text-center mb-4">Generar Pre-Orden</h3>
               <Form onSubmit={handleSubmit}>
-                <FormGroup>
-                  <Label for="nombre_contacto">Nombre del Contacto<span style={{ color: 'red' }}>*</span></Label>
-                  <Input
-                    type="text"
-                    name="nombre_contacto"
-                    id="nombre_contacto"
-                    value={formData.nombre_contacto}
-                    onChange={handleInputChange}
-                    invalid={!!errors.nombre_contacto}
-                  />
-                  <FormFeedback>{errors.nombre_contacto}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="telefono">Teléfono<span style={{ color: 'red' }}>*</span></Label>
-                  <Input
-                    type="text"
-                    name="telefono"
-                    id="telefono"
-                    value={formData.telefono}
-                    onChange={handleInputChange}
-                    invalid={!!errors.telefono}
-                  />
-                  <FormFeedback>{errors.telefono}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="id_direccion">Dirección de Entrega<span style={{ color: 'red' }}>*</span></Label>
-                  <Input
-                    type="select"
-                    name="id_direccion"
-                    id="id_direccion"
-                    value={formData.id_direccion}
-                    onChange={handleInputChange}
-                    invalid={!!errors.id_direccion}
-                  >
-                    <option value="">Seleccione una dirección</option>
-                    {selectedAddress && (
-                      <option value={selectedAddress.id}>
-                        {selectedAddress.direccion}
-                      </option>
-                    )}
-                  </Input>
-                  <FormFeedback>{errors.id_direccion}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="direccion_recoleccion">Dirección de recolección<span style={{ color: 'red' }}>*</span></Label>
-                  <Input
-                    type="select"
-                    name="direccion_recoleccion"
-                    id="direccion_recoleccion"
-                    value={formData.direccion_recoleccion}
-                    onChange={handleInputChange}
-                    invalid={!!errors.direccion_recoleccion}
-                  >
-                    <option value="">Seleccione una dirección</option>
-                    {selectedAddressRecol && (
-                      <option value={selectedAddressRecol.id}>
-                        {selectedAddressRecol.direccion}
-                      </option>
-                    )}
-                  </Input>
-                  <FormFeedback>{errors.id_direccion}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="id_tipo_pago">Tipo de Pago<span style={{ color: 'red' }}>*</span></Label>
-                  <Input
-                    type="select"
-                    name="id_tipo_pago"
-                    id="id_tipo_pago"
-                    value={formData.id_tipo_pago}
-                    onChange={handleInputChange}
-                    invalid={!!errors.id_tipo_pago}
-                  >
-                    <option value="1">Efectivo</option>
-                    <option value="2">Tarjeta</option>
-                  </Input>
-                  <FormFeedback>{errors.id_tipo_pago}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="total_pagar">Total a Pagar</Label>
-                  <Input
-                    type="number"
-                    name="total_pagar"
-                    id="total_pagar"
-                    value={formData.total_pagar}
-                    onChange={handleInputChange}
-                    readOnly
-                    invalid={!!errors.total_pagar}
-                  />
-                  <FormFeedback>{errors.total_pagar}</FormFeedback>
-                </FormGroup>
-                <FormGroup>
-                  <Label for="concepto">Concepto</Label>
-                  <Input
-                    type="text"
-                    name="concepto"
-                    id="concepto"
-                    value={formData.concepto}
-                    onChange={handleInputChange}
-                    invalid={!!errors.concepto}
-                  />
-                  <FormFeedback>{errors.concepto}</FormFeedback>
-                </FormGroup>
-                <Col md={6}>
-                      <FormGroup>
-                        <Label for="tipo_documento">Tipo de Documento<span style={{ color: 'red' }}>*</span></Label>
-                        <Input
-                          type="select"
-                          name="tipo_documento"
-                          id="tipo_documento"
-                          value={formData.tipo_documento}
-                          onChange={handleInputChange}
-                          invalid={!!errors.tipo_documento}
-                        >
-                          <option value="consumidor_final">
-                            Consumidor Final
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="nombre_contacto">
+                        Nombre del Contacto<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="text"
+                        name="nombre_contacto"
+                        id="nombre_contacto"
+                        value={formData.nombre_contacto}
+                        onChange={handleInputChange}
+                        invalid={!!errors.nombre_contacto}
+                      />
+                      <FormFeedback>{errors.nombre_contacto}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+                  
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="telefono">
+                        Teléfono<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="text"
+                        name="telefono"
+                        id="telefono"
+                        value={formData.telefono}
+                        onChange={handleInputChange}
+                        invalid={!!errors.telefono}
+                      />
+                      <FormFeedback>{errors.telefono}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+                </Row>
+  
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="id_direccion">
+                        Dirección de Entrega<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="select"
+                        name="id_direccion"
+                        id="id_direccion"
+                        value={formData.id_direccion}
+                        onChange={handleInputChange}
+                        invalid={!!errors.id_direccion}
+                      >
+                        <option value="">Seleccione una dirección</option>
+                        {selectedAddress && (
+                          <option value={selectedAddress.id}>
+                            {selectedAddress.direccion}
                           </option>
-                          <option value="credito_fiscal">Crédito Fiscal</option>
-                        </Input>
-                        <FormFeedback>{errors.tipo_documento}</FormFeedback>
-                      </FormGroup>
-                    </Col>
-
-                <FormGroup>
-                  <Label for="tipo_orden">Tipo de Orden</Label>
-                  <Input
-                  className="input_tipo-Orden"
-                    type="text"
-                    name="tipo_orden"
-                    id="tipo_orden"
-                    value="Pre Orden"
-                    readOnly
-                    /*style={{ backgroundColor: '#f0f0f0', cursor: 'not-allowed' }} // Bloqueado*/
-                  />
-                </FormGroup>
-
-
-                <Button type="submit" color="primary">Generar Pre-Orden</Button>
+                        )}
+                      </Input>
+                      <FormFeedback>{errors.id_direccion}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+  
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="direccion_recoleccion">
+                        Dirección de Recolección<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="select"
+                        name="direccion_recoleccion"
+                        id="direccion_recoleccion"
+                        value={formData.direccion_recoleccion}
+                        onChange={handleInputChange}
+                        invalid={!!errors.direccion_recoleccion}
+                      >
+                        <option value="">Seleccione una dirección</option>
+                        {selectedAddressRecol && (
+                          <option value={selectedAddressRecol.id}>
+                            {selectedAddressRecol.direccion}
+                          </option>
+                        )}
+                      </Input>
+                      <FormFeedback>{errors.direccion_recoleccion}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+                </Row>
+  
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="id_tipo_pago">
+                        Tipo de Pago<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="select"
+                        name="id_tipo_pago"
+                        id="id_tipo_pago"
+                        value={formData.id_tipo_pago}
+                        onChange={handleInputChange}
+                        invalid={!!errors.id_tipo_pago}
+                      >
+                        <option value="1">Efectivo</option>
+                        <option value="2">Tarjeta</option>
+                      </Input>
+                      <FormFeedback>{errors.id_tipo_pago}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+  
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="total_pagar">Total a Pagar</Label>
+                      <Input
+                        type="number"
+                        name="total_pagar"
+                        id="total_pagar"
+                        value={formData.total_pagar}
+                        onChange={handleInputChange}
+                        readOnly
+                        invalid={!!errors.total_pagar}
+                      />
+                      <FormFeedback>{errors.total_pagar}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+                </Row>
+  
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="concepto">Concepto</Label>
+                      <Input
+                        type="text"
+                        name="concepto"
+                        id="concepto"
+                        value={formData.concepto}
+                        onChange={handleInputChange}
+                        invalid={!!errors.concepto}
+                      />
+                      <FormFeedback>{errors.concepto}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+  
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="tipo_documento">
+                        Tipo de Documento<span style={{ color: 'red' }}>*</span>
+                      </Label>
+                      <Input
+                        type="select"
+                        name="tipo_documento"
+                        id="tipo_documento"
+                        value={formData.tipo_documento}
+                        onChange={handleInputChange}
+                        invalid={!!errors.tipo_documento}
+                      >
+                        <option value="consumidor_final">
+                          Consumidor Final
+                        </option>
+                        <option value="credito_fiscal">Crédito Fiscal</option>
+                      </Input>
+                      <FormFeedback>{errors.tipo_documento}</FormFeedback>
+                    </FormGroup>
+                  </Col>
+                </Row>
+  
+                <Row>
+                  <Col md={6}>
+                    <FormGroup>
+                      <Label for="tipo_orden">Tipo de Orden</Label>
+                      <Input
+                        className="input_tipo-Orden"
+                        type="text"
+                        name="tipo_orden"
+                        id="tipo_orden"
+                        value="Pre Orden"
+                        readOnly
+                      />
+                    </FormGroup>
+                  </Col>
+  
+                    <FormGroup>
+                      <Label>&nbsp;</Label> {/* Espaciado para alineación */}
+                      <Button type="submit" color="primary" block>
+                        Generar Pre-Orden
+                      </Button>
+                    </FormGroup>
+                </Row>
               </Form>
             </CardBody>
           </Card>
@@ -460,4 +508,4 @@ export default function GenerarPreOrden() {
       <ToastContainer />
     </Container>
   );
-}
+}  

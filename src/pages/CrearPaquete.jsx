@@ -361,20 +361,16 @@ export default function DatosPaquetePreOrden() {
       <Card>
         <CardHeader className="CardHeaderDatosPAquetes">
           {cliente && selectedAddress && (
-            <h3>
-              Nombre de contacto: {selectedAddress.nombre_contacto}
-            </h3>
+            <h3>Nombre de contacto: {selectedAddress.nombre_contacto}</h3>
           )}
           {selectedAddress && (
             <h6>Dirección seleccionada para entrega: {selectedAddress.direccion}</h6>
           )}
-          {cliente && selectedAddress && (
-            <h3>
-              Nombre de contacto: {selectedAddressRecol.nombre_contacto}
-            </h3>
+          {cliente && selectedAddressRecol && (
+            <h3>Nombre de contacto: {selectedAddressRecol.nombre_contacto}</h3>
           )}
           {selectedAddressRecol && (
-            <h6>Dirección seleccionada para recoleccion: {selectedAddressRecol.direccion}</h6>
+            <h6>Dirección seleccionada para recolección: {selectedAddressRecol.direccion}</h6>
           )}
         </CardHeader>
         <CardBody>
@@ -383,7 +379,7 @@ export default function DatosPaquetePreOrden() {
               <CardBody>
                 <h5>Datos Comunes para todos los Paquetes</h5>
                 <Row>
-                  <Col md={4}>
+                  <Col md={6}>
                     <FormGroup>
                       <Label for="estado_paquete">Estado del Paquete</Label>
                       <Input
@@ -395,9 +391,7 @@ export default function DatosPaquetePreOrden() {
                       />
                     </FormGroup>
                   </Col>
-                </Row>
-                <Row>
-                  <Col md={4}>
+                  <Col md={6}>
                     <FormGroup>
                       <Label for="tipo_entrega">Tipo de Entrega</Label>
                       <Input
@@ -409,7 +403,9 @@ export default function DatosPaquetePreOrden() {
                       />
                     </FormGroup>
                   </Col>
-                  <Col md={4}>
+                </Row>
+                <Row>
+                  <Col md={12}>
                     <FormGroup>
                       <Label for="instrucciones_entrega">
                         Instrucciones de Entrega <span style={{ color: 'red' }}>*</span>
@@ -438,7 +434,7 @@ export default function DatosPaquetePreOrden() {
                 <CardBody>
                   <h5>Paquete {index + 1}</h5>
                   <Row>
-                    <Col md={4}>
+                    <Col md={6}>
                       <FormGroup>
                         <Label for={`id_tipo_paquete_${index}`}>Tipo de Paquete <span style={{ color: 'red' }}>*</span></Label>
                         <Input
@@ -449,7 +445,7 @@ export default function DatosPaquetePreOrden() {
                           onChange={(e) => handleChangePaquete(index, e)}
                           invalid={!!errors.paquetes[index]?.id_tipo_paquete}
                         >
-                          <option value="">Selecciona un tipo de paquete </option>
+                          <option value="">Selecciona un tipo de paquete</option>
                           {tiposPaquete.map((tipo) => (
                             <option key={tipo.id} value={tipo.id}>
                               {tipo.nombre}
@@ -461,6 +457,8 @@ export default function DatosPaquetePreOrden() {
                         )}
                       </FormGroup>
 
+                      </Col>
+                    <Col md={6}>
                       <FormGroup>
                         <Label for={`id_empaque_${index}`}>Tipo de Empaque <span style={{ color: 'red' }}>*</span></Label>
                         <Input
@@ -482,56 +480,12 @@ export default function DatosPaquetePreOrden() {
                           <FormFeedback>{errors.paquetes[index].id_empaque}</FormFeedback>
                         )}
                       </FormGroup>
-
-                    </Col>
-                    <Col md={4}>
-                      <FormGroup>
-                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
-                        <Input
-                          type="number"
-                          name="peso"
-                          id={`peso_${index}`}
-                          value={paquete.peso}
-                          onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].peso
-                            )
-                          }
-                        />
-                        {errors.paquetes[index]?.peso && (
-                          <FormFeedback>
-                            {errors.paquetes[index].peso}
-                          </FormFeedback>
-                        )}
-                      </FormGroup>
-                    </Col>
-                    <Col md={4}>
-                      <FormGroup>
-                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
-                        <Input
-                          type="text"
-                          name="descripcion"
-                          id={`descripcion_${index}`}
-                          value={paquete.descripcion}
-                          onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].descripcion
-                            )
-                          }
-                        />
-                        {errors.paquetes[index]?.descripcion && (
-                          <FormFeedback>
-                            {errors.paquetes[index].descripcion}
-                          </FormFeedback>
-                        )}
-                      </FormGroup>
                     </Col>
 
-                    <Col md={4}>
+                  </Row>
+
+                  <Row>
+                    <Col md={12}>
                       <FormGroup>
                         <Label for={`tamano_paquete_${index}`}>
                           Tamaño del Paquete <span style={{ color: 'red' }}>*</span>
@@ -542,12 +496,7 @@ export default function DatosPaquetePreOrden() {
                           id={`tamano_paquete_${index}`}
                           value={paquete.tamano_paquete}
                           onChange={(e) => handleChangePaquete(index, e)}
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].tamano_paquete
-                            )
-                          }
+                          invalid={!!(errors.paquetes[index]?.tamano_paquete)}
                         >
                           <option value="">Seleccione un tamaño</option>
                           <option value="1">Pequeño</option>
@@ -560,6 +509,7 @@ export default function DatosPaquetePreOrden() {
                           </FormFeedback>
                         )}
                       </FormGroup>
+
                       {/* Mostrar la descripción y la imagen si hay un tamaño seleccionado */}
                       {paquete.tamano_paquete && (
                         <div className="tamano-paquete-info">
@@ -572,7 +522,7 @@ export default function DatosPaquetePreOrden() {
                           />
                         </div>
                       )}
-
+                      
                       {/* Modal para mostrar imagen grande */}
                       {modalOpen && (
                         <div className="modal" onClick={handleModalImageClick}>
@@ -588,8 +538,27 @@ export default function DatosPaquetePreOrden() {
                         </div>
                       )}
                     </Col>
+                  </Row>
 
-                    <Col md={4}>
+                  <Row>
+                    <Col md={6}>
+                      <FormGroup>
+                        <Label for={`peso_${index}`}>Peso <span style={{ color: 'red' }}>*</span></Label>
+                        <Input
+                          type="number"
+                          name="peso"
+                          id={`peso_${index}`}
+                          value={paquete.peso}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!(errors.paquetes[index]?.peso)}
+                        />
+                        {errors.paquetes[index]?.peso && (
+                          <FormFeedback>{errors.paquetes[index].peso}</FormFeedback>
+                        )}
+                      </FormGroup>
+                      </Col>
+                      <Col md={6}>
+
                       <FormGroup>
                         <Label for={`precio_${index}`}>Precio</Label>
                         <Input
@@ -598,21 +567,47 @@ export default function DatosPaquetePreOrden() {
                           id={`precio_${index}`}
                           value={paquete.precio}
                           readOnly
-                          invalid={
-                            !!(
-                              errors.paquetes[index] &&
-                              errors.paquetes[index].precio
-                            )
-                          }
+                          invalid={!!(errors.paquetes[index]?.precio)}
                         />
                         {errors.paquetes[index]?.precio && (
-                          <FormFeedback>
-                            {errors.paquetes[index].precio}
-                          </FormFeedback>
+                          <FormFeedback>{errors.paquetes[index].precio}</FormFeedback>
                         )}
                       </FormGroup>
                     </Col>
                   </Row>
+                  <Row>
+                    <Col md={12}>
+                      <FormGroup>
+                        <Label for={`descripcion_${index}`}>Descripción <span style={{ color: 'red' }}>*</span></Label>
+                        <Input
+                          type="text"
+                          name="descripcion"
+                          id={`descripcion_${index}`}
+                          value={paquete.descripcion}
+                          onChange={(e) => handleChangePaquete(index, e)}
+                          invalid={!!(errors.paquetes[index]?.descripcion)}
+                        />
+                        {errors.paquetes[index]?.descripcion && (
+                          <FormFeedback>{errors.paquetes[index].descripcion}</FormFeedback>
+                        )}
+                      </FormGroup>
+                    </Col>
+                  </Row>
+
+                  {modalOpen && (
+                    <div className="modal" onClick={handleModalImageClick}>
+                      <div className="modal-content">
+                        <span className="close" onClick={() => setModalOpen(false)}>&times;</span>
+                        <img
+                          src={selectedImage}
+                          alt="Imagen ampliada"
+                          style={{ width: "100%", height: "auto", cursor: "pointer" }}
+                          onClick={handleModalImageClick} // Cierra el modal al hacer clic en la imagen
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   {index > 0 && (
                     <Row className="mt-3">
                       <Col>
@@ -630,26 +625,19 @@ export default function DatosPaquetePreOrden() {
             ))}
             <Row className="mb-3">
               <Col className="d-flex justify-content-start">
-                <Button color="primary" onClick={agregarPaquete}>
+                <Button
+                  color="primary"
+                  onClick={agregarPaquete}
+                  disabled={paquetes.length >= 3} // Limita a un máximo de 3 paquetes
+                >
                   Agregar Paquete
                 </Button>
               </Col>
             </Row>
-            <Row className="mb-3">
-              <Col className="d-flex justify-content-start">
-                <Button
-                  className="btnGuardarDatosPaquete"
-                  color="success"
-                  type="submit"
-                >
-                  Guardar Paquetes
-                </Button>
-              </Col>
-            </Row>
+            <Button type="submit" color="success">Enviar</Button>
           </Form>
         </CardBody>
       </Card>
-    </Container >
+    </Container>
   );
-
-}
+}  

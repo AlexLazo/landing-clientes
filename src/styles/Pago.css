@@ -19,3 +19,12 @@
   color: #fa755a;
   margin-top: 10px;
 }
+/* Asegúrate de especificar el selector adecuado para tu modal */
+.custom-modal .modal-content {
+  background: white; /* Ajusta según el diseño */
+  z-index: 1050; /* Prioriza el modal */
+}
+
+.custom-modal .modal-backdrop {
+  opacity: 0.7; /* Ajusta la opacidad para una sombra menos densa */
+}

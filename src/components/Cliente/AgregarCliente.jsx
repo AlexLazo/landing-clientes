@@ -135,7 +135,7 @@ const AgregarCliente = () => {
     const handleSearchGiro = (inputValue) => {
         const searchTerm = inputValue.toLowerCase();
         setSearchGiro(searchTerm);
-    
+
         if (searchTerm.length > 0) {
             const filtered = giros.filter((g) => {
                 const codigo = g.st_codigo ? String(g.st_codigo).toLowerCase() : "";
@@ -147,7 +147,7 @@ const AgregarCliente = () => {
             setFilteredGiros(giros); // Mostrar todos los giros si no hay búsqueda
         }
     };
-    
+
     const handleGiroSelect = (selectedOption) => {
         if (selectedOption) {
             setGiro(selectedOption.label); // Guardar la descripción del giro seleccionada
@@ -598,36 +598,32 @@ const AgregarCliente = () => {
                                             </Col>
                                         </Row>
                                         <Row form>
-                                                    <Col md={6}>
-                                                        <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="esContribuyente">¿Es Contribuyente? <span style={{ color: 'red' }}>*</span></Label>
-                                                            <Input
-                                                                type="checkbox"
-                                                                id="esContribuyente"
-                                                                checked={esContribuyente}
-                                                                onChange={(e) => setEsContribuyente(e.target.checked)}
-                                                            />
-                                                        </FormGroup>
-                                                    </Col>
-                                                </Row>
-                                                <Row form>
-                                                    <Col md={6}>
-                                                        <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nombreComercial">Nombre Comercial <span style={{ color: 'red' }}>*</span></Label>
-                                                            <Input
-                                                                type="text"
-                                                                id="nombreComercial"
-                                                                value={nombreComercial}
-                                                                onChange={(e) => setNombreComercial(e.target.value)}
-                                                            />
-                                                        </FormGroup>
-                                                    </Col>
-                                                    </Row>
+                                            <Col md={6}>
+                                                <FormGroup className="form-group-custom">
+                                                    <Label htmlFor="esContribuyente">¿Es Contribuyente? <span style={{ color: 'red' }}>*</span></Label>
+                                                    <Input
+                                                        type="checkbox"
+                                                        id="esContribuyente"
+                                                        checked={esContribuyente}
+                                                        onChange={(e) => setEsContribuyente(e.target.checked)}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                            <Col md={6}>
+                                                <FormGroup className="form-group-custom">
+                                                    <Label htmlFor="nombreComercial">Nombre Comercial <span style={{ color: 'red' }}>*</span></Label>
+                                                    <Input
+                                                        type="text"
+                                                        id="nombreComercial"
+                                                        value={nombreComercial}
+                                                        onChange={(e) => setNombreComercial(e.target.value)}
+                                                    />
+                                                </FormGroup>
+                                            </Col>
+                                        </Row>
                                         {tipoPersona === "2" && ( // Si es persona jurídica
                                             <>
-                                        
                                                 <Row form>
-                                                   
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nit">NIT <span style={{ color: 'red' }}>*</span></Label>
@@ -645,8 +641,6 @@ const AgregarCliente = () => {
                                                             )}
                                                         </FormGroup>
                                                     </Col>
-                                                </Row>
-                                                <Row form>
                                                     <Col md={6}>
                                                         <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nrc">NRC <span style={{ color: 'red' }}>*</span></Label>
@@ -666,7 +660,7 @@ const AgregarCliente = () => {
                                                     </Col>
                                                 </Row>
                                                 <Row form>
-                                                <Col md={6}>
+                                                    <Col md={6}>
                                                         <FormGroup>
                                                             <Label htmlFor="giro">Giro <span style={{ color: 'red' }}>*</span></Label>
                                                             <Select
@@ -684,7 +678,7 @@ const AgregarCliente = () => {
                                                             />
                                                         </FormGroup>
                                                     </Col>
-                                                    <Col md={12}>
+                                                    <Col md={6}>
                                                         <FormGroup className="form-group-custom">
                                                             <Label htmlFor="nombreEmpresa">Nombre de la Empresa <span style={{ color: 'red' }}>*</span></Label>
                                                             <Input

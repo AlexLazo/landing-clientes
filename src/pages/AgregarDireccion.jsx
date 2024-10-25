@@ -23,7 +23,7 @@ const AgregarDireccion = () => {
     const [isDireccionValid, setIsDireccionValid] = useState(true);
     const [isTelefonoValid, setIsTelefonoValid] = useState(true);
     const [telefonoError, setTelefonoError] = useState("");
-    
+
     const [idCliente, setIdCliente] = useState("");
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -46,7 +46,7 @@ const AgregarDireccion = () => {
                 });
 
                 // Filtrar departamentos permitidos
-                const departamentosFiltrados = (response.data || []).filter(dep => 
+                const departamentosFiltrados = (response.data || []).filter(dep =>
                     departamentosPermitidos.includes(dep.id)
                 );
 
@@ -233,7 +233,7 @@ const AgregarDireccion = () => {
                                                 </Col>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label"for="telefono">Teléfono <span style={{ color: 'red' }}>*</span></Label>
+                                                        <Label className="label" for="telefono">Teléfono <span style={{ color: 'red' }}>*</span></Label>
                                                         <Input
                                                             type="text"
                                                             id="telefono"
@@ -250,9 +250,10 @@ const AgregarDireccion = () => {
                                             <Row form>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="departamento">Departamento <span style={{ color: 'red' }}>*</span></Label>
-                                                        <Input
-                                                            type="select"
+                                                        <Label className="label" for="departamento">
+                                                            Departamento <span style={{ color: 'red' }}>*</span>
+                                                        </Label>
+                                                        <select
                                                             id="departamento"
                                                             className="input"
                                                             value={departamento}
@@ -265,14 +266,15 @@ const AgregarDireccion = () => {
                                                                     {dep.nombre}
                                                                 </option>
                                                             ))}
-                                                        </Input>
+                                                        </select>
                                                     </FormGroup>
                                                 </Col>
                                                 <Col md={6}>
                                                     <FormGroup className="formGroup">
-                                                        <Label className="label" for="municipio">Municipio <span style={{ color: 'red' }}>*</span></Label>
-                                                        <Input
-                                                            type="select"
+                                                        <Label className="label" for="municipio">
+                                                            Municipio <span style={{ color: 'red' }}>*</span>
+                                                        </Label>
+                                                        <select
                                                             id="municipio"
                                                             className="input"
                                                             value={municipio}
@@ -285,10 +287,11 @@ const AgregarDireccion = () => {
                                                                     {mun.nombre}
                                                                 </option>
                                                             ))}
-                                                        </Input>
+                                                        </select>
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
+
                                             <Row form>
                                                 <Col md={12}>
                                                     <FormGroup className="formGroup">

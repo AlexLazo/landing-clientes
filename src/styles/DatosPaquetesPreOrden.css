@@ -7,7 +7,7 @@ form {
   
   /* Estilos para el contenedor del formulario */
   .container-fluid {
-    padding: 20px;
+    padding: 5px;
   }
   
   /* Estilos para el título del formulario */
@@ -97,4 +97,44 @@ form {
     margin-top: 1rem;
   }
   
-  
+  /* Estilos para el modal */
+.modal {
+  z-index:auto; /* Prioriza el modal */
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent; /* Sin fondo oscuro */
+}
+
+/* Estilos para el contenido del modal */
+.modal-content {
+  position: relative;
+}
+
+/* Estilos para la imagen dentro del modal */
+.modal-content img {
+  max-width: 100%; /* Limita el ancho de la imagen al 100% */
+  height: auto; /* Mantiene la proporción */
+}
+
+.tamano-paquete-info {
+  text-align: center; /* Centra el texto dentro del div */
+  margin-bottom: 20px; /* Espaciado inferior */
+}
+
+.image-container {
+  display: flex; /* Utiliza flexbox para centrar la imagen */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente si es necesario */
+}
+
+.image-container img {
+  width: 150px; /* Ajusta el ancho según lo necesites */
+  height: auto; /* Mantiene la proporción */
+  cursor: pointer; /* Cambia el cursor al pasar sobre la imagen */
+}
