@@ -1,35 +1,72 @@
-.payment-form {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
+/* Stripe Element Container */
 .stripe-element-container {
   border: 1px solid #ced4da;
-  padding: 10px;
+  padding: 12px;
   border-radius: 4px;
   background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.dark-mode .stripe-element-container{
+.dark-mode .stripe-element-container {
   color: #fff;
 }
 
+/* Reference Image */
 .reference-image {
-  margin-top: 5px;
+  margin-top: 10px;
   max-width: 100%;
+  align-self: center;
 }
 
+/* Error Message Styling */
 .error-message {
   color: #fa755a;
   margin-top: 10px;
+  font-size: 0.9em;
+  text-align: left;
 }
-/* Asegúrate de especificar el selector adecuado para tu modal */
+
+/* Custom Modal Styling */
+.custom-modal .modal-dialog {
+  max-width: 90%; /* Ensures responsive width */
+  margin: auto; /* Centers modal */
+}
+
+.custom-modal .modal-backdrop {
+  z-index: 1040;
+}
+
+/* Modal Content */
 .custom-modal .modal-content {
-  background: white; /* Ajusta según el diseño */
-  z-index: 1050; /* Prioriza el modal */
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
-.dark-mode .custom-modal .modal-content{
+.dark-mode .custom-modal .modal-content {
   background-color: #333;
+  color: #fff;
 }
 
+.modal-content {
+  width: 110%;
+  max-width: 900px; /* Caps width for better readability */
+}
+
+.custom-modal .modal-header {
+  border-bottom: none;
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.custom-modal .modal-body {
+  padding-top: 0;
+}
+
+/* Modal Backdrop Styling */
+.modal-backdrop {
+  z-index: 1040;
+}

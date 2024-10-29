@@ -18,7 +18,7 @@ const CARD_ELEMENT_OPTIONS = {
       color: '#32325d',
       fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
       fontSmoothing: 'antialiased',
-      fontSize: '16px',
+      fontSize: '14px',
       '::placeholder': {
         color: '#aab7c4'
       }
@@ -104,6 +104,14 @@ const CheckoutForm = ({ selectedOrder, toggleModal, updateOrders }) => {
     } finally {
       setLoading(false);
     }
+    const toggleModal = () => {
+      setModalOpen(!modalOpen);
+      document.body.classList.toggle('modal-open', !modalOpen); // Activa la clase modal-open
+      if (!modalOpen) {
+        setSelectedOrder(null);
+      }
+    };
+    
   };
 
   return (
@@ -305,6 +313,7 @@ const ProcesarPago = () => {
       </Modal>
 
     </div>
+    
   );
 };
 
