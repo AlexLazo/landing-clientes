@@ -31,7 +31,10 @@ export default function PerfilCliente() {
     const [totalPages, setTotalPages] = useState(1);
     const DIRECTIONS_PER_PAGE = 3;
     const navigate = useNavigate();
-
+    const [tiposPersona, setTiposPersona] = useState({});
+    const [departamentos, setDepartamentos] = useState({});
+const [municipios, setMunicipios] = useState({});
+const [municipiosPorDepartamento, setMunicipiosPorDepartamento] = useState({}); 
     
     useEffect(() => {
         const fetchCliente = async () => {
@@ -68,6 +71,97 @@ export default function PerfilCliente() {
         fetchCliente();
     }, [navigate]);
     
+    useEffect(() => {
+        const fetchTiposPersona = async () => {
+            const token = localStorage.getItem("authToken");
+        if (!token) {
+            console.error("No hay token de autorización.");
+            return; // Sal de la función si no hay token
+        }
+            try {
+                const response = await axios.get(`${API_URL}/tipoPersona`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                
+                // Aquí asegúrate de que response.data sea un array
+                if (Array.isArray(response.data)) {
+                    const tiposMap = response.data.reduce((acc, tipo) => {
+                        acc[tipo.id] = tipo.nombre;
+                        return acc;
+                    }, {});
+                    setTiposPersona(tiposMap);
+                } 
+            } catch (error) {
+                console.error("Error fetching tipos de persona:", error);
+            }
+        };
+        const fetchDepartamentos = async () => {
+            const token = localStorage.getItem("authToken");
+            if (!token) {
+                console.error("No hay token de autorización.");
+                return;
+            }
+    
+            try {
+                const response = await axios.get(`${API_URL}/dropdown/get_departamentos`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+    
+                if (Array.isArray(response.data)) {
+                    const deptosMap = response.data.reduce((acc, depto) => {
+                        acc[depto.id] = depto.nombre;
+                        return acc;
+                    }, {});
+                    setDepartamentos(deptosMap);
+                } else {
+                    console.error("La respuesta no es un array:", response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching departamentos:", error);
+            }
+        };
+
+        fetchTiposPersona();
+        fetchDepartamentos();
+        
+    }, [currentPage, navigate]);
+    
+    useEffect(() => {
+        const token = localStorage.getItem("authToken"); // Obtiene el token aquí
+    
+        const fetchMunicipios = async () => {
+            // Verifica que cliente e id_departamento existen antes de intentar hacer la solicitud
+            if (cliente && cliente.id_departamento && token) {
+                try {
+                    const response = await axios.get(`${API_URL}/dropdown/get_municipio/${cliente.id_departamento}`, {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+    
+                    // Verifica que la respuesta tenga datos en la estructura esperada
+                    if (Array.isArray(response.data.municipio)) {
+                        setMunicipiosPorDepartamento(prev => ({
+                            ...prev,
+                            [cliente.id_departamento]: response.data.municipio
+                        }));
+                    } else {
+                        console.warn("La respuesta no contiene un array de municipios:", response.data);
+                    }
+                } catch (error) {
+                    console.error("Error al obtener los municipios:", error);
+                }
+            }
+        };
+    
+        fetchMunicipios();
+    }, [cliente?.id_departamento]); // Solo ejecuta cuando id_departamento cambia
+    
+    
+    
+    
+    
+
     useEffect(() => {
         const fetchDirecciones = async () => {
             const token = localStorage.getItem('authToken');
@@ -198,12 +292,12 @@ export default function PerfilCliente() {
                                 <p>{cliente.telefono || '-'}</p>
                             </div>
                             <div>
-                                <p className="detailsLabel">Nombre Comercial:</p>
+                                <p className="detailsLabel">Razon Social:</p>
                                 <p>{cliente.nombre_comercial || '-'}</p>
                             </div>
                             <div>
                                 <p className="detailsLabel">Tipo Persona:</p>
-                                <p>{cliente.id_tipo_persona || '-'}</p>
+                                <p>{tiposPersona[cliente.id_tipo_persona] || '-'}</p>
                             </div>
                             <div>
                                 <p className="detailsLabel">Es Contribuyente:</p>
@@ -211,11 +305,13 @@ export default function PerfilCliente() {
                             </div>
                             <div>
                                 <p className="detailsLabel">Departamento:</p>
-                                <p>{cliente.id_departamento || '-'}</p>
+                                <p>{departamentos[cliente.id_departamento] || '-'}</p>
                             </div>
                             <div>
-                                <p className="detailsLabel">ID Municipio:</p>
-                                <p>{cliente.id_municipio || '-'}</p>
+                                <p className="detailsLabel">Municipio:</p>
+                                <p>{municipiosPorDepartamento[cliente.id_departamento]?.find(
+            (municipio) => municipio.id === cliente.id_municipio)?.nombre || '-'}
+                                </p>
                             </div>
                             <div>
                                 <p className="detailsLabel">NIT:</p>
@@ -230,7 +326,7 @@ export default function PerfilCliente() {
                                 <p>{cliente.giro || '-'}</p>
                             </div>
                             <div>
-                                <p className="detailsLabel">Nombre Empresa:</p>
+                                <p className="detailsLabel">Nombre Comercial:</p>
                                 <p>{cliente.nombre_empresa || '-'}</p>
                             </div>
                             <div>

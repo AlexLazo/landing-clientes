@@ -162,10 +162,10 @@ const CheckoutForm = ({ selectedOrder, toggleModal, updateOrders }) => {
       </Row>
       {error && <Alert color="danger" className="mt-3">{error}</Alert>}
       <div className="d-flex justify-content-between mt-4">
-        <Button color="secondary" onClick={toggleModal}>
+        <Button color="secondary" onClick={toggleModal}className="mx-2">
           Cancelar
         </Button>
-        <Button color="primary" type="submit" disabled={!stripe || loading}>
+        <Button color="primary" type="submit" disabled={!stripe || loading}className="mx-2">
           {loading ? 'Procesando...' : `Pagar $${selectedOrder.total_pagar}`}
         </Button>
       </div>

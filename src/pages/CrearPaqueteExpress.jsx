@@ -392,7 +392,7 @@ export default function CrearPaqueteExpress() {
                         type="text"
                         name="tipo_entrega"
                         id="tipo_entrega"
-                        value="Entrega Normal"
+                        value="Entrega Express"
                         disabled
                       />
                     </FormGroup>

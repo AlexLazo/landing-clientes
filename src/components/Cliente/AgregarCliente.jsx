@@ -302,7 +302,7 @@ const AgregarCliente = () => {
             id_municipio: municipio,
             es_contribuyente: esContribuyente ? 1 : 0,
             nombre_comercial: tipoPersona === "1" ? null : nombreComercial,
-            nombre_empresa: tipoPersona === "1" ? null : nombreEmpresa,
+            nombre_empresa:nombreEmpresa,
             nit: tipoPersona === "1" ? null : nit,
             nrc: tipoPersona === "1" ? null : nrc,
             giro: giroValue, // Usamos la descripción del giro como valor
@@ -395,7 +395,6 @@ const AgregarCliente = () => {
         setTipoPersona(selectedTipoPersona);
         if (selectedTipoPersona !== "2") {
             setEsContribuyente(false);
-            setNombreComercial("");
             setNit("");
             setNrc("");
             setGiro("");
@@ -611,13 +610,13 @@ const AgregarCliente = () => {
                                             </Col>
                                             <Col md={6}>
                                                 <FormGroup className="form-group-custom">
-                                                    <Label htmlFor="nombreComercial">Nombre Comercial <span style={{ color: 'red' }}>*</span></Label>
-                                                    <Input
-                                                        type="text"
-                                                        id="nombreComercial"
-                                                        value={nombreComercial}
-                                                        onChange={(e) => setNombreComercial(e.target.value)}
-                                                    />
+                                                <Label htmlFor="nombreEmpresa">Nombre Comercial <span style={{ color: 'red' }}>*</span></Label>
+                                                            <Input
+                                                                type="text"
+                                                                id="nombreEmpresa"
+                                                                value={nombreEmpresa}
+                                                                onChange={(e) => setNombreEmpresa(e.target.value)}
+                                                            />
                                                 </FormGroup>
                                             </Col>
                                         </Row>
@@ -679,14 +678,15 @@ const AgregarCliente = () => {
                                                         </FormGroup>
                                                     </Col>
                                                     <Col md={6}>
-                                                        <FormGroup className="form-group-custom">
-                                                            <Label htmlFor="nombreEmpresa">Nombre de la Empresa <span style={{ color: 'red' }}>*</span></Label>
-                                                            <Input
-                                                                type="text"
-                                                                id="nombreEmpresa"
-                                                                value={nombreEmpresa}
-                                                                onChange={(e) => setNombreEmpresa(e.target.value)}
-                                                            />
+                                                    <FormGroup className="form-group-custom">
+                                                    <Label htmlFor="nombreComercial">Razon Social <span style={{ color: 'red' }}>*</span></Label>
+                                                    <Input
+                                                        type="text"
+                                                        id="nombreComercial"
+                                                        value={nombreComercial}
+                                                        onChange={(e) => setNombreComercial(e.target.value)}
+                                                    />
+
                                                         </FormGroup>
                                                     </Col>
                                                 </Row>
